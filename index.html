@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 40px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 35px;
+            text-align: end;
+            background-color: lightslategrey;
+            border-radius: 10px;
+        }
+
+        .grid {
+            border-radius: 10px;
+
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            background-color: #5aaef3;
+            padding: 10px;
+            border-radius: 20px;
+
+        }
+
+        .grid-item {
+            background-color: rgba(255, 255, 255, 1);
+            border: 1px solid rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            font-size: 25px;
+            text-align: center;
+            border-radius: 10px;
+
+        }
+
+        /* img {
+            width: 100%;
+            border-radius: 5px;
+
+        } */
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Різні розрахунки за ДБН та не тільки</h1>
+
+    <p>Данні розрахунки виконані знаходяться в стадії тестування та можуть використовуватись для оцінення якщо ви
+        знайдете помилки пишіть нам. <a href="https://t.me/Akakiy_Bedrosovich"><img src="./images/Telegram_logo.svg" alt="telegram" height="15px"></a></p>
+    <h2> <span style="color: yellow;">Слава</span> <span style="color: blue;">Україні!</span></h2>
+
+    <div class="grid-container">
+        <a class="grid-item" href="./01_snow.html" target="_blank">
+            <!-- <img src="./images/snow.svg" alt="snow"> -->
+            <div>Снігове навантаження за ДБН В.1.2-2:2006 "Навантаження і впливи. Норми проектування" </div>
+        </a>
+        <a class="grid-item" href="./02_wind/wind.html" target="_blank">
+            <!-- <img src="./images/wind2.svg" alt="wind"> -->
+            <div>Вітрове навантаження за ДБН В.1.2-2:2006 "Навантаження і впливи. Норми проектування" </div>
+        </a>
+        <a class="grid-item" href="./03_Laying depth.html" target="_blank">Глубина закладення фундаментів. ДБН В.2.1-10-2009 Основи та фундаменти споруд</a>
+        <a class="grid-item" href="./04_package weight.html" target="_blank">Вага склопакету</a>
+        <a class="grid-item" href="./05_section.html" target="_blank">Геометрічні характеристики</a>
+        <a class="grid-item" href="./06_welding_input.html" target="_blank">Зварне з'єднання. ДБН В.2.6-198:2014 "Сталеві конструкції. Норми проектування"</a>
+        <a class="grid-item" href="./08_bolts.html" target="_blank">Болтове з'єднання. ДБН В.2.6-198:2014 "Сталеві конструкції. Норми проектування" </a>
+        <!-- <div class="grid-item">Сталева балка на міцність та прогин</div> -->
+        <a class="grid-item" href="./09_al_beam/beam2.html" target="_blank">Алюміньева балка на міцність та прогин</a>
+        <a class="grid-item" href="./10_proflist/proflist.html" target="_blank">Розрахунок профліста</a>
+    </div>
+
+</body>
+
+</html>

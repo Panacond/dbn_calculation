@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Расчет алюминиевого профиля неразрезного</title>
+  <style>
+    body {
+      background-image: url(../A4.svg);
+      background-repeat: repeat-y;
+      font-family: 'Times New Roman', Times, Georgia, serif;
+      font-size: 0.99em;
+    }
+
+    .page {
+      /* border-style: solid; */
+      /* border-color: red; */
+      /* border-width: 0.03cm; */
+      margin: 0px 0.5cm 2cm 1.8cm;
+      height: 990px;
+      width: 17.5cm;
+      padding: 0.5cm;
+    }
+
+    .before {
+      height: 8px;
+      border-style: solid;
+      border-color: white;
+      font-size: 10px;
+      content: " ";
+    }
+  </style>
+</head>
+
+<body>
+  <script src="./vue.global.js"></script>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+          processEscapes: true
+        },
+        "HTML-CSS": { fonts: ["TeX"] }
+      });
+    </script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js"></script>
+
+  <div id="app">
+    <div class="before"></div>
+    <div class="page">
+      <h2>Розрахунок алюмініевого профіля міцніть та прогиб</h2>
+      <p>
+        R=
+        <input v-model="R" type="number" placeholder="R" size="5" />
+        (МПа) Розрахунковий опір <b>зміцненого</b> алюмінію
+      </p>
+      <p>
+        E=
+        <input v-model="E" type="number" placeholder="E" />
+        (МПа) Модуль пружності алюмінію
+      </p>
+      <p>
+        b=
+        <input v-model="b" type="number" placeholder="b" />
+        (м) ширина дії навантаження
+      </p>
+      <p>
+        Для перевірки граничних станів першої групи використовуються основні
+        поєднання, що включають постійні навантаження з граничними
+        розрахунковими значеннями, також граничні розрахункові, циклічні або
+        квазіпостійні значення змінних навантажень:
+      </p>
+      <p>
+        q<sub>sn</sub>=
+        <input v-model="q_sn" type="number" placeholder="q_sn" />
+        (Па) Навантаження від снігу
+      </p>
+      <p>
+        q<sub>p</sub>=
+        <input v-model="q_p" type="number" placeholder="q_p" />
+        (Па) Навантаження від ваги пакету
+      </p>
+      <p>Загальне навантаження складе:</p>
+      <p>
+        $$q=(q_{sn}+q_p) \times b=({{q_sn}}+{{q_p}}) \times
+        {{b}}={{q=Math.round( (q_sn + q_p) * b *100)/100}} Па/м$$
+      </p>
+      <!-- &times; -->
+      <p>
+        Для перевірки граничних станів другої групи використовуються основні
+        поєднання, що включають постійні навантаження з експлуатаційними
+        значеннями, а також експлуатаційні розрахункові, циклічні або
+        квазіпостійні значення змінних навантажень:
+      </p>
+      <p>Експлуатаційне розрахункове значення для снігу:</p>
+      <p>
+        $$q_{sn2} = \frac{q_{sn} \times \gamma_{fe} }{ \gamma_{fm} } = \frac{
+        {{q_sn}} \times 0.49}{ 1.14 } = {{ q_sn2 =Math.round(
+        (q_sn*0.49/1.14)*100)/100 }} Па/м $$
+      </p>
+      <p>Експлуатаційне розрахункове значення для ваги пакету</p>
+      <p>
+        $$q_{p2} = \frac{q_p}{ \gamma_{fm}} = \frac{ {{q_p}} }{ 1.1} = {{ q_p2
+        = Math.round( (q_p/1.1)*100)/100}} Па/м $$
+      </p>
+      <p>Загальне експлуатаційне навантаження складе:</p>
+      <p>
+        $$q_e=(q_{sn2}+q_{p2}) \times b=({{q_sn2}}+{{q_p2}}) \times
+        {{b}}={{q_e=Math.round( (q_sn2 + q_p2) * b *100)/100}} Па/м$$
+      </p>
+      <h2>Геометрічні характеристики перерізу</h2>
+      <p>
+        I<sub>p</sub>=
+        <input v-model="I_p" type="number" placeholder="I_p" />
+        (см<sup>4</sup>) момент інерції
+      </p>
+      <p>
+        W<sub>p</sub>=
+        <input v-model="W_p" type="number" placeholder="W_p" />
+        (см<sup>3</sup>) момент опору
+      </p>
+      <p>
+        l=
+        <input v-model="l" type="number" placeholder="l" />
+        (м) довжина розрахункового прольоту
+      </p>
+    </div>
+    <div class="before"></div>
+    <div class="page">
+      <div>
+        <h2>Балка з вільним опиранням</h2>
+        <p>
+          <img src="./beam_re.svg" alt="шарнироно опертая балка" />
+          <span>
+            $M_1= \frac{q \times l^2}{8} =\frac{ {{q}} \times {{l}}^2}{8} =
+            {{M_1 = Math.round( (q*l**2/8)*100)/100}} Н/м$
+          </span>
+        </p>
+        <p>
+          $$k_1 = \frac{M_1}{W_p \times R} = \frac{ {{M_1}} }{ {{W_p}} \times
+          {{R}} } = {{k_1 = Math.round( (M_1/W_p/R)*100)/100}}$$
+        </p>
+        <div v-if="k_1 < 1">
+          <h3>Міцність перерізу достатня коэфіцієнт використання {{k_1}}</h3>
+        </div>
+        <div style="color: red" v-else>
+          <h3>Міцність перерізу не достатня</h3>
+        </div>
+        <p>прогин складе:</p>
+        <p>
+          $$f= \frac{ 5 \times q_e \times\ l^4}{384 \times E \times I_p} =
+          \frac{ 5 \times {{q_e}} \times\ {{l}}^4}{384 \times {{E}} \times
+          {{I_p}} }= {{f = Math.round( (5 * q_e * l**4)/(384 * E *
+          I_p)*100*10**5)/100}}мм$$
+        </p>
+      </div>
+      <div>
+        <h2>Балка з 2 затиснутими опорами</h2>
+        <p>
+          <img src="./beam_two.svg" alt="балка с двумя защемленными опорами" />
+          <span>
+            $M_2= \frac{q \times l^2}{12} =\frac{ {{q}} \times {{l}}^2}{12} =
+            {{M_2 = Math.round( (q*l**2/12)*100)/100}} Н/м$
+          </span>
+        </p>
+        <p>
+          $$k_2 = \frac{M_2}{W_p \times R} = \frac{ {{M_2}} }{ {{W_p}} \times
+          {{R}} } = {{k_2 = Math.round( (M_2/W_p/R)*100)/100}}$$
+        </p>
+        <div v-if="k_2 < 1">
+          <h3>Міцність перерізу достатня коэфіцієнт використання {{k_2}}</h3>
+        </div>
+        <div style="color: red" v-else>
+          <h3>Міцність перерізу не достатня</h3>
+        </div>
+        <p>прогин складе:</p>
+        <p>
+          $$f= \frac{ 1 \times q_e \times\ l^4}{384 \times E \times I_p} =
+          \frac{ 1 \times {{q_e}} \times\ {{l}}^4}{384 \times {{E}} \times
+          {{I_p}} }= {{f = Math.round( (1 * q_e * l**4)/(384 * E *
+          I_p)*100*10**5)/100}}мм$$
+        </p>
+      </div>
+      <div>
+        <h2>Балка з 1 затиснутою опорою</h2>
+        <p>
+          <img src="./beam_one.svg" alt="балка с одной защемленной опорой" />
+          <span>
+            $M_3= \frac{q \times l^2}{8} =\frac{ {{q}} \times {{l}}^2}{8} =
+            {{M_3 = Math.round( (q*l**2/8)*100)/100}} Н/м$
+          </span>
+        </p>
+        <p>
+          $$k_3 = \frac{M_3}{W_p \times R} = \frac{ {{M_3}} }{ {{W_p}} \times
+          {{R}} } = {{k_3 = Math.round( (M_3/W_p/R)*100)/100}}$$
+        </p>
+        <div v-if="k_3 < 1">
+          <h3>Міцність перерізу достатня коэфіцієнт використання {{k_3}}</h3>
+        </div>
+        <div style="color: red" v-else>
+          <h3>Міцність перерізу не достатня</h3>
+        </div>
+        <p>прогин складе:</p>
+        <p>
+          $$f= \frac{ 1 \times q_e \times\ l^4}{185 \times E \times I_p} =
+          \frac{ 1 \times {{q_e}} \times\ {{l}}^4}{185 \times {{E}} \times
+          {{I_p}} }= {{f = Math.round( (1 * q_e * l**4)/(185 * E *
+          I_p)*100*10**5)/100}}мм$$
+        </p>
+      </div>
+    </div>
+
+    <!-- <div class="before"></div> -->
+  </div>
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          R: 150,
+          E: 70000,
+          q_sn: 1767,
+          q_p: 770,
+          b: 1.33,
+          l: 2.3,
+          b_t: 50,
+          h_t: 88.5,
+          t_b: 2,
+          t_h: 2.3,
+          S_0: 880,
+          S: 160,
+          h_max: 62.8,
+          I_p: 166.71,
+          W_p: 26.53,
+        };
+      },
+      methods: {
+        reRender() {
+          if (window.MathJax) {
+            console.log("rendering mathjax");
+            window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub], () =>
+              console.log("done")
+            );
+          }
+        },
+      },
+      computed: {
+        F() {
+          console.log("data changed");
+          this.$nextTick().then(() => {
+            this.reRender();
+          });
+        },
+      },
+      mounted() {
+        this.reRender();
+      },
+      watch: {
+        R: function () {
+          this.$nextTick().then(() => {
+            this.reRender();
+          });
+        },
+        E: function () {
+          this.$nextTick().then(() => {
+            this.reRender();
+          });
+        },
+        q_sn: function () {
+          this.$nextTick().then(() => {
+            this.reRender();
+          });
+        },
+        q_p: function () {
+          this.$nextTick().then(() => {
+            this.reRender();
+          });
+        },
+        b: function () {
+          this.$nextTick().then(() => {
+            this.reRender();
+          });
+        },
+        l: function () {
+          this.$nextTick().then(() => {
+            this.reRender();
+          });
+        },
+        b_t: function () {
+          this.$nextTick().then(() => {
+            this.reRender();
+          });
+        },
+        h_t: function () {
+          this.$nextTick().then(() => {
+            this.reRender();
+          });
+        },
+        t_b: function () {
+          this.$nextTick().then(() => {
+            this.reRender();
+          });
+        },
+        t_h: function () {
+          this.$nextTick().then(() => {
+            this.reRender();
+          });
+        },
+        I_p: function () {
+          this.$nextTick().then(() => {
+            this.reRender();
+          });
+        },
+        W_p: function () {
+          this.$nextTick().then(() => {
+            this.reRender();
+          });
+        },
+      },
+    }).mount("#app");
+  </script>
+</body>
+
+</html>

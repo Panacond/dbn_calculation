@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Зварні з’єднання</title>
+  <style>
+    body {
+      background-image: url(./A4.svg);
+      background-repeat: repeat-y;
+      font-family: 'Times New Roman', Times, Georgia, serif;
+      font-size: 0.99em;
+    }
+
+    .page {
+      /* border-style: solid; */
+      /* border-color: red; */
+      /* border-width: 0.03cm; */
+      margin: 0px 0.5cm 2cm 1.8cm;
+      height: 990px;
+      width: 17.5cm;
+      padding: 0.5cm;
+    }
+
+    .before {
+      height: 8px;
+      border-style: solid;
+      border-color: white;
+      font-size: 10px;
+      content: " ";
+    }
+  </style>
+</head>
+
+<body>
+  <script src="./vue.global.js"></script>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=default'></script> -->
+
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+          processEscapes: true
+        },
+        "HTML-CSS": { fonts: ["TeX"] }
+      });
+    </script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js"></script>
+
+  <div id="app">
+    <div class="before"></div>
+    <div class="page">
+      <h2>Розрахунок зварного з'єднання</h2>
+      <p>Розрахунок виконан за ДБН В.2.6-198:2014 СТАЛЕВІ КОНСТРУКЦІЇ</p>
+      <h3>16.1 Зварні з’єднання</h3>
+      <p>вихідні дані</p>
+
+      <p :key="N">
+        N=
+        <input v-model="N" placeholder="N" />
+        кН(100 кг=0.1 кН)
+      </p>
+      <p>
+        k<sub>f</sub>=
+        <input v-model="k_f" placeholder="k_f" />
+        мм - 16.1.5 Розміри зварних кутових швів
+      </p>
+      <p>
+        16.1.5 Таблица16.1 Коэффициенты, принимаемые при сварке: $$\beta_f=
+        {{beta_f=0.7}}\;\beta_z= {{beta_z=1}}$$
+      </p>
+      <p>Максимальна довжина шва см (п.12.7г, 1):</p>
+      <p>
+        $$L_{max}=85 \times \beta_f \times k_f = 85 \times {{beta_f}} \times
+        {{k_f}} = {{L_max=Math.round(85*beta_f*k_f/10*100)/100}} см$$
+      </p>
+      <p>Довжина шва, повинна бути меншою за максимальну:</p>
+      <p>
+        L=
+        <input :style="{ 'color':redAlert}" v-model="L" placeholder="L" />
+        см
+        <span v-show="L > L_max" :style="{ 'color':'red'}">Уменьшите длину шва!</span>
+      </p>
+      <p>
+        R<sub>un</sub>={{R_un=360}}Н/мм<sup>2</sup> Нормативний опір сталі
+        (для С235) ДСТУ-8539-2015
+      </p>
+      <p>R<sub>wun</sub>={{R_wun=410}} - За таблицею Д.2</p>
+      <p>Розрахунковий опір металу шва:</p>
+      <p>
+        $$R_{wf}=0.45 \times R_{un} = 0.45 \times {{R_un}} =
+        {{R_wf=0.45*R_un}} \frac{Н}{мм^2}$$
+      </p>
+      <p>$$ \gamma_{wm}={{gamma_wm=1.25}}$$</p>
+      <p>
+        $$R_{wz}=\frac{0.55 \times R_{wun}}{\gamma_{wm}}=\frac{0.55 \times
+        {{R_wun}} }{ {{gamma_wm}}
+        }={{R_wz=Math.round(0.55*R_wun/gamma_wm*100)/100}}МПа$$
+      </p>
+      <p>
+        Коефіцієнт умов роботи шва, див. (таб.5.1):
+        $$\gamma_c={{gamma_c=0.9}}$$
+      </p>
+      <p>
+        Коефіцієнт надійності щодо відповідальності ДБН В1.2-14:
+        $$\gamma_n={{gamma_n=1.1}}$$
+      </p>
+    </div>
+    <div class="before"></div>
+    <div class="page">
+      <h3>16.1.16 Розрахункова довжина шва</h3>
+      <p v-if="2*k_f <= 10">$$L_w=L-10={{L*10}}-10={{L_w=L*10-10}}мм$$</p>
+      <p v-else>
+        $$L_w=L-2 \times k_f={{L*10}}-2 \times {{k_f}}={{L_w=L*10-2*k_f}}мм$$
+      </p>
+      <p>
+        16.1.16 Розрахунок зварного з’єднання з кутовими швами при дії
+        поздовжньої сили N:
+      </p>
+      <p>
+        $$k= \frac{ \beta_f \times R_{wf} }{0.45 \times \beta_z \times
+        R_{un}}= \frac{ {{beta_f}} \times {{R_wf}} }{0.45 \times {{beta_z}}
+        \times {{R_un}} } = {{k=beta_f*R_wf/(0.45*beta_z*R_un)}}$$
+      </p>
+      <div v-if="k > 1">
+        <p>розрахунок ведемо у площіні металлу межі сплавлення:</p>
+        <p>
+          $$ k_1= \frac{N \times \gamma_n}{ \beta_z \times k_f \times R_{wz}
+          \times L_w \times \gamma_c}= \frac{ {{N}} \times {{gamma_n}} }{
+          {{beta_z}} \times {{k_f}} \times {{R_wz}} \times {{L_w}} \times
+          {{gamma_c}}
+          }={{k_1=Math.round((N*gamma_n)/(beta_z*k_f*R_wz*L_w*gamma_c)*10**3*1000)/1000}}$$
+        </p>
+      </div>
+      <div v-else>
+        <p>розрахунок ведемо у площіні наплавленного металу:</p>
+        <p>
+          $$ k_1= \frac{N \times \gamma_n}{ \beta_f \times k_f \times R_{wf}
+          \times L_w \times \gamma_c}= \frac{ {{N}} \times {{gamma_n}} }{
+          {{beta_f}} \times {{k_f}} \times {{R_wf}} \times {{L_w}} \times
+          {{gamma_c}}
+          }={{k_1=Math.round((N*gamma_n)/(beta_f*k_f*R_wf*L_w*gamma_c)*10**3*1000)/1000}}$$
+        </p>
+      </div>
+      <h4 v-if="k_1 < 1">
+        З’єднання витримує задані навантаження коэффіціент використання
+        k={{k_1}}
+      </h4>
+      <h4 style="color: red;" v-else>
+        З’єднання не витримує задані навантаження коэффіціент використання
+        k={{k_1}}
+      </h4>
+    </div>
+  </div>
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          N: 5,
+          k_f: 5,
+          L: 25,
+          activeColor: "black",
+        };
+      },
+      methods: {
+        reRender() {
+          if (window.MathJax) {
+            console.log("rendering mathjax");
+            window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub], () =>
+              console.log("done")
+            );
+          }
+        },
+      },
+      computed: {
+        redAlert() {
+          if (this.L > this.L_max) {
+            return "red";
+          } else {
+            return "black";
+          }
+        },
+      },
+      mounted() {
+        this.reRender();
+      },
+      watch: {
+        N: function () {
+          console.log("data changed");
+          this.$nextTick().then(() => {
+            this.reRender();
+          });
+        },
+        k_f: function () {
+          console.log("data changed");
+          this.$nextTick().then(() => {
+            this.reRender();
+          });
+        },
+        L: function () {
+          console.log("data changed");
+          this.$nextTick().then(() => {
+            this.reRender();
+          });
+        },
+      },
+    }).mount("#app");
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вес пакета</title>
+    <style>
+        body {
+            background-image: url(./A4.svg);
+            background-repeat: repeat-y;
+            font-family: 'Times New Roman', Times, Georgia, serif;
+            font-size: 0.99em;
+        }
+
+        .page {
+            /* border-style: solid; */
+            /* border-color: red; */
+            /* border-width: 0.03cm; */
+            margin: 0px 0.5cm 2cm 1.8cm;
+            height: 990px;
+            width: 17.5cm;
+            padding: 0.5cm;
+        }
+
+        .before {
+            height: 8px;
+            border-style: solid;
+            border-color: white;
+            font-size: 10px;
+            content: " ";
+        }
+    </style>
+</head>
+
+<body>
+    <script src="./vue.global.js"></script>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          extensions: ["tex2jax.js"],
+          jax: ["input/TeX", "output/HTML-CSS"],
+          tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true
+          },
+          "HTML-CSS": { fonts: ["TeX"] }
+        });
+      </script>
+
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js">
+    </script>
+
+    <div id="app">
+        <div class="before"></div>
+        <div class="page">
+            <h2>Вага пакету</h2>
+            <p>Вихідні дані</p>
+            <!-- &times; -->
+            <p>b=
+                <input v-model="b_p" type="number" placeholder="b_p">
+                мм ширина пакета
+            </p>
+            <p>h=
+                <input v-model="h_p" type="number" placeholder="h_p">
+                мм висота пакета
+            </p>
+            <p>Товщина скла пакета</p>
+            <p>t<sub>1</sub> =
+                <input v-model="t_1" type="number" placeholder="t_1">
+                мм товщина 1-го скла
+            </p>
+            <p>t<sub>2</sub> =
+                <input v-model="t_2" type="number" placeholder="t_2">
+                мм товщина 2-го скла
+            </p>
+            <p>t<sub>3</sub> =
+                <input v-model="t_3" type="number" placeholder="t_3">
+                мм товщина 3-го скла
+            </p>
+            <!-- <img src="./window2.svg" alt="вікно"> -->
+            <svg width="70mm" height="60mm" viewBox="0 0 70 60" version="1.1" id="svg5" xml:space="preserve"
+                inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)" sodipodi:docname="window2.svg"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+                xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg"
+                xmlns:svg="http://www.w3.org/2000/svg">
+                <sodipodi:namedview id="namedview7" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0"
+                    inkscape:showpageshadow="2" inkscape:pageopacity="0.0" inkscape:pagecheckerboard="0"
+                    inkscape:deskcolor="#d1d1d1" inkscape:document-units="mm" showgrid="false" inkscape:zoom="1.1705808"
+                    inkscape:cx="131.98576" inkscape:cy="210.57923" inkscape:window-width="1600"
+                    inkscape:window-height="838" inkscape:window-x="-8" inkscape:window-y="-8"
+                    inkscape:window-maximized="1" inkscape:current-layer="layer1" />
+                <defs id="defs2" />
+                <g inkscape:label="Слой 1" inkscape:groupmode="layer" id="layer1"
+                    transform="translate(-64.100223,-68.784478)">
+                    <g id="g2215" transform="matrix(0.58394734,0,0,0.58394734,32.237763,32.101972)">
+                        <rect
+                            style="fill:none;stroke:#000000;stroke-width:0.3;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0.6;stop-color:#000000"
+                            id="rect1270" width="98.132858" height="75.757286" x="70.003571" y="68.405312" />
+                        <rect
+                            style="fill:none;stroke:#000000;stroke-width:0.3;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:3.6, 3.6;stroke-dashoffset:0;stop-color:#000000"
+                            id="rect2124" width="91.274612" height="70.462845" x="73.432693" y="71.052589" />
+                    </g><text xml:space="preserve"
+                        style="font-style:normal;
+                        font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;font-variation-settings:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;
+                        /* dominant-baseline:auto;baseline-shift:baseline; */
+                        /* white-space:normal;vector-effect:none; */
+                        fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000"
+                        x="99.377602" y="125.14928" id="text67-5-4">
+                        <tspan sodipodi:role="line" id="tspan65-5-4"
+                            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;font-variation-settings:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;
+                            /* dominant-baseline:auto;baseline-shift:baseline; */
+                            /* white-space:normal;vector-effect:none; */
+                            fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"
+                            x="99.377602" y="125.14928">b</tspan>
+                    </text>
+                    <path
+                        style="font-variation-settings:normal;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000"
+                        d="m 73.283871,118.43401 c -0.003,0.55606 0.33962,0.89902 1.02887,1.02888 H 100.145 c 0.55931,-0.0151 0.81624,0.37736 0.94398,0.94397"
+                        id="path1265-8" sodipodi:nodetypes="cccc" />
+                    <path
+                        style="font-variation-settings:normal;
+                        /* vector-effect:none; */
+                        fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000"
+                        d="m 130.54078,118.43401 c 0.003,0.55606 -0.33963,0.89902 -1.02888,1.02888 h -27.47895 c -0.5593,-0.0151 -0.81624,0.37736 -0.94397,0.94397"
+                        id="path1265-3-4" sodipodi:nodetypes="cccc" /><text xml:space="preserve"
+                        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;font-variation-settings:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;
+                        /* dominant-baseline:auto;baseline-shift:baseline; */
+                        white-space:normal;
+                        /* vector-effect:none; */
+                        fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000"
+                        x="65.770752" y="95.951965" id="text67-5-4-0">
+                        <tspan sodipodi:role="line" id="tspan65-5-4-4"
+                            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;font-variation-settings:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;
+                            /* dominant-baseline:auto;baseline-shift:baseline; */
+                            white-space:normal;
+                            /* vector-effect:none; */
+                            fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"
+                            x="65.770752" y="95.951965">h</tspan>
+                    </text>
+                    <g id="g3457" transform="translate(33.866682,-45.690421)">
+                        <path
+                            style="font-variation-settings:normal;
+                            /* vector-effect:none; */
+                            fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000"
+                            d="m 37.82889,118.02481 c -0.55606,-0.003 -0.89902,0.33962 -1.02888,1.02887 v 20.30545 c 0.0151,0.55931 -0.37736,0.81624 -0.94397,0.94397"
+                            id="path1265-8-8" sodipodi:nodetypes="cccc" />
+                        <path
+                            style="font-variation-settings:normal;
+                            /* vector-effect:none; */
+                            fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000"
+                            d="m 37.82889,161.21293 c -0.55606,0.003 -0.89902,-0.33963 -1.02888,-1.02888 v -18.93699 c 0.0151,-0.5593 -0.37736,-0.81624 -0.94397,-0.94397"
+                            id="path1265-3-4-5" sodipodi:nodetypes="cccc" />
+                    </g>
+                </g>
+            </svg>
+            <p>Вага скла в пакеті:</p>
+            <p>$$P_s=b \times h \times ( t_1 + t_2 + t_3 ) \times 2600 = {{b_p}} \times {{h_p}} \times ( {{t_1}} +
+                {{t_2}} + {{t_3}} ) \times 2600 = {{P_s = Math.round((b_p*h_p*(t_1+t_2+t_3)*2600)/10**9)}} кгс $$</p>
+            <p>Вага обрамлення в пакеті:</p>
+            <p>$$P_o=20 \times 40 \times (b + h) \times 2 \times 2600 = 20 \times 40 \times ( {{b_p}} + {{h_p}} ) \times
+                2 \times 2600= {{P_o = Math.round((20*40*(b_p+h_p)*2*2600)/10**9)}} кгс $$</p>
+            <p>Загальна вага складе:</p>
+            <p>$$P = P_s + P_o = {{P_s}} + {{P_o}} = {{P = P_s + P_o }} кгс $$</p>
+            <p>Згідно ДБН В.1.2-2:2006 "навантаження і впливи"</p>
+            <p>За таблицею 5.1 Коефіцієнти надійності за навантаженням: $$\gamma_{fm} = {{gamma_fm=1.1}}$$</p>
+            <p>Розрахуноква вага: $$P_r = \gamma_{fm} \times P = {{gamma_fm}} \times {{P}} = {{P_r=
+                Math.round(P*gamma_fm)}} кгс $$</p>
+
+        </div>
+
+        <!-- <div class="before"></div> -->
+    </div>
+    <script>
+        const { createApp } = Vue
+
+
+        createApp({
+            data() {
+                return {
+                    b_p: 1000,
+                    h_p: 1000,
+                    t_1: 10,
+                    t_2: 6,
+                    t_3: 8,
+                }
+            },
+            methods: {
+                reRender() {
+                    if (window.MathJax) {
+                        console.log('rendering mathjax');
+                        window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub], () => console.log('done'));
+                    }
+                }
+            },
+            computed: {
+                redAlert() {
+                    if (this.L < this.L_max) {
+                        return "red"
+                    } else {
+                        return "black"
+                    }
+
+                }
+            },
+            mounted() {
+                this.reRender();
+            },
+            watch: {
+                b_p: function () {
+                    console.log('data changed');
+                    this.$nextTick().then(() => {
+                        this.reRender();
+                    });
+                },
+                h_p: function () {
+                    console.log('data changed');
+                    this.$nextTick().then(() => {
+                        this.reRender();
+                    });
+                },
+                t_1: function () {
+                    console.log('data changed');
+                    this.$nextTick().then(() => {
+                        this.reRender();
+                    });
+                },
+                t_2: function () {
+                    console.log('data changed');
+                    this.$nextTick().then(() => {
+                        this.reRender();
+                    });
+                },
+                t_3: function () {
+                    console.log('data changed');
+                    this.$nextTick().then(() => {
+                        this.reRender();
+                    });
+                },
+                k_2: function () {
+                    console.log('data changed');
+                    this.$nextTick().then(() => {
+                        this.reRender();
+                    });
+                },
+
+            }
+        }).mount('#app')
+    </script>
+
+
+</body>
+
+</html>

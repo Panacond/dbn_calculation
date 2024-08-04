@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Глубина заложения</title>
+  <style>
+    body {
+      background-image: url(./A4.svg);
+      background-repeat: repeat-y;
+      font-family: 'Times New Roman', Times, Georgia, serif;
+      font-size: 0.99em;
+    }
+
+    .page {
+      /* border-style: solid; */
+      /* border-color: red; */
+      /* border-width: 0.03cm; */
+      margin: 0px 0.5cm 2cm 1.8cm;
+      height: 990px;
+      width: 17.5cm;
+      padding: 0.5cm;
+    }
+
+    .before {
+      height: 8px;
+      border-style: solid;
+      border-color: white;
+      font-size: 10px;
+      content: " ";
+    }
+
+    table {
+      border-collapse: collapse;
+      border: 2px solid rgb(140 140 140);
+      /* font-family: sans-serif; */
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+    }
+
+    caption {
+      padding: 10px;
+      font-weight: bold;
+    }
+
+    th,
+    td {
+      border: 1px solid rgb(160 160 160);
+      padding: 8px 10px;
+    }
+
+    td {
+      text-align: center;
+    }
+
+    tbody>tr:nth-of-type(even) {
+      background-color: rgb(237 238 242);
+    }
+
+    thead {
+      background-color: rgb(228 240 245);
+    }
+  </style>
+</head>
+
+<body>
+  <script src="./vue.global.js"></script>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+          processEscapes: true
+        },
+        "HTML-CSS": { fonts: ["TeX"] }
+      });
+    </script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js"></script>
+
+  <div id="app">
+    <div class="before"></div>
+    <div class="page">
+      <h2>7.5 Глибина закладання фундаментів</h2>
+      <p>ДБН В.2.1-10-2009 основи та фундаменти споруд</p>
+      <!-- &times; -->
+      <p>7.5.3 Нормативну глибину сезонного промерзання ґрунту dtn , м, за відсутності даних багаторіч-них спостережень
+        слід визначати на основі теплотехнічних розрахунків, її нормативне значення допус-кається визначати за формулою
+      </p>
+      <p>
+        M<sub>t</sub>=
+        <input v-model="M_t" type="number" placeholder="M_t" />
+        безрозмірний коефіцієнт, що чисельно дорівнює сумі абсолютних значень середньомісячних негативних температур за
+        зиму в даному районі, визначають згідно зі СНиП 2.01.01, а за відсу-тності даних для конкретного району
+        будівництва – за результатами спостережень гідромете-орологічної станції, що знаходиться в аналогічних умо¬вах з
+        районом будівництва
+      </p>
+      <p>
+        для грунта:
+        <select v-model="Earth">
+          <option disabled value="">Виберіть тип грунта</option>
+          <option>суглинків і глин</option>
+          <option>супісків і пісків пилуватих та дрібних</option>
+          <option>пісків гравіюватих, крупних та середньої крупності</option>
+          <option>великоуламкових грунтів</option>
+        </select>
+      </p>
+      <p>d<sub>0</sub>={{d_0=depth}}</p>
+      <p>Глибина закладання фундаменту складе</p>
+      <p>$$d_{fn}=d_0 \times \sqrt{M_t} = {{d_0}} \times \sqrt{ {{M_t}} } = {{Math.round( (d_0*M_t**0.5 )*100 )/100}} m
+        $$</p>
+    </div>
+
+    <!-- <div class="before"></div> -->
+    <!-- <div v-if="k < 1">
+                <h3>Міцність перерізу достатня коэфіцієнт використання {{k}}</h3>
+            </div>
+            <div style="color: red;" v-else>
+                <h3>Необхідно збільшити кількість гвинтів</h3>
+            </div> -->
+
+    <!-- <div class="before"></div> -->
+    <script>
+      const { createApp } = Vue;
+
+      createApp({
+        data() {
+          return {
+            M_t: 1.9,
+            Earth: "великоуламкових грунтів",
+            d_0: 0.34,
+            activeColor: "black",
+          };
+        },
+        methods: {
+          reRender() {
+            if (window.MathJax) {
+              console.log("rendering mathjax");
+              window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub], () =>
+                console.log("done")
+              );
+            }
+          },
+        },
+        computed: {
+          depth() {
+            if (this.Earth === "великоуламкових грунтів") {
+              return 0.34;
+            } else if (this.Earth === "супісків і пісків пилуватих та дрібних") {
+              return 0.28;
+            } else if (this.Earth === "суглинків і глин") {
+              return 0.23;
+            } else if (this.Earth === "пісків гравіюватих, крупних та середньої крупності") {
+              return 0.3;
+            } else {
+              0
+            }
+          },
+          redAlert() {
+            if (this.L < this.L_max) {
+              return "red";
+            } else {
+              return "black";
+            }
+          },
+        },
+        mounted() {
+          this.reRender();
+        },
+        watch: {
+          Earth: function () {
+            console.log("data changed");
+            this.$nextTick().then(() => {
+              this.reRender();
+            });
+          },
+          M_t: function () {
+            console.log("data changed");
+            this.$nextTick().then(() => {
+              this.reRender();
+            });
+          },
+        },
+      }).mount("#app");
+    </script>
+</body>
+
+</html>

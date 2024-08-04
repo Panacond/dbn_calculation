@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Расчет болтов</title>
+    <style>
+        body {
+            background-image: url(./A4.svg);
+            background-repeat: repeat-y;
+            font-family: 'Times New Roman', Times, Georgia, serif;
+            font-size: 0.99em;
+        }
+
+        .page {
+            /* border-style: solid; */
+            /* border-color: red; */
+            /* border-width: 0.03cm; */
+            margin: 0px 0.5cm 2cm 1.8cm;
+            height: 990px;
+            width: 17.5cm;
+            padding: 0.5cm;
+        }
+
+        .before {
+            height: 8px;
+            border-style: solid;
+            border-color: white;
+            font-size: 10px;
+            content: " ";
+        }
+    </style>
+</head>
+
+<body>
+    <script src="./vue.global.js"></script>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          extensions: ["tex2jax.js"],
+          jax: ["input/TeX", "output/HTML-CSS"],
+          tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true
+          },
+          "HTML-CSS": { fonts: ["TeX"] }
+        });
+      </script>
+
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js">
+    </script>
+
+    <div id="app">
+        <div class="before"></div>
+        <div class="page">
+            <!-- &times; -->
+            <h2>Розрахунок Розрахунок болтового з'єднання</h2>
+            <!-- <img src="./support.svg" alt="расчетная схема"> -->
+            <svg width="85mm" height="55mm" viewBox="0 0 85.000001 55" version="1.1" id="svg5"
+                inkscape:version="1.2.2 (b0a8486541, 2022-12-01)" sodipodi:docname="support.svg"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+                xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg"
+                xmlns:svg="http://www.w3.org/2000/svg">
+                <sodipodi:namedview id="namedview7" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0"
+                    inkscape:showpageshadow="2" inkscape:pageopacity="0.0" inkscape:pagecheckerboard="0"
+                    inkscape:deskcolor="#d1d1d1" inkscape:document-units="mm" showgrid="true" inkscape:zoom="1.7209638"
+                    inkscape:cx="194.0773" inkscape:cy="171.99665" inkscape:window-width="1920"
+                    inkscape:window-height="1003" inkscape:window-x="0" inkscape:window-y="0"
+                    inkscape:window-maximized="1" inkscape:current-layer="layer1">
+                    <inkscape:grid type="xygrid" id="grid132" units="mm" originx="20.261919" originy="-140.59148"
+                        spacingx="5" spacingy="5" empspacing="10" enabled="false" />
+                    <inkscape:grid type="xygrid" id="grid5037" units="mm" spacingx="1" spacingy="1" empspacing="10"
+                        color="#ff3f69" opacity="0.1254902" empcolor="#ff3ff2" empopacity="0.25098039" enabled="false"
+                        visible="true" originx="20.261919" originy="-140.59148" />
+                </sodipodi:namedview>
+                <defs id="defs2" />
+                <g inkscape:label="Слой 1" inkscape:groupmode="layer" id="layer1"
+                    transform="translate(20.261922,-140.59147)">
+                    <rect
+                        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.310471;stroke-dasharray:none;stop-color:#000000"
+                        id="rect236" width="1.5523539" height="24.837662" x="2.6106875" y="162.99167" />
+                    <rect
+                        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.310471;stroke-dasharray:none;stop-color:#000000"
+                        id="rect1572" width="48.122971" height="17.075893" x="4.1630402" y="164.54402" />
+                    <path
+                        style="fill:none;stroke:#000000;stroke-width:0.155235;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:0.620942, 0.620942;stroke-dashoffset:0;stroke-opacity:1"
+                        d="M 4.1630415,166.09614 H 52.286013" id="path2410" />
+                    <rect
+                        style="font-variation-settings:normal;opacity:1;
+                        /* vector-effect:none; */
+                        fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.361074;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"
+                        id="rect3192" width="2.1226921" height="4.6064582" x="4.1883416" y="166.12167" />
+                    <rect
+                        style="font-variation-settings:normal;opacity:1;
+                        /* vector-effect:none; */
+                        fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.310471;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"
+                        id="rect8306" width="2.1732955" height="2.1732955" x="4.1630402" y="167.33826" />
+                    <path
+                        style="fill:#000000;stroke:#000000;stroke-width:0.310471;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+                        d="m 47.628952,147.46789 v 17.07589 l 1.552354,-6.20941 h -3.104708 l 1.552354,6.20941"
+                        id="path9034" />
+                    <path
+                        style="fill:#000000;stroke:#000000;stroke-width:0.310471;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+                        d="M 6.3110333,168.42467 H 23.386927 l -6.209416,1.55235 v -3.10471 l 6.209416,1.55236"
+                        id="path9034-5" />
+                    <path
+                        style="fill:#000000;stroke:#000000;stroke-width:0.310471;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+                        d="M 21.276589,186.27674 H 4.2006917 l 6.2094183,1.55235 v -3.10471 l -6.2094183,1.55236"
+                        id="path9034-5-4" />
+                    <path
+                        style="fill:none;stroke:#000000;stroke-width:0.124188;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+                        d="M 2.6106876,162.99143 V 150.28945" id="path9855" sodipodi:nodetypes="cc" />
+                    <path
+                        style="fill:none;stroke:#000000;stroke-width:0.124188;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+                        d="m 47.628952,147.46789 v 2.82156" id="path9857" sodipodi:nodetypes="cc" />
+                    <path
+                        style="fill:none;stroke:#000000;stroke-width:0.124188;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+                        d="M 1.0583333,151.8418 H 49.181306" id="path9859" sodipodi:nodetypes="cc" />
+                    <path
+                        style="fill:none;stroke:#000000;stroke-width:0.310471;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+                        d="m 46.076598,153.39416 3.104708,-3.10471" id="path9861" sodipodi:nodetypes="cc" />
+                    <path
+                        style="fill:none;stroke:#000000;stroke-width:0.310471;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+                        d="m 1.0583336,153.39416 3.1047079,-3.10471" id="path9861-4" sodipodi:nodetypes="cc" />
+                    <text xml:space="preserve"
+                        style="font-style:normal;font-weight:normal;font-size:4.11035px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.102759"
+                        x="49.53125" y="156.21556" id="text9939">
+                        <tspan sodipodi:role="line" id="tspan9937" style="stroke-width:0.102759" x="49.53125"
+                            y="156.21556">N<tspan style="font-size:2.67172px;
+                            /* baseline-shift:sub; */
+                            stroke-width:0.102759"
+                                id="tspan10893">s</tspan>
+                        </tspan>
+                    </text>
+                    <text xml:space="preserve"
+                        style="font-style:normal;font-weight:normal;font-size:5.40418px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.135105"
+                        x="8.3388443" y="160.35486" id="text9939-6">
+                        <tspan sodipodi:role="line" id="tspan9937-1" style="stroke-width:0.135105" x="8.3388443"
+                            y="160.35486">N<tspan style="font-size:3.51271px;
+                            /* baseline-shift:sub; */
+                            stroke-width:0.135105"
+                                id="tspan11621">bt</tspan>
+                        </tspan>
+                    </text>
+                    <text xml:space="preserve"
+                        style="font-style:normal;font-weight:normal;font-size:5.76988px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.144248"
+                        x="24.947075" y="147.34724" id="text9939-8">
+                        <tspan sodipodi:role="line" id="tspan9937-8" style="stroke-width:0.144248" x="24.947075"
+                            y="147.34724">l<tspan style="font-size:3.75042px;
+                            /* baseline-shift:sub; */
+                            stroke-width:0.144248"
+                                id="tspan10018">1</tspan>
+                        </tspan>
+                    </text>
+                    <text xml:space="preserve"
+                        style="font-style:normal;font-weight:normal;font-size:4.10647px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.102662"
+                        x="-178.71629" y="-12.279576" id="text9939-8-8" transform="rotate(-90)">
+                        <tspan sodipodi:role="line" id="tspan9937-8-9" style="stroke-width:0.102662" x="-178.71629"
+                            y="-12.279576">l<tspan style="font-size:2.66921px;
+                            /* baseline-shift:sub; */
+                            stroke-width:0.102662"
+                                id="tspan10018-4">2</tspan>
+                        </tspan>
+                    </text>
+                    <path
+                        style="fill:none;stroke:#000000;stroke-width:0.124188;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+                        d="M 2.5868214,186.27674 H -11.384363" id="path10052" sodipodi:nodetypes="cc" />
+                    <path
+                        style="fill:none;stroke:#000000;stroke-width:0.124188;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+                        d="m 4.1883418,168.42467 -15.5235388,0.0621" id="path10052-0" sodipodi:nodetypes="cc" />
+                    <path
+                        style="font-variation-settings:normal;opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.124188;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
+                        d="m -9.8320093,187.82909 0.04917,-21.00445" id="path10076" sodipodi:nodetypes="cc" />
+                    <path
+                        style="font-variation-settings:normal;opacity:1;
+                        /* vector-effect:none; */
+                        fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.310471;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"
+                        d="m -8.279656,187.82909 -3.104707,-3.10471" id="path10097" sodipodi:nodetypes="cc" />
+                    <path
+                        style="font-variation-settings:normal;
+                        /* vector-effect:none;fill:none; */
+                        fill-opacity:1;stroke:#000000;stroke-width:0.310471;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000"
+                        d="m -8.2304895,170.03911 -3.1047075,-3.1047" id="path10097-4" sodipodi:nodetypes="cc" />
+                </g>
+            </svg>
+
+            <p>N<sub>s</sub>=
+                <input v-model="N_s" type="number" placeholder="N_s" size="5">
+                (кгс) Наватаження на вузол
+            </p>
+            <p>l<sub>1</sub>=
+                <input v-model="l_1" type="number" placeholder="l_1" size="5">
+                (мм) Відстать між наватаження та опорною граню кронштейна
+            </p>
+            <p>l<sub>2</sub>=
+                <input v-model="l_2" type="number" placeholder="l_2" size="5">
+                (мм) Відстать між болтом та центром тяжіння стиснутої зони кронштейна
+            </p>
+            <p>n=
+                <input v-model="n" type="number" placeholder="n" size="5">
+                кількість болтів сприймаючих розтяг та зріз одночасно
+            </p>
+            <p>n<sub>s</sub>=
+                <input v-model="n_s" type="number" placeholder="n_s" size="5">
+                кількість перерізів в одному болті працюючих на зріз
+            </p>
+            <p>t=
+                <input v-model="t" type="number" placeholder="t" size="5">
+                (мм) мінімальная товщина елементів, що з'єднуються
+            </p>
+            <div>
+                <p>Класс міцності болтового з'єднання
+                    <select v-model="c">
+                        <option disabled value="">Виберіть клас міцності</option>
+                        <option>5.6</option>
+                        <option>5.8</option>
+                        <option>8.8</option>
+                        <option>10.9</option>
+                        <option>12.9</option>
+                    </select>
+                </p>
+                <p>R<sub>bs</sub>={{R_bs}} Н/мм<sup>2</sup>; R<sub>bp</sub>={{R_bp}} Н/мм<sup>2</sup> ;
+                    R<sub>bt</sub>={{R_bt}} Н/мм<sup>2</sup>
+                </p>
+            </div>
+            <div>
+                <p>Діаметр болта (мм)
+                    <select v-model="d">
+                        <option disabled value="">Виберіть діаметр </option>
+                        <option>8</option>
+                        <option>10</option>
+                        <option>12</option>
+                        <option>16</option>
+                        <option>20</option>
+                        <option>24</option>
+                    </select>
+                    A<sub>bt</sub>={{A_bt}} cм<sup>2</sup>
+                </p>
+            </div>
+            <p>$\gamma_c={{gamma_c=1}}$ - коэфіцієнт умов роботи, який визначается за таблицею 5.1 </p>
+            <p>$\gamma_b={{gamma_b=0.8}}$ - коэфіцієнт умов роботи болтового з'єднання, який визначается за таблицею
+                16.4 </p>
+            <p>16. 2.9 Розрахунокове зусилля, яке може бути сприйняте</p>
+            <p>при зрізі бовтів</p>
+            <p>$$N_{bs}=R_{bs} \times A_{bt} \times n_s \times n \times \gamma_c \times \gamma_b = {{R_bs}} \times
+                {{A_bt}} \times {{n_s}} \times {{n}} \times {{gamma_c}} \times {{gamma_b}} = {{N_bs = Math.round( (R_bs
+                * A_bt * n_s * n * gamma_c * gamma_b *10) *100)/100}} кгс $$</p>
+            <p>при зминанні бовтів</p>
+            <p>$$N_{bp}=R_{bp} \times d \times t \times n \times \gamma_c \times \gamma_b = {{R_bp}} \times {{d}} \times
+                {{t}} \times {{n}} \times {{gamma_c}} \times {{gamma_b}} = {{N_bp = Math.round( (R_bp * d * t * n *
+                gamma_c * gamma_b /10) *100)/100}} кгс $$</p>
+            <p>при розтяжінні бовтів</p>
+            <p>$$N_{bt}=R_{bt} \times A_{bt} \times n \times \gamma_c \times \gamma_b = {{R_bt}} \times {{A_bt}} \times
+                {{n}} \times {{gamma_c}} \times {{gamma_b}} = {{N_bt = Math.round( (R_bt * A_bt * n * gamma_c * gamma_b
+                *10) *100)/100}} кгс $$</p>
+
+        </div>
+        <div class="before"></div>
+        <div class="page">
+            <p>Зусилля розтягування від моменту</p>
+            <p>$$N_t= \frac{N_s \times l_1}{l_2} = \frac{ {{N_s}} \times {{l_1}} }{ {{l_2}}} = {{N_t= Math.round(
+                (N_s*l_1/l_2)*100)/100}} кгс$$</p>
+            <p>16.2.13 При одночасній дії на болтове з'єднання зусиль, що викликають зріз і розтяг болтів, поряд з
+                попередніми формулами слід перевіряти за формулою:</p>
+            <p>$$k=\sqrt{ \left(\frac{N_s}{N_{bs}} \right)^2 + \left(\frac{N_t}{N_{bt}} \right)^2} = \sqrt{ \left(\frac{
+                {{N_s}} }{ {{N_bs}} } \right)^2 + \left(\frac{ {{N_t}} }{ {{N_bt}} } \right)^2} = {{k = Math.round((
+                (N_s/N_bs)**2 + (N_t/N_bt)**2 )**0.5*100 )/100}} $$</p>
+            <div v-if="k < 1">
+                <h3>Міцність з'єднання достатня коэфіцієнт використання {{k}}</h3>
+            </div>
+            <div style="color: red;" v-else>
+                <h3>Міцність з'єднання не достатня</h3>
+            </div>
+        </div>
+
+        <!-- <div class="before"></div> -->
+    </div>
+    <script>
+        const { createApp } = Vue
+
+
+        createApp({
+            data() {
+                return {
+                    N_s: 200,
+                    l_1: 160,
+                    l_2: 50,
+                    c: 5.6,
+                    R_bp: 475,
+                    d: 8,
+                    n: 2,
+                    n_s: 1,
+                    t: 5,
+                }
+            },
+            methods: {
+                reRender() {
+                    if (window.MathJax) {
+                        console.log('rendering mathjax');
+                        window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub], () => console.log('done'));
+                    }
+                },
+
+            },
+            computed: {
+                F() {
+                    console.log('data changed');
+                    this.$nextTick().then(() => {
+                        this.reRender();
+                    });
+                },
+                R_bs() {
+                    if (this.c < 8.8) {
+                        return 210
+                    } else if (this.c < 10.9) {
+                        return 320
+                    } else if (this.c < 12.9) {
+                        return 400
+                    }
+                    return 420
+                },
+                R_bt() {
+                    if (this.c < 8.8) {
+                        return 225
+                    } else if (this.c < 10.9) {
+                        return 435
+                    }
+                    return 540
+                },
+                A_bt() {
+                    if (this.d == 8) {
+                        return 0.36
+                    } else if (this.d == 10) {
+                        return 0.57
+                    } else if (this.d == 12) {
+                        return 0.82
+                    } else if (this.d == 16) {
+                        return 1.54
+                    } else if (this.d == 20) {
+                        return 2.40
+                    }
+                    return 3.46
+                },
+            },
+            mounted() {
+                this.reRender();
+            },
+            watch: {
+                N_s: function () {
+                    this.$nextTick().then(() => {
+                        this.reRender();
+                    });
+                },
+                l_1: function () {
+                    this.$nextTick().then(() => {
+                        this.reRender();
+                    });
+                },
+                l_2: function () {
+                    this.$nextTick().then(() => {
+                        this.reRender();
+                    });
+                },
+                c: function () {
+                    this.$nextTick().then(() => {
+                        this.reRender();
+                    });
+                },
+                n: function () {
+                    this.$nextTick().then(() => {
+                        this.reRender();
+                    });
+                },
+                n_s: function () {
+                    this.$nextTick().then(() => {
+                        this.reRender();
+                    });
+                },
+                t: function () {
+                    this.$nextTick().then(() => {
+                        this.reRender();
+                    });
+                },
+                d: function () {
+                    this.$nextTick().then(() => {
+                        this.reRender();
+                    });
+                },
+                R_bp: function () {
+                    this.$nextTick().then(() => {
+                        this.reRender();
+                    });
+                },
+            }
+        }).mount('#app')
+    </script>
+
+
+</body>
+
+</html>

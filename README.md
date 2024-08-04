@@ -1,6 +1,6 @@
 # This is the list calculation performed according to the current standards of Ukraine.
 
-You can ran it in veb go to link [go her](https://panacond.github.io/dbn_calculation/)
+You can ran it in veb go to link [click here](https://panacond.github.io/dbn_calculation/)
 
 I hope to make it more convenient to use, if you find errors, please write.
 

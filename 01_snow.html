@@ -1,75 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Снеговая нагрузка</title>
+    <style>
+      body {
+        background-image: url(./A4.svg);
+        background-repeat: repeat-y;
+        font-family: "Times New Roman", Times, Georgia, serif;
+        font-size: 0.99em;
+      }
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Снеговая нагрузка</title>
-  <style>
-    body {
-      background-image: url(./A4.svg);
-      background-repeat: repeat-y;
-      font-family: 'Times New Roman', Times, Georgia, serif;
-      font-size: 0.99em;
-    }
+      .page {
+        /* border-style: solid; */
+        /* border-color: red; */
+        /* border-width: 0.03cm; */
+        margin: 0px 0.5cm 2cm 1.8cm;
+        height: 990px;
+        width: 17.5cm;
+        padding: 0.5cm;
+      }
 
-    .page {
-      /* border-style: solid; */
-      /* border-color: red; */
-      /* border-width: 0.03cm; */
-      margin: 0px 0.5cm 2cm 1.8cm;
-      height: 990px;
-      width: 17.5cm;
-      padding: 0.5cm;
-    }
+      .before {
+        height: 8px;
+        border-style: solid;
+        border-color: white;
+        font-size: 10px;
+        content: " ";
+      }
 
-    .before {
-      height: 8px;
-      border-style: solid;
-      border-color: white;
-      font-size: 10px;
-      content: " ";
-    }
+      table {
+        border-collapse: collapse;
+        border: 2px solid rgb(140 140 140);
+        /* font-family: sans-serif; */
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+      }
 
-    table {
-      border-collapse: collapse;
-      border: 2px solid rgb(140 140 140);
-      /* font-family: sans-serif; */
-      font-size: 0.8rem;
-      letter-spacing: 1px;
-    }
+      caption {
+        padding: 10px;
+        font-weight: bold;
+      }
 
-    caption {
-      padding: 10px;
-      font-weight: bold;
-    }
+      th,
+      td {
+        border: 1px solid rgb(160 160 160);
+        padding: 8px 10px;
+      }
 
-    th,
-    td {
-      border: 1px solid rgb(160 160 160);
-      padding: 8px 10px;
-    }
+      td {
+        text-align: center;
+      }
 
-    td {
-      text-align: center;
-    }
+      tbody > tr:nth-of-type(even) {
+        background-color: rgb(237 238 242);
+      }
 
-    tbody>tr:nth-of-type(even) {
-      background-color: rgb(237 238 242);
-    }
+      thead {
+        background-color: rgb(228 240 245);
+      }
+      .help {
+        color: red;
+      }
+      .help:hover img {
+        display: inline;
+      }
+      .help img {
+        display: none;
+        z-index: 1;
+        position: absolute;
+      }
+    </style>
+  </head>
 
-    thead {
-      background-color: rgb(228 240 245);
-    }
-  </style>
-</head>
+  <body>
+    <script src="./vue.global.js"></script>
 
-<body>
-  <script src="./vue.global.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
-  <script type="text/x-mathjax-config">
+    <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
         extensions: ["tex2jax.js"],
         jax: ["input/TeX", "output/HTML-CSS"],
@@ -82,286 +92,468 @@
       });
     </script>
 
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js"
+    ></script>
 
-  <div id="app">
-    <div class="before"></div>
-    <div class="page">
-      <h2>Визначення снігового навантаження</h2>
-      <p>ДБН В.1.2-2:2006 навантаження і впливи</p>
-      <p>8 СНІГОВІ НАВАНТАЖЕННЯ</p>
-      <!-- &times; -->
-      <p>
-        8.12 Коефіцієнт надійності за експлуатаційним розрахунковим значенням
-        снігового навантаження визначається за табл. 8.3 залежно від частки
-        часу, протягом якої можуть порушуватися умови другого граничного
-        стану.
-      </p>
-      <p>
-        Значення приймається за нормами проектування конструкцій або
-        встановлюється завданням на проектування залежно від їхнього
-        призначення, відповідальності та наслідків виходу за граничний стан.
-        Для об'єктів масового будівництва допускається приймати $\eta = 0,02$
-      </p>
-      <p>Згідно таблиці 8.3 $\gamma_{fe} = {{gamma_fe=0.49}}$</p>
-      <p>
-        8.11 Коефіцієнт надійності за граничним розрахунковим значенням
-        снігового навантаження визначається залежно від заданого середнього
-        періоду повторюваності Т за табл. 8.1.
-      </p>
-      <p>$$\gamma_{fm} = {{gamma_fm=1.14}}$$</p>
-      <p>
-        8.10 Коефіцієнт Calt враховує висоту Н (у кілометрах) розміщення
-        будівельного об'єкта над рівнем моря
-      </p>
-      <p>$$C_{alt} = 1$$</p>
-      <p>
-        8.9 Коефіцієнт Се враховує вплив особливостей режиму експлуатації на
-        накопичення снігу на покрівлі (очищення, танення тощо) і
-        встановлюється завданням на проектування.
-      </p>
-      <p>
-        При відсутності даних про режим експлуатації покрівлі коефіцієнт Се
-        допускається приймати таким, що дорівнює одиниці.
-      </p>
-      <p>$$C_e=1$$</p>
-      <p>
-        $\alpha$=
-        <input v-model="alpha" type="number" placeholder="alpha" />
-        кут нахилу (градусів)
-      </p>
-      <p>
-        8.7 Коефіцієнт визначається за додатком Ж залежно від форми покрівлі і
-        схеми розподілу снігового навантаження, при цьому проміжні значення
-        коефіцієнта слід визначати лінійною інтерполяцією.
-      </p>
-      <p>$$\mu = {{mu}}$$</p>
-      <p>
-        8.6 Коефіцієнт С визначається за формулою $$C = \mu \times C_e \times
-        C_alt = {{mu}} \times 1 \times 1 = {{C = mu}} $$
-      </p>
+    <div id="app">
+      <div class="before"></div>
+      <div class="page">
+        <h2>Визначення снігового навантаження</h2>
+        <p>ДБН В.1.2-2:2006 навантаження і впливи</p>
+        <p>8 СНІГОВІ НАВАНТАЖЕННЯ</p>
+        <!-- &times; -->
+        <p>
+          8.12 Коефіцієнт надійності за експлуатаційним розрахунковим значенням
+          снігового навантаження визначається за табл. 8.3 залежно від частки
+          часу, протягом якої можуть порушуватися умови другого граничного
+          стану.
+          Значення приймається за нормами проектування конструкцій або
+          встановлюється завданням на проектування залежно від їхнього
+          призначення, відповідальності та наслідків виходу за граничний стан.
+          Для об'єктів масового будівництва допускається приймати $\eta = 0,02$
+        </p>
+        <p>Згідно таблиці 8.3 $\gamma_{fe} = {{gamma_fe=0.49}}$</p>
+        <p>
+          згідно ДБН В.1.2-14:2018 Загальні принципи забезпечення надійності та
+          конструктивної безпеки будівель і споруд
+        </p>
+        <table>
+          <caption>
+            Таблиця 2 - Строк експлуатації будівель та інженерних споруд
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Найменування</th>
+              <th scope="col">
+                Орієнтовне значення розрахункового строку експлуатації
+                T<sub>ef</sub>, років
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">
+                <select v-model="age">
+                  <option disabled value="">Виберіть тип</option>
+                  <option>житлові та громадські</option>
+                  <option>виробничі та допоміжні</option>
+                  <option>складські</option>
+                  <option>сільськогосподарські</option>
+                  <option>
+                    мобільні збірно-розбірні (у тому числі промислові, житлові
+                    та інші)
+                  </option>
+                  <option>мобільні контейнерні</option>
+                </select>
+              </th>
+              <td>{{year}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          8.11 Коефіцієнт надійності за граничним розрахунковим значенням
+          снігового навантаження визначається залежно від заданого середнього
+          періоду повторюваності Т<sub>ef</sub> за табл. 8.1.
+        </p>
+        <p>$$\gamma_{fm} = {{gamma_fm}}$$</p>
+        <p>
+          8.10 Коефіцієнт Calt враховує висоту Н (у кілометрах) розміщення
+          будівельного об'єкта над рівнем моря $C_{alt} = 1$
+        </p>
+        <p>
+          8.9 Коефіцієнт Се враховує вплив особливостей режиму експлуатації на
+          накопичення снігу на покрівлі (очищення, танення тощо) і
+          встановлюється завданням на проектування.
+        </p>
+        <p>
+          При відсутності даних про режим експлуатації покрівлі коефіцієнт Се
+          допускається приймати таким, що дорівнює одиниці. $C_e=1$
+        </p>
+        <p>
+          $\alpha$=
+          <input v-model="alpha" type="number" placeholder="alpha" />
+          кут нахилу (градусів)
+        </p>
+        <p>
+          8.7 Коефіцієнт визначається за додатком Ж залежно від форми покрівлі і
+          схеми розподілу снігового навантаження, при цьому проміжні значення
+          коефіцієнта слід визначати лінійною інтерполяцією. $\mu = {{mu}}$
+        </p>
+        <p>
+          8.6 Коефіцієнт С визначається за формулою $$C = \mu \times C_e \times
+          C_alt = {{mu}} \times 1 \times 1 = {{C = mu}} $$
+        </p>
 
-      <p>
-        8.5 Характеристичне значення снігового навантаження S0 визначається
-        залежно від снігового району по карті (рис. 8.1) або за додатком Е.
-      </p>
-      <p>
-        $S_0$=
-        <input v-model="S_0" type="number" placeholder="S_0" />
-        Па (10 Па = 1 $\frac{ кгс }{ м^2 }$)
-      </p>
-    </div>
-    <div class="before"></div>
-    <div class="page">
-      <p>Схема 1. Будинки з односхилими та двосхилими покриттями</p>
-      <!-- <img src="./snow.svg" alt="схема снеговой нагрузки"> -->
-      <svg width="100mm" height="110mm" viewBox="0 0 100 110" version="1.1" id="svg5" xml:space="preserve"
-        inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)" sodipodi:docname="snow.svg"
-        xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-        xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:xlink="http://www.w3.org/1999/xlink"
-        xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-        <namedview id="namedview7" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0"
-          inkscape:showpageshadow="2" inkscape:pageopacity="0.0" inkscape:pagecheckerboard="0"
-          inkscape:deskcolor="#d1d1d1" inkscape:document-units="mm" showgrid="false" inkscape:zoom="0.41386281"
-          inkscape:cx="422.84544" inkscape:cy="155.84875" inkscape:window-width="1600" inkscape:window-height="838"
-          inkscape:window-x="-8" inkscape:window-y="-8" inkscape:window-maximized="1" inkscape:current-layer="layer1" />
-        <defs id="defs2">
-          <pattern inkscape:collect="always" xlink:href="#pattern4630" id="pattern4639"
-            patternTransform="matrix(0.21636994,0,0,0.21636994,142.34027,147.82944)" />
-          <pattern patternUnits="userSpaceOnUse" width="73.901367" height="60.438984"
-            patternTransform="translate(782.16133,625.49295)" id="pattern3488">
-            <path style="
+        <p>
+          8.5 Характеристичне значення снігового навантаження S0 визначається
+          залежно від снігового району
+          <span class="help" color="red"
+            >по карті (рис. 8.1)
+            <img class="help-img" src="./images/map.png" alt="map" />
+          </span>
+          або за додатком Е.
+        </p>
+        <p>
+          $S_0$=
+          <input v-model="S_0" type="number" placeholder="S_0" />
+          Па (10 Па = 1 $\frac{ кгс }{ м^2 }$)
+        </p>
+      </div>
+      <div class="before"></div>
+      <div class="page">
+        <p>Схема 1. Будинки з односхилими та двосхилими покриттями</p>
+        <!-- <img src="./snow.svg" alt="схема снеговой нагрузки"> -->
+        <svg
+          width="100mm"
+          height="110mm"
+          viewBox="0 0 100 110"
+          version="1.1"
+          id="svg5"
+          xml:space="preserve"
+          inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+          sodipodi:docname="snow.svg"
+          xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+          xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:svg="http://www.w3.org/2000/svg"
+        >
+          <namedview
+            id="namedview7"
+            pagecolor="#ffffff"
+            bordercolor="#666666"
+            borderopacity="1.0"
+            inkscape:showpageshadow="2"
+            inkscape:pageopacity="0.0"
+            inkscape:pagecheckerboard="0"
+            inkscape:deskcolor="#d1d1d1"
+            inkscape:document-units="mm"
+            showgrid="false"
+            inkscape:zoom="0.41386281"
+            inkscape:cx="422.84544"
+            inkscape:cy="155.84875"
+            inkscape:window-width="1600"
+            inkscape:window-height="838"
+            inkscape:window-x="-8"
+            inkscape:window-y="-8"
+            inkscape:window-maximized="1"
+            inkscape:current-layer="layer1"
+          />
+          <defs id="defs2">
+            <pattern
+              inkscape:collect="always"
+              xlink:href="#pattern4630"
+              id="pattern4639"
+              patternTransform="matrix(0.21636994,0,0,0.21636994,142.34027,147.82944)"
+            />
+            <pattern
+              patternUnits="userSpaceOnUse"
+              width="73.901367"
+              height="60.438984"
+              patternTransform="translate(782.16133,625.49295)"
+              id="pattern3488"
+            >
+              <path
+                style="
                   fill: #000000;
                   stroke: #000000;
                   stroke-width: 0.999999px;
                   stroke-linecap: butt;
                   stroke-linejoin: miter;
                   stroke-opacity: 1;
-                " d="M 4.6622688,0 V 60.268309 L 0.71353176,49.395137 H 8.3997302 L 4.6622688,60.268309"
-              id="path2648-5" sodipodi:nodetypes="ccccc" />
-            <path style="
+                "
+                d="M 4.6622688,0 V 60.268309 L 0.71353176,49.395137 H 8.3997302 L 4.6622688,60.268309"
+                id="path2648-5"
+                sodipodi:nodetypes="ccccc"
+              />
+              <path
+                style="
                   fill: #000000;
                   stroke: #000000;
                   stroke-width: 0.999999px;
                   stroke-linecap: butt;
                   stroke-linejoin: miter;
                   stroke-opacity: 1;
-                " d="M 20.862533,0 V 60.268309 L 16.913796,49.395137 h 7.686199 l -3.737462,10.873172"
-              id="path2648-9-3" sodipodi:nodetypes="ccccc" />
-            <path style="
+                "
+                d="M 20.862533,0 V 60.268309 L 16.913796,49.395137 h 7.686199 l -3.737462,10.873172"
+                id="path2648-9-3"
+                sodipodi:nodetypes="ccccc"
+              />
+              <path
+                style="
                   fill: #000000;
                   stroke: #000000;
                   stroke-width: 0.999999px;
                   stroke-linecap: butt;
                   stroke-linejoin: miter;
                   stroke-opacity: 1;
-                " d="M 37.062798,0 V 60.268309 L 33.114061,49.395137 h 7.686198 l -3.737461,10.873172"
-              id="path2648-6-6" sodipodi:nodetypes="ccccc" />
-            <path style="
+                "
+                d="M 37.062798,0 V 60.268309 L 33.114061,49.395137 h 7.686198 l -3.737461,10.873172"
+                id="path2648-6-6"
+                sodipodi:nodetypes="ccccc"
+              />
+              <path
+                style="
                   fill: #000000;
                   stroke: #000000;
                   stroke-width: 0.999999px;
                   stroke-linecap: butt;
                   stroke-linejoin: miter;
                   stroke-opacity: 1;
-                " d="M 53.263062,0 V 60.268309 L 49.314325,49.395137 h 7.686199 l -3.737462,10.873172"
-              id="path2648-7-8" sodipodi:nodetypes="ccccc" />
-            <path style="
+                "
+                d="M 53.263062,0 V 60.268309 L 49.314325,49.395137 h 7.686199 l -3.737462,10.873172"
+                id="path2648-7-8"
+                sodipodi:nodetypes="ccccc"
+              />
+              <path
+                style="
                   fill: #000000;
                   stroke: #000000;
                   stroke-width: 0.999999px;
                   stroke-linecap: butt;
                   stroke-linejoin: miter;
                   stroke-opacity: 1;
-                " d="M 69.463327,0 V 60.268309 L 65.51459,49.395137 h 7.686198 l -3.737461,10.873172" id="path2648-0-3"
-              sodipodi:nodetypes="ccccc" />
-          </pattern>
-          <pattern patternUnits="userSpaceOnUse" width="69.239099" height="60.768308"
-            patternTransform="translate(834.54471,522.19786)" id="pattern4547">
-            <path style="
+                "
+                d="M 69.463327,0 V 60.268309 L 65.51459,49.395137 h 7.686198 l -3.737461,10.873172"
+                id="path2648-0-3"
+                sodipodi:nodetypes="ccccc"
+              />
+            </pattern>
+            <pattern
+              patternUnits="userSpaceOnUse"
+              width="69.239099"
+              height="60.768308"
+              patternTransform="translate(834.54471,522.19786)"
+              id="pattern4547"
+            >
+              <path
+                style="
                   fill: #000000;
                   stroke: #000000;
                   stroke-width: 0.999999px;
                   stroke-linecap: butt;
                   stroke-linejoin: miter;
                   stroke-opacity: 1;
-                " d="M 16.200265,0 V 60.268309 L 12.251528,49.395137 h 7.686198 l -3.737461,10.873172" id="path4537"
-              sodipodi:nodetypes="ccccc" />
-            <path style="
+                "
+                d="M 16.200265,0 V 60.268309 L 12.251528,49.395137 h 7.686198 l -3.737461,10.873172"
+                id="path4537"
+                sodipodi:nodetypes="ccccc"
+              />
+              <path
+                style="
                   fill: #000000;
                   stroke: #000000;
                   stroke-width: 0.999999px;
                   stroke-linecap: butt;
                   stroke-linejoin: miter;
                   stroke-opacity: 1;
-                " d="M 32.400529,0 V 60.268309 L 28.451792,49.395137 h 7.686199 l -3.737462,10.873172" id="path4539"
-              sodipodi:nodetypes="ccccc" />
-            <path style="
+                "
+                d="M 32.400529,0 V 60.268309 L 28.451792,49.395137 h 7.686199 l -3.737462,10.873172"
+                id="path4539"
+                sodipodi:nodetypes="ccccc"
+              />
+              <path
+                style="
                   fill: #000000;
                   stroke: #000000;
                   stroke-width: 0.999999px;
                   stroke-linecap: butt;
                   stroke-linejoin: miter;
                   stroke-opacity: 1;
-                " d="M 48.600794,0 V 60.268309 L 44.652057,49.395137 h 7.686198 l -3.737461,10.873172" id="path4541"
-              sodipodi:nodetypes="ccccc" />
-            <path style="
+                "
+                d="M 48.600794,0 V 60.268309 L 44.652057,49.395137 h 7.686198 l -3.737461,10.873172"
+                id="path4541"
+                sodipodi:nodetypes="ccccc"
+              />
+              <path
+                style="
                   fill: #000000;
                   stroke: #000000;
                   stroke-width: 0.999999px;
                   stroke-linecap: butt;
                   stroke-linejoin: miter;
                   stroke-opacity: 1;
-                " d="M 64.801058,0 V 60.268309 L 60.852321,49.395137 h 7.686199 l -3.737462,10.873172" id="path4543"
-              sodipodi:nodetypes="ccccc" />
-            <path style="
+                "
+                d="M 64.801058,0 V 60.268309 L 60.852321,49.395137 h 7.686199 l -3.737462,10.873172"
+                id="path4543"
+                sodipodi:nodetypes="ccccc"
+              />
+              <path
+                style="
                   fill: none;
                   stroke: #000000;
                   stroke-width: 0.999999px;
                   stroke-linecap: butt;
                   stroke-linejoin: miter;
                   stroke-opacity: 1;
-                " d="M 64.801058,60.268309 H 0" id="path4545" />
-          </pattern>
-          <pattern patternUnits="userSpaceOnUse" width="64.802479" height="60.939141"
-            patternTransform="translate(838.98133,522.19786)" id="pattern4630">
-            <path style="
+                "
+                d="M 64.801058,60.268309 H 0"
+                id="path4545"
+              />
+            </pattern>
+            <pattern
+              patternUnits="userSpaceOnUse"
+              width="64.802479"
+              height="60.939141"
+              patternTransform="translate(838.98133,522.19786)"
+              id="pattern4630"
+            >
+              <path
+                style="
                   fill: #000000;
                   stroke: #000000;
                   stroke-width: 0.999999px;
                   stroke-linecap: butt;
                   stroke-linejoin: miter;
                   stroke-opacity: 1;
-                " d="M 11.763645,0 V 60.268309 L 7.814908,49.395137 h 7.686198 l -3.737461,10.873172" id="path4620"
-              sodipodi:nodetypes="ccccc" />
-            <path style="
+                "
+                d="M 11.763645,0 V 60.268309 L 7.814908,49.395137 h 7.686198 l -3.737461,10.873172"
+                id="path4620"
+                sodipodi:nodetypes="ccccc"
+              />
+              <path
+                style="
                   fill: #000000;
                   stroke: #000000;
                   stroke-width: 0.999999px;
                   stroke-linecap: butt;
                   stroke-linejoin: miter;
                   stroke-opacity: 1;
-                " d="M 27.96391,0 V 60.268309 L 24.015173,49.395137 h 7.686198 L 27.96391,60.268309" id="path4622"
-              sodipodi:nodetypes="ccccc" />
-            <path style="
+                "
+                d="M 27.96391,0 V 60.268309 L 24.015173,49.395137 h 7.686198 L 27.96391,60.268309"
+                id="path4622"
+                sodipodi:nodetypes="ccccc"
+              />
+              <path
+                style="
                   fill: #000000;
                   stroke: #000000;
                   stroke-width: 0.999999px;
                   stroke-linecap: butt;
                   stroke-linejoin: miter;
                   stroke-opacity: 1;
-                " d="M 44.164174,0 V 60.268309 L 40.215437,49.395137 h 7.686199 l -3.737462,10.873172" id="path4624"
-              sodipodi:nodetypes="ccccc" />
-            <path style="
+                "
+                d="M 44.164174,0 V 60.268309 L 40.215437,49.395137 h 7.686199 l -3.737462,10.873172"
+                id="path4624"
+                sodipodi:nodetypes="ccccc"
+              />
+              <path
+                style="
                   fill: #000000;
                   stroke: #000000;
                   stroke-width: 0.999999px;
                   stroke-linecap: butt;
                   stroke-linejoin: miter;
                   stroke-opacity: 1;
-                " d="M 60.364439,0 V 60.268309 L 56.415702,49.395137 H 64.1019 l -3.737461,10.873172" id="path4626"
-              sodipodi:nodetypes="ccccc" />
-            <path style="
+                "
+                d="M 60.364439,0 V 60.268309 L 56.415702,49.395137 H 64.1019 l -3.737461,10.873172"
+                id="path4626"
+                sodipodi:nodetypes="ccccc"
+              />
+              <path
+                style="
                   fill: none;
                   stroke: #000000;
                   stroke-width: 0.999999px;
                   stroke-linecap: butt;
                   stroke-linejoin: miter;
                   stroke-opacity: 1;
-                " d="M 60.364439,60.268309 0.00141505,60.439143" id="path4628" sodipodi:nodetypes="cc" />
-          </pattern>
-          <pattern inkscape:collect="always" xlink:href="#pattern4630-3" id="pattern4639-8"
-            patternTransform="matrix(0.21636994,0,0,0.21636994,141.81767,169.09635)" />
-          <pattern patternUnits="userSpaceOnUse" width="64.802479" height="60.939141"
-            patternTransform="translate(838.98133,522.19786)" id="pattern4630-3">
-            <path style="
+                "
+                d="M 60.364439,60.268309 0.00141505,60.439143"
+                id="path4628"
+                sodipodi:nodetypes="cc"
+              />
+            </pattern>
+            <pattern
+              inkscape:collect="always"
+              xlink:href="#pattern4630-3"
+              id="pattern4639-8"
+              patternTransform="matrix(0.21636994,0,0,0.21636994,141.81767,169.09635)"
+            />
+            <pattern
+              patternUnits="userSpaceOnUse"
+              width="64.802479"
+              height="60.939141"
+              patternTransform="translate(838.98133,522.19786)"
+              id="pattern4630-3"
+            >
+              <path
+                style="
                   fill: #000000;
                   stroke: #000000;
                   stroke-width: 0.999999px;
                   stroke-linecap: butt;
                   stroke-linejoin: miter;
                   stroke-opacity: 1;
-                " d="M 11.763645,0 V 60.268309 L 7.814908,49.395137 h 7.686198 l -3.737461,10.873172" id="path4620-8"
-              sodipodi:nodetypes="ccccc" />
-            <path style="
+                "
+                d="M 11.763645,0 V 60.268309 L 7.814908,49.395137 h 7.686198 l -3.737461,10.873172"
+                id="path4620-8"
+                sodipodi:nodetypes="ccccc"
+              />
+              <path
+                style="
                   fill: #000000;
                   stroke: #000000;
                   stroke-width: 0.999999px;
                   stroke-linecap: butt;
                   stroke-linejoin: miter;
                   stroke-opacity: 1;
-                " d="M 27.96391,0 V 60.268309 L 24.015173,49.395137 h 7.686198 L 27.96391,60.268309" id="path4622-2"
-              sodipodi:nodetypes="ccccc" />
-            <path style="
+                "
+                d="M 27.96391,0 V 60.268309 L 24.015173,49.395137 h 7.686198 L 27.96391,60.268309"
+                id="path4622-2"
+                sodipodi:nodetypes="ccccc"
+              />
+              <path
+                style="
                   fill: #000000;
                   stroke: #000000;
                   stroke-width: 0.999999px;
                   stroke-linecap: butt;
                   stroke-linejoin: miter;
                   stroke-opacity: 1;
-                " d="M 44.164174,0 V 60.268309 L 40.215437,49.395137 h 7.686199 l -3.737462,10.873172" id="path4624-7"
-              sodipodi:nodetypes="ccccc" />
-            <path style="
+                "
+                d="M 44.164174,0 V 60.268309 L 40.215437,49.395137 h 7.686199 l -3.737462,10.873172"
+                id="path4624-7"
+                sodipodi:nodetypes="ccccc"
+              />
+              <path
+                style="
                   fill: #000000;
                   stroke: #000000;
                   stroke-width: 0.999999px;
                   stroke-linecap: butt;
                   stroke-linejoin: miter;
                   stroke-opacity: 1;
-                " d="M 60.364439,0 V 60.268309 L 56.415702,49.395137 H 64.1019 l -3.737461,10.873172" id="path4626-4"
-              sodipodi:nodetypes="ccccc" />
-            <path style="
+                "
+                d="M 60.364439,0 V 60.268309 L 56.415702,49.395137 H 64.1019 l -3.737461,10.873172"
+                id="path4626-4"
+                sodipodi:nodetypes="ccccc"
+              />
+              <path
+                style="
                   fill: none;
                   stroke: #000000;
                   stroke-width: 0.999999px;
                   stroke-linecap: butt;
                   stroke-linejoin: miter;
                   stroke-opacity: 1;
-                " d="M 60.364439,60.268309 0.00141505,60.439143" id="path4628-0" sodipodi:nodetypes="cc" />
-          </pattern>
-        </defs>
-        <g inkscape:label="Слой 1" inkscape:groupmode="layer" id="layer1" transform="translate(-5.2904427,-6.49069)">
-          <path style="
+                "
+                d="M 60.364439,60.268309 0.00141505,60.439143"
+                id="path4628-0"
+                sodipodi:nodetypes="cc"
+              />
+            </pattern>
+          </defs>
+          <g
+            inkscape:label="Слой 1"
+            inkscape:groupmode="layer"
+            id="layer1"
+            transform="translate(-5.2904427,-6.49069)"
+          >
+            <path
+              style="
                 fill: none;
                 stroke: #000000;
                 stroke-width: 1.45917;
@@ -369,8 +561,12 @@
                 stroke-linejoin: miter;
                 stroke-dasharray: none;
                 stroke-opacity: 1;
-              " d="M 8.8484192,38.091225 V 24.758641 L 103.53232,8.9397792 V 38.324436" id="path365" />
-          <path style="
+              "
+              d="M 8.8484192,38.091225 V 24.758641 L 103.53232,8.9397792 V 38.324436"
+              id="path365"
+            />
+            <path
+              style="
                 fill: none;
                 stroke: #000000;
                 stroke-width: 0.729582;
@@ -378,8 +574,13 @@
                 stroke-linejoin: miter;
                 stroke-dasharray: none;
                 stroke-opacity: 1;
-              " d="M 8.6197186,24.758641 H 38.467611" id="path921" />
-          <text xml:space="preserve" style="
+              "
+              d="M 8.6197186,24.758641 H 38.467611"
+              id="path921"
+            />
+            <text
+              xml:space="preserve"
+              style="
                 font-style: normal;
                 font-weight: normal;
                 font-size: 7.72138px;
@@ -392,17 +593,28 @@
                 stroke: none;
                 stroke-width: 0.193339;
                 stroke-dasharray: none;
-              " x="30.634598" y="16.266008" id="text2436">
-            <tspan sodipodi:role="line" id="tspan2434" style="
+              "
+              x="30.634598"
+              y="16.266008"
+              id="text2436"
+            >
+              <tspan
+                sodipodi:role="line"
+                id="tspan2434"
+                style="
                   fill: #000000;
                   stroke: none;
                   stroke-width: 0.193339;
                   stroke-dasharray: none;
-                " x="30.634598" y="16.266008">
-              a
-            </tspan>
-          </text>
-          <path style="
+                "
+                x="30.634598"
+                y="16.266008"
+              >
+                a
+              </tspan>
+            </text>
+            <path
+              style="
                 font-variation-settings: normal;
                 opacity: 1;
                 /* vector-effect: none; */
@@ -419,9 +631,12 @@
                 -inkscape-stroke: none;
                 stop-color: #000000;
                 stop-opacity: 1;
-              " d="M 9.1982376,58.764748 V 46.404532 L 56.19037,34.39418 101.79132,45.280647 v 13.192437"
-            id="path2438" />
-          <path style="
+              "
+              d="M 9.1982376,58.764748 V 46.404532 L 56.19037,34.39418 101.79132,45.280647 v 13.192437"
+              id="path2438"
+            />
+            <path
+              style="
                 font-variation-settings: normal;
                 opacity: 1;
                 /* vector-effect: none; */
@@ -438,9 +653,13 @@
                 -inkscape-stroke: none;
                 stop-color: #000000;
                 stop-opacity: 1;
-              " d="m 31.703155,20.775265 c 0.311292,1.295506 0.528753,2.622289 0.349816,4.081204" id="path2459"
-            sodipodi:nodetypes="cc" />
-          <path style="
+              "
+              d="m 31.703155,20.775265 c 0.311292,1.295506 0.528753,2.622289 0.349816,4.081204"
+              id="path2459"
+              sodipodi:nodetypes="cc"
+            />
+            <path
+              style="
                 fill: none;
                 stroke: #000000;
                 stroke-width: 0.729582;
@@ -448,8 +667,14 @@
                 stroke-linejoin: miter;
                 stroke-dasharray: none;
                 stroke-opacity: 1;
-              " d="M 8.9083186,46.203691 H 38.756211" id="path921-6" sodipodi:nodetypes="cc" />
-          <text xml:space="preserve" style="
+              "
+              d="M 8.9083186,46.203691 H 38.756211"
+              id="path921-6"
+              sodipodi:nodetypes="cc"
+            />
+            <text
+              xml:space="preserve"
+              style="
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
@@ -494,8 +719,15 @@
                 -inkscape-stroke: none;
                 stop-color: #000000;
                 stop-opacity: 1;
-              " x="30.923197" y="37.71114" id="text2436-6">
-            <tspan sodipodi:role="line" id="tspan2434-1" style="
+              "
+              x="30.923197"
+              y="37.71114"
+              id="text2436-6"
+            >
+              <tspan
+                sodipodi:role="line"
+                id="tspan2434-1"
+                style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
@@ -539,11 +771,16 @@
                   -inkscape-stroke: none;
                   stop-color: #000000;
                   stop-opacity: 1;
-                " x="30.923197" y="37.71114">
-              a
-            </tspan>
-          </text>
-          <text xml:space="preserve" style="
+                "
+                x="30.923197"
+                y="37.71114"
+              >
+                a
+              </tspan>
+            </text>
+            <text
+              xml:space="preserve"
+              style="
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
@@ -586,8 +823,15 @@
                 stroke-opacity: 1;
                 -inkscape-stroke: none;
                 stop-color: #000000;
-              " x="56.334461" y="62.69426" id="text2436-6-7">
-            <tspan sodipodi:role="line" id="tspan2434-1-4" style="
+              "
+              x="56.334461"
+              y="62.69426"
+              id="text2436-6-7"
+            >
+              <tspan
+                sodipodi:role="line"
+                id="tspan2434-1-4"
+                style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
@@ -631,11 +875,16 @@
                   -inkscape-stroke: none;
                   stop-color: #000000;
                   stop-opacity: 1;
-                " x="56.334461" y="62.69426">
-              L
-            </tspan>
-          </text>
-          <text xml:space="preserve" style="
+                "
+                x="56.334461"
+                y="62.69426"
+              >
+                L
+              </tspan>
+            </text>
+            <text
+              xml:space="preserve"
+              style="
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
@@ -678,8 +927,15 @@
                 stroke-opacity: 1;
                 -inkscape-stroke: none;
                 stop-color: #000000;
-              " x="56.49913" y="69.062416" id="text2436-6-7-5">
-            <tspan sodipodi:role="line" id="tspan2434-1-4-8" style="
+              "
+              x="56.49913"
+              y="69.062416"
+              id="text2436-6-7-5"
+            >
+              <tspan
+                sodipodi:role="line"
+                id="tspan2434-1-4-8"
+                style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
@@ -723,11 +979,15 @@
                   -inkscape-stroke: none;
                   stop-color: #000000;
                   stop-opacity: 1;
-                " x="56.49913" y="69.062416">
-              μ
-            </tspan>
-          </text>
-          <path style="
+                "
+                x="56.49913"
+                y="69.062416"
+              >
+                μ
+              </tspan>
+            </text>
+            <path
+              style="
                 font-variation-settings: normal;
                 fill: none;
                 fill-opacity: 1;
@@ -740,49 +1000,74 @@
                 stroke-dashoffset: 0;
                 stroke-opacity: 1;
                 stop-color: #000000;
-              " d="m 31.563329,40.688401 c 0.82662,1.728375 0.957183,4.154205 0.778246,5.613121" id="path2459-5"
-            sodipodi:nodetypes="cc" />
-          <path style="
+              "
+              d="m 31.563329,40.688401 c 0.82662,1.728375 0.957183,4.154205 0.778246,5.613121"
+              id="path2459-5"
+              sodipodi:nodetypes="cc"
+            />
+            <path
+              style="
                 fill: none;
                 stroke: #000000;
                 stroke-width: 0.193035px;
                 stroke-linecap: butt;
                 stroke-linejoin: miter;
                 stroke-opacity: 1;
-              " d="M 8.9083179,58.140562 V 70.850593" id="path2615" />
-          <path style="
+              "
+              d="M 8.9083179,58.140562 V 70.850593"
+              id="path2615"
+            />
+            <path
+              style="
                 fill: none;
                 stroke: #000000;
                 stroke-width: 0.193035px;
                 stroke-linecap: butt;
                 stroke-linejoin: miter;
                 stroke-opacity: 1;
-              " d="M 7.4491514,65.070772 H 103.68774" id="path2617" />
-          <path style="
+              "
+              d="M 7.4491514,65.070772 H 103.68774"
+              id="path2617"
+            />
+            <path
+              style="
                 fill: none;
                 stroke: #000000;
                 stroke-width: 0.193035px;
                 stroke-linecap: butt;
                 stroke-linejoin: miter;
                 stroke-opacity: 1;
-              " d="m 7.9600965,65.975796 1.690282,-1.772737" id="path2619" />
-          <path style="
+              "
+              d="m 7.9600965,65.975796 1.690282,-1.772737"
+              id="path2619"
+            />
+            <path
+              style="
                 fill: none;
                 stroke: #000000;
                 stroke-width: 0.193035px;
                 stroke-linecap: butt;
                 stroke-linejoin: miter;
                 stroke-opacity: 1;
-              " d="m 101.86631,58.370636 v 12.71003" id="path2615-3" />
-          <path style="
+              "
+              d="m 101.86631,58.370636 v 12.71003"
+              id="path2615-3"
+            />
+            <path
+              style="
                 fill: none;
                 stroke: #000000;
                 stroke-width: 0.193035px;
                 stroke-linecap: butt;
                 stroke-linejoin: miter;
                 stroke-opacity: 1;
-              " d="m 100.97637,66.03096 1.69031,-1.772737" id="path2619-9" />
-          <text xml:space="preserve" style="
+              "
+              d="m 100.97637,66.03096 1.69031,-1.772737"
+              id="path2619-9"
+            />
+            <text
+              xml:space="preserve"
+              style="
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
@@ -823,8 +1108,15 @@
                 stroke-dashoffset: 0;
                 stroke-opacity: 1;
                 stop-color: #000000;
-              " x="55.763248" y="110.42456" id="text2436-6-7-8">
-            <tspan sodipodi:role="line" id="tspan2434-1-4-87" style="
+              "
+              x="55.763248"
+              y="110.42456"
+              id="text2436-6-7-8"
+            >
+              <tspan
+                sodipodi:role="line"
+                id="tspan2434-1-4-87"
+                style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
@@ -866,11 +1158,16 @@
                   stroke-opacity: 1;
                   stop-color: #000000;
                   stop-opacity: 1;
-                " x="55.763248" y="110.42456">
-              L
-            </tspan>
-          </text>
-          <text xml:space="preserve" style="
+                "
+                x="55.763248"
+                y="110.42456"
+              >
+                L
+              </tspan>
+            </text>
+            <text
+              xml:space="preserve"
+              style="
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
@@ -911,8 +1208,15 @@
                 stroke-dashoffset: 0;
                 stroke-opacity: 1;
                 stop-color: #000000;
-              " x="27.009682" y="92.795517" id="text2436-6-7-5-9">
-            <tspan sodipodi:role="line" id="tspan2434-1-4-8-8" style="
+              "
+              x="27.009682"
+              y="92.795517"
+              id="text2436-6-7-5-9"
+            >
+              <tspan
+                sodipodi:role="line"
+                id="tspan2434-1-4-8-8"
+                style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
@@ -954,11 +1258,16 @@
                   stroke-opacity: 1;
                   stop-color: #000000;
                   stop-opacity: 1;
-                " x="27.009682" y="92.795517">
-              0.75μ
-            </tspan>
-          </text>
-          <text xml:space="preserve" style="
+                "
+                x="27.009682"
+                y="92.795517"
+              >
+                0.75μ
+              </tspan>
+            </text>
+            <text
+              xml:space="preserve"
+              style="
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
@@ -999,8 +1308,15 @@
                 stroke-dashoffset: 0;
                 stroke-opacity: 1;
                 stop-color: #000000;
-              " x="69.636742" y="87.748383" id="text2436-6-7-5-9-2">
-            <tspan sodipodi:role="line" id="tspan2434-1-4-8-8-2" style="
+              "
+              x="69.636742"
+              y="87.748383"
+              id="text2436-6-7-5-9-2"
+            >
+              <tspan
+                sodipodi:role="line"
+                id="tspan2434-1-4-8-8-2"
+                style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
@@ -1042,51 +1358,75 @@
                   stroke-opacity: 1;
                   stop-color: #000000;
                   stop-opacity: 1;
-                " x="69.636742" y="87.748383">
-              1.25μ
-            </tspan>
-          </text>
-          <path style="
+                "
+                x="69.636742"
+                y="87.748383"
+              >
+                1.25μ
+              </tspan>
+            </text>
+            <path
+              style="
                 fill: none;
                 stroke: #000000;
                 stroke-width: 0.193035px;
                 stroke-linecap: butt;
                 stroke-linejoin: miter;
                 stroke-opacity: 1;
-              " d="m 8.3371094,102.3963 v 12.71003" id="path2615-8" />
-          <path style="
+              "
+              d="m 8.3371094,102.3963 v 12.71003"
+              id="path2615-8"
+            />
+            <path
+              style="
                 fill: none;
                 stroke: #000000;
                 stroke-width: 0.193035px;
                 stroke-linecap: butt;
                 stroke-linejoin: miter;
                 stroke-opacity: 1;
-              " d="M 6.8779428,112.80116 H 103.11652" id="path2617-0" />
-          <path style="
+              "
+              d="M 6.8779428,112.80116 H 103.11652"
+              id="path2617-0"
+            />
+            <path
+              style="
                 fill: none;
                 stroke: #000000;
                 stroke-width: 0.193035px;
                 stroke-linecap: butt;
                 stroke-linejoin: miter;
                 stroke-opacity: 1;
-              " d="m 7.3888879,113.70619 1.6902813,-1.77273" id="path2619-3" />
-          <path style="
+              "
+              d="m 7.3888879,113.70619 1.6902813,-1.77273"
+              id="path2619-3"
+            />
+            <path
+              style="
                 fill: none;
                 stroke: #000000;
                 stroke-width: 0.193035px;
                 stroke-linecap: butt;
                 stroke-linejoin: miter;
                 stroke-opacity: 1;
-              " d="m 101.29509,102.62638 v 12.71003" id="path2615-3-0" />
-          <path style="
+              "
+              d="m 101.29509,102.62638 v 12.71003"
+              id="path2615-3-0"
+            />
+            <path
+              style="
                 fill: none;
                 stroke: #000000;
                 stroke-width: 0.193035px;
                 stroke-linecap: butt;
                 stroke-linejoin: miter;
                 stroke-opacity: 1;
-              " d="m 100.40517,113.76136 1.69029,-1.77274" id="path2619-9-3" />
-          <rect style="
+              "
+              d="m 100.40517,113.76136 1.69029,-1.77274"
+              id="path2619-9-3"
+            />
+            <rect
+              style="
                 font-variation-settings: normal;
                 opacity: 1;
                 fill: url(#pattern4639);
@@ -1101,8 +1441,16 @@
                 stroke-opacity: 1;
                 stop-color: #000000;
                 stop-opacity: 1;
-              " id="rect4604" width="92.95797" height="10.84576" x="8.8399096" y="70.934418" />
-          <path id="rect4604-5" style="
+              "
+              id="rect4604"
+              width="92.95797"
+              height="10.84576"
+              x="8.8399096"
+              y="70.934418"
+            />
+            <path
+              id="rect4604-5"
+              style="
                 font-variation-settings: normal;
                 fill: url(#pattern4639-8);
                 fill-opacity: 1;
@@ -1115,136 +1463,169 @@
                 stroke-dashoffset: 0;
                 stroke-opacity: 1;
                 stop-color: #000000;
-              " d="m 54.754079,89.892205 v 5.587469 H 8.2326047 v 7.566836 H 101.27519 V 89.892205 Z" />
-        </g>
-      </svg>
-      <p>
-        8.4 Квазіпостійне розрахункове значення обчислюється за формулою $$S_p
-        = (0.4 \times S_0 - \bar{S}) \times C = (0.4 \times {{S_0}} - \bar{
-        {{S}} }) \times {{C}} = {{S_p=Math.round((0.4*S_0-S)*C*100)/100}} Па$$
-        де $\bar{S} = 160 Па$
-      </p>
-      <p>
-        8.3 Експлуатаційне розрахункове значення обчислюється за формулою
-        $$S_b = \gamma_{fe} \times S_0 \times C = {{gamma_fe}} \times {{S_0}}
-        \times {{C}} = {{S_b = Math.round(gamma_fe*S_0*C*100)/100}} Па $$
-      </p>
-      <p>
-        8.2 Граничне розрахункове значення снігового навантаження на
-        горизонтальну проекцію покриття (конструкції) обчислюється за формулою
-        $$S_m=\gamma_{fm} \times S_0 \times C = S_m={{gamma_fm}} \times
-        {{S_0}} \times {{C}} = {{S_m = Math.round(gamma_fm*S_0*C*100)/100}}$$
-      </p>
-      <table>
-        <caption>
-          Загальная таблиця снігових навантажень
-        </caption>
-        <thead>
-          <tr>
-            <th scope="col">Вид сігового навантаження</th>
-            <th scope="col">1 &times; μ</th>
-            <th scope="col">0,75 &times; μ</th>
-            <th scope="col">1,25 &times; μ</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">Квазіпостійне, Па</th>
-            <td>{{S_p}}</td>
-            <td>{{Math.round(S_p*0.75*10)/10}}</td>
-            <td>{{Math.round(S_p*1.25*10)/10}}</td>
-          </tr>
-          <tr>
-            <th scope="row">Експлуатаційне, Па</th>
-            <td>{{S_b}}</td>
-            <td>{{Math.round(S_b*0.75*10)/10}}</td>
-            <td>{{Math.round(S_b*1.25*10)/10}}</td>
-          </tr>
-          <tr>
-            <th scope="row">Граничне розрахункове значення, Па</th>
-            <td>{{S_m}}</td>
-            <td>{{Math.round(S_m*0.75*10)/10}}</td>
-            <td>{{Math.round(S_m*1.25*10)/10}}</td>
-          </tr>
-        </tbody>
-      </table>
-      <p>10 Па = 1 $\frac{ кгс }{ м^2 }$</p>
-      <!-- <div v-if="k < 1">
+              "
+              d="m 54.754079,89.892205 v 5.587469 H 8.2326047 v 7.566836 H 101.27519 V 89.892205 Z"
+            />
+          </g>
+        </svg>
+        <p>
+          8.4 Квазіпостійне розрахункове значення обчислюється за формулою $$S_p
+          = (0.4 \times S_0 - \bar{S}) \times C = (0.4 \times {{S_0}} - \bar{
+          {{S}} }) \times {{C}} = {{S_p=Math.round((0.4*S_0-S)*C*100)/100}} Па$$
+          де $\bar{S} = 160 Па$
+        </p>
+        <p>
+          8.3 Експлуатаційне розрахункове значення обчислюється за формулою
+          $$S_b = \gamma_{fe} \times S_0 \times C = {{gamma_fe}} \times {{S_0}}
+          \times {{C}} = {{S_b = Math.round(gamma_fe*S_0*C*100)/100}} Па $$
+        </p>
+        <p>
+          8.2 Граничне розрахункове значення снігового навантаження на
+          горизонтальну проекцію покриття (конструкції) обчислюється за формулою
+          $$S_m=\gamma_{fm} \times S_0 \times C = S_m={{gamma_fm}} \times
+          {{S_0}} \times {{C}} = {{S_m = Math.round(gamma_fm*S_0*C*100)/100}}$$
+        </p>
+        <table>
+          <caption>
+            Загальная таблиця снігових навантажень
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Вид сігового навантаження</th>
+              <th scope="col">1 &times; μ</th>
+              <th scope="col">0,75 &times; μ</th>
+              <th scope="col">1,25 &times; μ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Квазіпостійне, Па</th>
+              <td>{{S_p}}</td>
+              <td>{{Math.round(S_p*0.75*10)/10}}</td>
+              <td>{{Math.round(S_p*1.25*10)/10}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Експлуатаційне, Па</th>
+              <td>{{S_b}}</td>
+              <td>{{Math.round(S_b*0.75*10)/10}}</td>
+              <td>{{Math.round(S_b*1.25*10)/10}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Граничне розрахункове значення, Па</th>
+              <td>{{S_m}}</td>
+              <td>{{Math.round(S_m*0.75*10)/10}}</td>
+              <td>{{Math.round(S_m*1.25*10)/10}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>10 Па = 1 $\frac{ кгс }{ м^2 }$</p>
+        <!-- <div v-if="k < 1">
                 <h3>Міцність перерізу достатня коэфіцієнт використання {{k}}</h3>
             </div>
             <div style="color: red;" v-else>
                 <h3>Необхідно збільшити кількість гвинтів</h3>
             </div> -->
+      </div>
+
+      <!-- <div class="before"></div> -->
     </div>
+    <script>
+      const { createApp } = Vue;
 
-    <!-- <div class="before"></div> -->
-  </div>
-  <script>
-    const { createApp } = Vue;
-
-    createApp({
-      data() {
-        return {
-          alpha: 20,
-          S_0: 880,
-          S: 160,
-          activeColor: "black",
-        };
-      },
-      methods: {
-        reRender() {
-          if (window.MathJax) {
-            console.log("rendering mathjax");
-            window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub], () =>
-              console.log("done")
-            );
-          }
+      createApp({
+        data() {
+          return {
+            alpha: 20,
+            S_0: 880,
+            S: 160,
+            activeColor: "black",
+            age: "житлові та громадські",
+            gamma_fm: 1.14,
+          };
         },
-      },
-      computed: {
-        mu() {
-          if (this.alpha < 25) {
-            return 1;
-          } else if (this.alpha > 60) {
-            return 0;
-          } else {
-            return Math.round(((60 - this.alpha) / 35) * 100) / 100;
-          }
-          return;
+        methods: {
+          reRender() {
+            if (window.MathJax) {
+              console.log("rendering mathjax");
+              window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub], () =>
+                console.log("done")
+              );
+            }
+          },
         },
-        redAlert() {
-          if (this.L < this.L_max) {
-            return "red";
-          } else {
-            return "black";
-          }
+        computed: {
+          mu() {
+            if (this.alpha < 25) {
+              return 1;
+            } else if (this.alpha > 60) {
+              return 0;
+            } else {
+              return Math.round(((60 - this.alpha) / 35) * 100) / 100;
+            }
+            return;
+          },
+          redAlert() {
+            if (this.L < this.L_max) {
+              return "red";
+            } else {
+              return "black";
+            }
+          },
+          year() {
+            if (this.age == "житлові та громадські") {
+              this.gamma_fm = 1.14;
+              return 100;
+            } else if (this.age == "виробничі та допоміжні") {
+              this.gamma_fm = 1.04;
+              return 60;
+            } else if (this.age == "складські") {
+              this.gamma_fm = 1.04;
+              return 60;
+            } else if (this.age == "сільськогосподарські") {
+              this.gamma_fm = 1.00;
+              return 50;
+            } else if (
+              this.age ==
+              "мобільні збірно-розбірні (у тому числі промислові, житлові та інші)"
+            ) {
+              this.gamma_fm = 0.83;
+              return 20;
+            } else {
+              this.gamma_fm = 0.76;
+              return 15;
+            }
+          },
         },
-      },
-      mounted() {
-        this.reRender();
-      },
-      watch: {
-        alpha: function () {
-          console.log("data changed");
-          this.$nextTick().then(() => {
-            this.reRender();
-          });
+        mounted() {
+          this.reRender();
         },
-        h: function () {
-          console.log("data changed");
-          this.$nextTick().then(() => {
-            this.reRender();
-          });
+        watch: {
+          alpha: function () {
+            console.log("data changed");
+            this.$nextTick().then(() => {
+              this.reRender();
+            });
+          },
+          h: function () {
+            console.log("data changed");
+            this.$nextTick().then(() => {
+              this.reRender();
+            });
+          },
+          S_0: function () {
+            console.log("data changed");
+            this.$nextTick().then(() => {
+              this.reRender();
+            });
+          },
+          gamma_fm: function () {
+            console.log("data changed");
+            this.$nextTick().then(() => {
+              this.reRender();
+            });
+          },
         },
-        S_0: function () {
-          console.log("data changed");
-          this.$nextTick().then(() => {
-            this.reRender();
-          });
-        },
-      },
-    }).mount("#app");
-  </script>
-</body>
-
+      }).mount("#app");
+    </script>
+  </body>
 </html>

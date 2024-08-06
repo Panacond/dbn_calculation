@@ -76,16 +76,16 @@
     <div id="app">
       <div class="before"></div>
       <div class="page">
-        <h2>Розрахунок алюмініевого профіля міцніть та прогиб</h2>
+        <h2>Розрахунок металевої балки на міцніть та прогиб</h2>
         <p>
           R=
           <input v-model="R" type="number" placeholder="R" size="5" />
-          (МПа) Розрахунковий опір <b>зміцненого</b> алюмінію
+          (МПа) Розрахунковий опір
         </p>
         <p>
           E=
           <input v-model="E" type="number" placeholder="E" />
-          (МПа) Модуль пружності алюмінію
+          (МПа) Модуль пружності
         </p>
         <p>
           b=
@@ -158,7 +158,7 @@
                 (мм) висота перерізу
                 <img
                   class="section"
-                  src="./section.svg"
+                  src="../09_al_beam/section.svg"
                   width="100px"
                   alt="сечение"
                 />
@@ -216,7 +216,7 @@
         </p>
         <div v-if="scheme == 'Балка з вільним опиранням'">
           <h2>Балка з вільним опиранням</h2>
-          <img src="./beam_re.svg" alt="шарнироно опертая балка" />
+          <img src="../09_al_beam/beam_re.svg" alt="шарнироно опертая балка" />
           <p>Максимальний момент в перерізі буде:</p>
           <p>
             $$M= \frac{q \times l^2}{8} =\frac{ {{q}} \times {{l}}^2}{8} = {{M=
@@ -232,7 +232,7 @@
         </div>
         <div v-else-if="scheme == 'Балка з 2 затиснутими опорами'">
           <h2>Балка з 2 затиснутими опорами</h2>
-          <img src="./beam_two.svg" alt="балка с двумя защемленными опорами" />
+          <img src="../09_al_beam/beam_two.svg" alt="балка с двумя защемленными опорами" />
           <p>Максимальний момент в перерізі буде:</p>
           <p>
             $$M= \frac{q \times l^2}{12} =\frac{ {{q}} \times {{l}}^2}{12} = {{M
@@ -248,7 +248,7 @@
         </div>
         <div v-else-if="scheme == 'Балка з 1 затиснутою опорою'">
           <h2>Балка з 1 затиснутою опорою</h2>
-          <img src="./beam_one.svg" alt="балка с одной защемленной опорой" />
+          <img src="../09_al_beam/beam_one.svg" alt="балка с одной защемленной опорой" />
           <p>Максимальний момент в перерізі буде:</p>
           <p>
             $$M= \frac{q \times l^2}{8} =\frac{ {{q}} \times {{l}}^2}{8} = {{M =
@@ -264,7 +264,7 @@
         </div>
         <div v-else>
           <h2>Консольна балка</h2>
-          <img src="./console.svg" alt="балка консольная" />
+          <img src="../09_al_beam/console.svg" alt="балка консольная" />
           <p>Максимальний момент в перерізі буде:</p>
           <p>
             $$M= \frac{q \times l^2}{2} =\frac{ {{q}} \times {{l}}^2}{2} = {{M =
@@ -278,14 +278,26 @@
           </p>
         </div>
         <div class="test-strength">
-          <h4>Перевірка міцності за ДБН В.2.6-165:2011 алюмінієві конструкції</h4>
-          <p>Таблиця 4.1 - Значення коефіцієнта умов роботи</p>
-          <p>$$\gamma_c = {{gamma_c = 1}}$$</p>
-          <p>8.2 Згинальні елементи</p>
-          <p>8.2.1 Розрахунок на міцність елементів, що згинаються в одній з головних площин, слід виконувати за формулами (8.20):</p>
+          <h4>
+            Перевірка міцності за ДБН В.2.6-198:2014 Зі Зміною № 1 сталеві
+            конструкції
+          </h4>
+          <p>Таблиця 5.1 – Коефіцієнт умов роботи для балок суцільного перерізу $\gamma_c = {{gamma_c = 0.9}}$</p>
+          <p>9 Розрахунок елементів сталевих конструкцій при згині
+            <br>
+            9.2 Розрахунок на міцність згинних елементів суцільного перерізу
+          </p>
           <p>
-            $$k = \frac{M}{W_p \times R \times \gamma_c} = \frac{ {{M}} }{ {{W_p}} \times {{R}} \times {{gamma_c}}
-            } = {{k = Math.round( (M/W_p/R)*100)/100}}$$
+            9.2.1 Розрахунок на міцність балок у розрахункових перерізах 1 класу
+            необхідно виконувати за формулами:
+          </p>
+          <p>
+            - при дії згинального моменту М в одній з головних площин (9.1):
+          </p>
+          <p>
+            $$k = \frac{M}{W_p \times R \times \gamma_c} = \frac{ {{M}} }{
+            {{W_p}} \times {{R}} \times {{gamma_c}} } = {{k = Math.round(
+            (M/W_p/R)*100)/100}}$$
           </p>
           <div v-if="k < 1">
             <h4>Міцність перерізу достатня коэфіцієнт використання {{k}}</h4>
@@ -303,10 +315,12 @@
           </p>
           <p>Згідно таблиці 1</p>
           <p>При прольоті {{l_p}} м допустимий прогин l/ {{max_f}}:</p>
-          <p v-if="typeS == 2">Для консолі замість l слід приймати подвоєний її виліт.</p>
+          <p v-if="typeS == 2">
+            Для консолі замість l слід приймати подвоєний її виліт.
+          </p>
           <p>
-            $$f_d= \frac{l_p}{ {{max_f}} } = \frac{ {{l_p}} \times 1000}{ {{max_f}}
-            } = {{f_d=Math.round(l_p/max_f*1000*100 )/100}}мм $$
+            $$f_d= \frac{l_p}{ {{max_f}} } = \frac{ {{l_p}} \times 1000}{
+            {{max_f}} } = {{f_d=Math.round(l_p/max_f*1000*100 )/100}}мм $$
           </p>
           <div v-if="f < f_d">
             <h4>
@@ -336,8 +350,8 @@
       createApp({
         data() {
           return {
-            R: 150,
-            E: 70000,
+            R: 235,
+            E: 206000,
             q_sn: 1767,
             q_p: 770,
             b: 1.33,
@@ -369,15 +383,15 @@
           },
         },
         computed: {
-          typeS(){
+          typeS() {
             let k = 1;
-            if (this.scheme == 'Консольная') {
+            if (this.scheme == "Консольная") {
               k = 2;
             }
-            return k
+            return k;
           },
-          l_p(){
-            return this.l * this.typeS
+          l_p() {
+            return this.l * this.typeS;
           },
           F() {
             console.log("data changed");
@@ -386,16 +400,16 @@
             });
           },
           max_f() {
-            let k = this.typeS
-            if (this.l*k <= 1) {
-              return 120*k;
-            } else if (this.l*k <= 3) {
+            let k = this.typeS;
+            if (this.l * k <= 1) {
+              return 120 * k;
+            } else if (this.l * k <= 3) {
               return interpolate(this.l, 1, 3, 120, 150);
-            } else if (this.l*k <= 6) {
+            } else if (this.l * k <= 6) {
               return interpolate(this.l, 3, 6, 150, 200);
-            } else if (this.l*k <= 12) {
+            } else if (this.l * k <= 12) {
               return interpolate(this.l, 6, 12, 200, 250);
-            } else if (this.l*k <= 24) {
+            } else if (this.l * k <= 24) {
               return interpolate(this.l, 12, 24, 250, 300);
             }
             return 300;

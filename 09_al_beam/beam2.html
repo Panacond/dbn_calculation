@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Розрахунок металевої балки</title>
+    <title>Розрахунок алюмінієвої балки</title>
     <style>
       body {
         background-image: url(../A4.svg);
@@ -78,9 +78,20 @@
       <div class="page">
         <h2>Розрахунок алюмініевого профіля міцніть та прогиб</h2>
         <p>
+          Марка алюмінію:
+          <select v-model="mark">
+            <option disabled value="">Виберіть марку</option>
+            <option>АД31Т5</option>
+            <option>АД31Т1</option>
+            <option>1915Т</option>
+            <option>АД31Т</option>
+            <option>6060T66</option></select
+          >{{R_ins}}
+        </p>
+        <p>
           R=
           <input v-model="R" type="number" placeholder="R" size="5" />
-          (МПа) Розрахунковий опір <b>зміцненого</b> алюмінію
+          (МПа) Розрахунковий опір алюмінію
         </p>
         <p>
           E=
@@ -99,19 +110,14 @@
           квазіпостійні значення змінних навантажень:
         </p>
         <p>
-          q<sub>sn</sub>=
-          <input v-model="q_sn" type="number" placeholder="q_sn" />
-          (Па) Навантаження від снігу (100 кгс/м<sup>2</sup> = 1000 Па)
+          q<sub>r</sub>=
+          <input v-model="q_r" type="number" placeholder="q_r" />
+          (Па) Розрахункове навантаження (100 кгс/м<sup>2</sup> = 1000 Па)
         </p>
+        <p>Розрахункове навантаження з урахування ширини дії:</p>
         <p>
-          q<sub>p</sub>=
-          <input v-model="q_p" type="number" placeholder="q_p" />
-          (Па) Навантаження від конструкції (100 кгс/м<sup>2</sup> = 1000 Па)
-        </p>
-        <p>Загальне навантаження складе:</p>
-        <p>
-          $$q=(q_{sn}+q_p) \times b=({{q_sn}}+{{q_p}}) \times
-          {{b}}={{q=Math.round( (q_sn + q_p) * b *100)/100}} Па/м$$
+          $$q=q_{r}\times b={{q_r}} \times {{b}}={{q=Math.round( q_r * b
+          *100)/100}} Па/м$$
         </p>
         <p>
           Для перевірки граничних станів другої групи використовуються основні
@@ -119,21 +125,15 @@
           значеннями, а також експлуатаційні розрахункові, циклічні або
           квазіпостійні значення змінних навантажень:
         </p>
-        <p>Експлуатаційне розрахункове значення для снігу:</p>
         <p>
-          $$q_{sn2} = \frac{q_{sn} \times \gamma_{fe} }{ \gamma_{fm} } = \frac{
-          {{q_sn}} \times 0.49}{ 1.14 } = {{ q_sn2 =Math.round(
-          (q_sn*0.49/1.14)*100)/100 }} Па \times м $$
+          q<sub>n</sub>=
+          <input v-model="q_n" type="number" placeholder="q_n" />
+          (Па)Експлутаційне навантаження (100 кгс/м<sup>2</sup> = 1000 Па)
         </p>
-        <p>Експлуатаційне розрахункове значення для ваги конструкції</p>
+        <p>Експлутаційне навантаження з урахування ширини дії:</p>
         <p>
-          $$q_{p2} = \frac{q_p}{ \gamma_{fm}} = \frac{ {{q_p}} }{ 1.1} = {{ q_p2
-          = Math.round( (q_p/1.1)*100)/100}} Па \times м $$
-        </p>
-        <p>Загальне експлуатаційне навантаження складе:</p>
-        <p>
-          $$q_e=(q_{sn2}+q_{p2}) \times b=({{q_sn2}}+{{q_p2}}) \times
-          {{b}}={{q_e=Math.round( (q_sn2 + q_p2) * b *100)/100}} Па \times м$$
+          $$q_{e}=q_{n}\times b={{q_n}} \times {{b}}={{q_e=Math.round( q_n * b
+          *100)/100}} Па/м$$
         </p>
         <h2>Геометрічні характеристики перерізу</h2>
         <p></p>
@@ -178,11 +178,11 @@
                 Момент інерції: $ I = \frac{b_s \times h^3}{12} - \frac{(b_s - 2
                 \times t) \times (b_s - 2 \times t)^3}{12}= \frac{ {{b_s}}
                 \times {{h}}^3}{12} - \frac{({{b_s}} - 2 \times {{t}}) \times
-                ({{b_s}} - 2 \times {{t}})^3}{12} = {{I_p = Math.round((
+                ({{h}} - 2 \times {{t}})^3}{12} = {{I_p = Math.round((
                 b_s*h**3/12-(b_s-2*t)*(h-2*t)**3/12 )/100)/100}}см^4$
               </p>
               <p>
-                Момент опору: $W = \frac{I}{ \frac{h}{2} } = \frac{ {{I}} }{
+                Момент опору: $W = \frac{I}{ \frac{h}{2} } = \frac{ {{I_p}} }{
                 \frac{ {{h/10}} }{2} }= {{W_p =
                 Math.round((I_p/h*2)*1000)/100}}см^3$
               </p>
@@ -196,9 +196,6 @@
             <label for="two">Переріз</label>
           </div>
         </div>
-      </div>
-      <div class="before"></div>
-      <div class="page">
         <p>
           l=
           <input v-model="l" type="number" placeholder="l" />
@@ -214,6 +211,10 @@
             <option>Консольная</option>
           </select>
         </p>
+      </div>
+      <div class="before"></div>
+      <div class="page">
+       
         <div v-if="scheme == 'Балка з вільним опиранням'">
           <h2>Балка з вільним опиранням</h2>
           <img src="./beam_re.svg" alt="шарнироно опертая балка" />
@@ -278,20 +279,31 @@
           </p>
         </div>
         <div class="test-strength">
-          <h4>Перевірка міцності за ДБН В.2.6-165:2011 алюмінієві конструкції</h4>
+          <h4>
+            Перевірка міцності за ДБН В.2.6-165:2011 алюмінієві конструкції
+          </h4>
           <p>Таблиця 4.1 - Значення коефіцієнта умов роботи</p>
           <p>$$\gamma_c = {{gamma_c = 1}}$$</p>
-          <p>8.2 Згинальні елементи</p>
-          <p>8.2.1 Розрахунок на міцність елементів, що згинаються в одній з головних площин, слід виконувати за формулами (8.20):</p>
           <p>
-            $$k = \frac{M}{W_p \times R \times \gamma_c} = \frac{ {{M}} }{ {{W_p}} \times {{R}} \times {{gamma_c}}
-            } = {{k = Math.round( (M/W_p/R)*100)/100}}$$
+            8.2 Згинальні елементи
+            <br />
+            8.2.1 Розрахунок на міцність елементів, що згинаються в одній з
+            головних площин, слід виконувати за формулами (8.20):
+          </p>
+          <p>
+            $$k = \frac{M}{W_p \times R \times \gamma_c} = \frac{ {{M}} }{
+            {{W_p}} \times {{R}} \times {{gamma_c}} } = {{k = Math.round(
+            (M/W_p/R)*100)/100}}$$
           </p>
           <div v-if="k < 1">
             <h4>Міцність перерізу достатня коэфіцієнт використання {{k}}</h4>
           </div>
           <div style="color: red" v-else>
-            <h3>Міцність перерізу не достатня</h3>
+            <h3>Міцність перерізу не достатня k ={{k}}</h3>
+            <p>
+              Необхіднй момент опору: $$W_{tr}= W_p \times k ={{W_p}} \times
+              {{k}} = {{Math.round((W_p*k)*100)/100}} cm^3$$
+            </p>
           </div>
         </div>
         <div>
@@ -300,13 +312,16 @@
           <p>
             5.1 Вертикальні граничні прогини елементів конструкцій і
             навантаження, від яких слід визначати прогини, наведені в табл. 1.
+            <br />
+            Згідно таблиці 1<br />
+            При прольоті {{l_p}} м допустимий прогин l/ {{max_f}}:
           </p>
-          <p>Згідно таблиці 1</p>
-          <p>При прольоті {{l_p}} м допустимий прогин l/ {{max_f}}:</p>
-          <p v-if="typeS == 2">Для консолі замість l слід приймати подвоєний її виліт.</p>
+          <p v-if="typeS == 2">
+            Для консолі замість l слід приймати подвоєний її виліт.
+          </p>
           <p>
-            $$f_d= \frac{l_p}{ {{max_f}} } = \frac{ {{l_p}} \times 1000}{ {{max_f}}
-            } = {{f_d=Math.round(l_p/max_f*1000*100 )/100}}мм $$
+            $$f_d= \frac{l_p}{ {{max_f}} } = \frac{ {{l_p}} \times 1000}{
+            {{max_f}} } = {{f_d=Math.round(l_p/max_f*1000*100 )/100}}мм $$
           </p>
           <div v-if="f < f_d">
             <h4>
@@ -317,8 +332,12 @@
           <div style="color: red" v-else>
             <h3>
               Прогини перевищують допустимі f= {{f}}мм, L<sub>d</sub>={{f_d}}мм,
-              k={{Math.round(f/f_d*100 )/100}}
+              k={{k1=Math.round(f/f_d*100 )/100}}
             </h3>
+            <p>
+              Необхіднй момент інерції: $$I_{tr}=I_p \times k ={{I_p}} \times
+              {{k1}} = {{Math.round((I_p*k1)*100)/100}}см^3$$
+            </p>
           </div>
         </div>
       </div>
@@ -336,10 +355,11 @@
       createApp({
         data() {
           return {
-            R: 150,
+            mark: "1915Т",
             E: 70000,
-            q_sn: 1767,
-            q_p: 770,
+            R: 55,
+            q_r: 1767,
+            q_n: 770,
             b: 1.33,
             l: 2.3,
             b_t: 50,
@@ -369,15 +389,28 @@
           },
         },
         computed: {
-          typeS(){
+          R_ins() {
+            if (this.mark === "1915Т") {
+              this.R = 195;
+            } else if (this.mark === "АД31Т5") {
+              this.R = 100;
+            } else if (this.mark === "АД31Т1") {
+              this.R = 120;
+            } else if (this.mark === "6060T66") {
+              this.R = 195;
+            } else {
+              this.R = 55;
+            }
+          },
+          typeS() {
             let k = 1;
-            if (this.scheme == 'Консольная') {
+            if (this.scheme == "Консольная") {
               k = 2;
             }
-            return k
+            return k;
           },
-          l_p(){
-            return this.l * this.typeS
+          l_p() {
+            return this.l * this.typeS;
           },
           F() {
             console.log("data changed");
@@ -386,16 +419,16 @@
             });
           },
           max_f() {
-            let k = this.typeS
-            if (this.l*k <= 1) {
-              return 120*k;
-            } else if (this.l*k <= 3) {
+            let k = this.typeS;
+            if (this.l * k <= 1) {
+              return 120 * k;
+            } else if (this.l * k <= 3) {
               return interpolate(this.l, 1, 3, 120, 150);
-            } else if (this.l*k <= 6) {
+            } else if (this.l * k <= 6) {
               return interpolate(this.l, 3, 6, 150, 200);
-            } else if (this.l*k <= 12) {
+            } else if (this.l * k <= 12) {
               return interpolate(this.l, 6, 12, 200, 250);
-            } else if (this.l*k <= 24) {
+            } else if (this.l * k <= 24) {
               return interpolate(this.l, 12, 24, 250, 300);
             }
             return 300;
@@ -405,6 +438,11 @@
           this.reRender();
         },
         watch: {
+          mark: function () {
+            this.$nextTick().then(() => {
+              this.reRender();
+            });
+          },
           R: function () {
             this.$nextTick().then(() => {
               this.reRender();

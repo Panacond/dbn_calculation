@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Геометрические характеристики</title>
+    <style>
+      body {
+        background-image: url(../A4.svg);
+        background-repeat: repeat-y;
+        font-family: "Times New Roman", Times, Georgia, serif;
+        font-size: 0.99em;
+      }
+
+      .page {
+        /* border-style: solid; */
+        /* border-color: red; */
+        /* border-width: 0.03cm; */
+        margin: 0px 0.5cm 2cm 1.8cm;
+        height: 990px;
+        width: 17.5cm;
+        padding: 0.5cm;
+      }
+
+      .before {
+        height: 8px;
+        border-style: solid;
+        border-color: white;
+        font-size: 10px;
+        content: " ";
+      }
+    </style>
+  </head>
+
+  <body>
+    <script src="./vue.global.js"></script>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+          processEscapes: true
+        },
+        "HTML-CSS": { fonts: ["TeX"] }
+      });
+    </script>
+
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js"
+    ></script>
+
+    <div id="app">
+      <div class="before"></div>
+      <div class="page">
+        <!-- &times; -->
+        <h2>Розрахунок геометрічних характеристик</h2>
+        <p>
+          Переріз:
+          <select v-model="section">
+            <option disabled value="">Виберіть переріз</option>
+            <option>Прямокутник</option>
+            <option>Труба прямокутна</option>
+            <option>Коло</option>
+            <option>Кругла труба</option>
+            <option>Двотавр</option>
+            <option>Швеллер</option>
+            <option>Складне</option>
+          </select>
+        </p>
+        <!-- <img src="./section.svg" alt="сечение" /> -->
+        <div v-if="section == 'Труба прямокутна'">
+          <img src="./rect.svg" alt="сечение" />
+          <p>
+            h=
+            <input v-model="h" type="number" placeholder="h" size="5" />
+            (мм) висота перерізу
+          </p>
+          <p>
+            b=
+            <input v-model="b" type="number" placeholder="b" size="5" />
+            (мм) ширина перерізу
+          </p>
+          <p>
+            t=
+            <input v-model="t" type="number" placeholder="t" size="5" />
+            (мм) товщина елементa
+          </p>
+          <p>
+            допоміжні розміри: $$b_1=b - 2 \times t = {{b}} - 2 \times {{t}} =
+            {{b_1=b-2*t}} мм$$ $$h_1=b - 2 \times t = {{h}} - 2 \times {{t}} =
+            {{h_1=h-2*t}} мм$$
+          </p>
+          <p>
+            Площа перерізу: $$A=b \times h - b_1 \times h_1 = {{b}} \times {{h}}
+            - {{b_1}} \times {{h_1}} = {{A = Math.round(b*h -
+            b_1*h_1)/100}}см^2$$
+          </p>
+          <p>
+            Момент інерції: $$I = \frac{b \times h^3}{12} - \frac{b_1 \times
+            h_1^3}{12}= 
+            \frac{ {{b}} \times {{h}}^3}{12} - \frac{ {{b_1}} \times
+              {{h_1}}^3}{12}= 
+            {{I = Math.round(( b*h**3/12-b_1*h_1**3/12
+            )/100)/100}}см^4$$
+          </p>
+        </div>
+        <div v-else-if="section == 'Прямокутник'">
+          <img src="./rect2.svg" alt="сечение" />
+          <p>
+            h=
+            <input v-model="h" type="number" placeholder="h" size="5" />
+            (мм) висота перерізу
+          </p>
+          <p>
+            b=
+            <input v-model="b" type="number" placeholder="b" size="5" />
+            (мм) ширина перерізу
+          </p>
+          <p>
+            Площа перерізу: $$A=b \times h = {{b}} \times {{h}} = {{A =
+            Math.round(b*h )/100}}см^2$$
+          </p>
+          <p>
+            Момент інерції: $$I = \frac{b \times h^3}{12} = 
+            \frac{ {{b}} \times {{h}}^3}{12} ={{I = Math.round((
+            b*h**3/12 )/100)/100}}см^4$$
+          </p>
+        </div>
+        <div v-else-if="section == 'Коло'">
+          <img src="./circle2.svg" alt="сечение" />
+          <p>
+            b=
+            <input v-model="b" type="number" placeholder="b" size="5" />
+            (мм) ширина перерізу
+          </p>
+          <p>
+            Площа перерізу: $$A=\frac{3.14}{4} \times b^2 = \frac{3.14}{4}
+            \times {{b}}^2 = {{A = Math.round(3.14/4* (b**2 ))/100}}см^2$$
+          </p>
+          <p>
+            Момент інерції: $$I = \frac{3.14}{64} \times b^4 =\frac{3.14}{64}
+            \times {{b}}^4 = {{I = Math.round(( 3.14/64*(b**4)
+            )/100)/100}}см^4$$
+          </p>
+        </div>
+        <div v-else-if="section == 'Кругла труба'">
+          <img src="./circle.svg" alt="сечение" />
+          <p>
+            b=
+            <input v-model="b" type="number" placeholder="b" size="5" />
+            (мм) ширина перерізу
+          </p>
+          <p>
+            t=
+            <input v-model="t" type="number" placeholder="t" size="5" />
+            (мм) товщина елементa
+          </p>
+          <p>
+            допоміжні розміри: $$b_1=b - 2 \times t = {{b}} - 2 \times {{t}} =
+            {{b_1=b-2*t}} мм$$
+          </p>
+          <p>
+            Площа перерізу: $$A=\frac{3.14}{4} \times (b^2 - b_1^2 ) =
+            \frac{3.14}{4} \times ({{b}}^2- {{b_1}}^2) = {{A =
+            Math.round(3.14/4* (b**2 - b_1**2))/100}}см^2$$
+          </p>
+          <p>
+            Момент інерції: $$I = \frac{3.14}{64} \times (b^4 - b_1^4
+            )=\frac{3.14}{64} \times ({{b}}^4 - {{b_1}}^4 )= {{I = Math.round((
+            3.14/64*(b**4-b_1**4) )/100)/100}}см^4$$
+          </p>
+        </div>
+        <div v-else-if="section == 'Двотавр'">
+          <img src="./2T.svg" alt="сечение" />
+          <p>
+            h=
+            <input v-model="h" type="number" placeholder="h" size="5" />
+            (мм) висота перерізу
+          </p>
+          <p>
+            b=
+            <input v-model="b" type="number" placeholder="b" size="5" />
+            (мм) ширина перерізу
+          </p>
+          <p>
+            t=
+            <input v-model="t" type="number" placeholder="t" size="5" />
+            (мм) товщина стінки
+          </p>
+          <p>
+            s=
+            <input v-model="s" type="number" placeholder="s" size="5" />
+            (мм) товщина полки
+          </p>
+          <p>
+            допоміжні розміри: $$a=b - t = {{b}} - {{t}} = {{a=b-t}} мм$$
+            $$h_1=b - 2 \times t = {{h}} - 2 \times {{t}} = {{h_1=h-2*t}} мм$$
+          </p>
+          <p>
+            Площа перерізу: $$A=b \times h - h_1 \times a = {{b}} \times {{h}}
+            - {{h_1}} \times {{a}} = 
+            b \times h - h_1 \times a = {{b}} \times {{h}}
+            - {{h_1}} \times {{a}} =
+            {{A = Math.round(b*h -
+              h_1*a)/100}}см^2$$
+          </p>
+          <p>
+            Момент інерції: $$I = \frac{b \times h^3}{12} - \frac{h_1 \times
+            a^3}{12}= 
+            \frac{ {{b}} \times {{h}}^3}{12} - \frac{ {{h_1}} \times
+              {{a}}^3}{12}=
+            {{I = Math.round(( b*h**3/12-b_1*h_1**3/12
+            )/100)/100}}см^4$$
+          </p>
+        </div>
+        <div v-else-if="section == 'Швеллер'">
+          <img src="./C.svg" alt="сечение" />
+        </div>
+        <div v-else>
+          <img src="./rect.svg" alt="сечение" />
+        </div>
+        <p>
+          Момент опору: $$W = \frac{I}{ \frac{h}{2} } = \frac{ {{I}} }{ \frac{
+          {{h/10}} }{2} }= {{W = Math.round((I/h*2)*1000)/100}}см^3$$
+        </p>
+        <p>
+          Радіус інерції: $$i =\sqrt{\frac{ I }{ A } } = \sqrt{\frac{ {{I}} }{
+          {{A}} } }= {{A = Math.round((I/A)**0.5*100)/100}}см$$
+        </p>
+      </div>
+
+      <!-- <div class="before"></div> -->
+    </div>
+    <script>
+      const { createApp } = Vue;
+
+      createApp({
+        data() {
+          return {
+            section: "Труба прямокутна",
+            h: 100,
+            b: 100,
+            t: 3,
+            s: 4,
+          };
+        },
+        methods: {
+          reRender() {
+            if (window.MathJax) {
+              console.log("rendering mathjax");
+              window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub], () =>
+                console.log("done")
+              );
+            }
+          },
+        },
+        computed: {
+          h() {
+            console.log("data changed");
+            this.$nextTick().then(() => {
+              this.reRender();
+            });
+          },
+        },
+        mounted() {
+          this.reRender();
+        },
+        watch: {
+          section: function () {
+            this.$nextTick().then(() => {
+              this.reRender();
+            });
+          },
+
+          h: function () {
+            this.$nextTick().then(() => {
+              this.reRender();
+            });
+          },
+          b: function () {
+            this.$nextTick().then(() => {
+              this.reRender();
+            });
+          },
+          t: function () {
+            this.$nextTick().then(() => {
+              this.reRender();
+            });
+          },
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

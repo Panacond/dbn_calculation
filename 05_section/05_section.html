@@ -13,9 +13,6 @@
       }
 
       .page {
-        /* border-style: solid; */
-        /* border-color: red; */
-        /* border-width: 0.03cm; */
         margin: 0px 0.5cm 2cm 1.8cm;
         height: 990px;
         width: 17.5cm;
@@ -29,14 +26,79 @@
         font-size: 10px;
         content: " ";
       }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      label {
+        margin-right: 10px;
+      }
+      input[type="number"] {
+        width: 70px;
+        padding: 5px;
+        margin-right: 10px;
+      }
+      .formula {
+        /* font-size: 1.2em; */
+        margin-top: 20px;
+        /* padding-top: 6cm; */
+        position: absolute;
+        top: 29.7cm; 
+        /* left: 100px;  */
+        width: 17.5cm; 
+        height: 29.0cm;
+      }
+      .rectangles {
+        margin-bottom: 20px;
+      }
+      .rectangles div {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      button {
+        margin-left: 10px;
+      }
+      svg rect {
+        fill: lightgray;
+        stroke: black;
+        stroke-width: 2;
+      }
+      .form-row {
+        margin-bottom: 10px;
+        display: flex;
+      }
+      /* Стили для координатной оси */
+      .axis {
+        stroke: black;
+        stroke-width: 2;
+      }
+      /* Стили для сетки */
+      .grid {
+        stroke: lightgray;
+        stroke-width: 1;
+      }
+      /* Стили для стрелок */
+      .arrow {
+        fill: black;
+      }
+      input {
+        width: 2cm;
+      }
     </style>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/contrib/auto-render.min.js"></script>
+
+    <script src="./RectangleForm.js"></script>
+    <script src="./SectionFormula.js"></script>
   </head>
 
   <body>
-    <script src="./vue.global.js"></script>
-
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
         extensions: ["tex2jax.js"],
@@ -103,10 +165,8 @@
           </p>
           <p>
             Момент інерції: $$I = \frac{b \times h^3}{12} - \frac{b_1 \times
-            h_1^3}{12}= 
-            \frac{ {{b}} \times {{h}}^3}{12} - \frac{ {{b_1}} \times
-              {{h_1}}^3}{12}= 
-            {{I = Math.round(( b*h**3/12-b_1*h_1**3/12
+            h_1^3}{12}= \frac{ {{b}} \times {{h}}^3}{12} - \frac{ {{b_1}} \times
+            {{h_1}}^3}{12}= {{I = Math.round(( b*h**3/12-b_1*h_1**3/12
             )/100)/100}}см^4$$
           </p>
         </div>
@@ -127,9 +187,8 @@
             Math.round(b*h )/100}}см^2$$
           </p>
           <p>
-            Момент інерції: $$I = \frac{b \times h^3}{12} = 
-            \frac{ {{b}} \times {{h}}^3}{12} ={{I = Math.round((
-            b*h**3/12 )/100)/100}}см^4$$
+            Момент інерції: $$I = \frac{b \times h^3}{12} = \frac{ {{b}} \times
+            {{h}}^3}{12} ={{I = Math.round(( b*h**3/12 )/100)/100}}см^4$$
           </p>
         </div>
         <div v-else-if="section == 'Коло'">
@@ -200,47 +259,77 @@
           </p>
           <p>
             допоміжні розміри: $$a=b - t = {{b}} - {{t}} = {{a=b-t}} мм$$
-            $$h_1=b - 2 \times t = {{h}} - 2 \times {{t}} = {{h_1=h-2*t}} мм$$
+            $$h_1=b - 2 \times s = {{h}} - 2 \times {{s}} = {{h_1=h-2*s}} мм$$
           </p>
           <p>
-            Площа перерізу: $$A=b \times h - h_1 \times a = {{b}} \times {{h}}
-            - {{h_1}} \times {{a}} = 
-            b \times h - h_1 \times a = {{b}} \times {{h}}
-            - {{h_1}} \times {{a}} =
-            {{A = Math.round(b*h -
-              h_1*a)/100}}см^2$$
+            Площа перерізу: $$A=b \times h - h_1 \times a = {{b}} \times {{h}} -
+            {{h_1}} \times {{a}} = {{A = Math.round(b*h - h_1*a)/100}}см^2$$
           </p>
           <p>
-            Момент інерції: $$I = \frac{b \times h^3}{12} - \frac{h_1 \times
-            a^3}{12}= 
-            \frac{ {{b}} \times {{h}}^3}{12} - \frac{ {{h_1}} \times
-              {{a}}^3}{12}=
-            {{I = Math.round(( b*h**3/12-b_1*h_1**3/12
+            Момент інерції: $$I = \frac{b \times h^3}{12} - \frac{a \times
+            a^3}{12}= \frac{ {{b}} \times {{h}}^3}{12} - \frac{ {{a}} \times
+            {{h_1}}^3}{12}= {{I = Math.round(( b*h**3/12-a*h_1**3/12
             )/100)/100}}см^4$$
           </p>
         </div>
         <div v-else-if="section == 'Швеллер'">
           <img src="./C.svg" alt="сечение" />
+          <p>
+            h=
+            <input v-model="h" type="number" placeholder="h" size="5" />
+            (мм) висота перерізу
+          </p>
+          <p>
+            b=
+            <input v-model="b" type="number" placeholder="b" size="5" />
+            (мм) ширина перерізу
+          </p>
+          <p>
+            t=
+            <input v-model="t" type="number" placeholder="t" size="5" />
+            (мм) товщина стінки
+          </p>
+          <p>
+            s=
+            <input v-model="s" type="number" placeholder="s" size="5" />
+            (мм) товщина полки
+          </p>
+          <p>
+            допоміжні розміри: $$a=b - t = {{b}} - {{t}} = {{a=b-t}} мм$$
+            $$h_1=b - 2 \times s = {{h}} - 2 \times {{s}} = {{h_1=h-2*s}} мм$$
+          </p>
+          <p>
+            Площа перерізу: $$A=b \times h - h_1 \times a = {{b}} \times {{h}} -
+            {{h_1}} \times {{a}} = {{A = Math.round(b*h - h_1*a)/100}}см^2$$
+          </p>
+          <p>
+            Момент інерції: $$I = \frac{b \times h^3}{12} - \frac{a \times
+            a^3}{12}= \frac{ {{b}} \times {{h}}^3}{12} - \frac{ {{a}} \times
+            {{h_1}}^3}{12}= {{I = Math.round(( b*h**3/12-a*h_1**3/12
+            )/100)/100}}см^4$$
+          </p>
         </div>
         <div v-else>
-          <img src="./rect.svg" alt="сечение" />
+          <section-formula></section-formula>
         </div>
-        <p>
-          Момент опору: $$W = \frac{I}{ \frac{h}{2} } = \frac{ {{I}} }{ \frac{
-          {{h/10}} }{2} }= {{W = Math.round((I/h*2)*1000)/100}}см^3$$
-        </p>
-        <p>
-          Радіус інерції: $$i =\sqrt{\frac{ I }{ A } } = \sqrt{\frac{ {{I}} }{
-          {{A}} } }= {{A = Math.round((I/A)**0.5*100)/100}}см$$
-        </p>
+        <div v-if="section != 'Складне'">
+          <p>
+            Момент опору: $$W = \frac{I}{ \frac{h}{2} } = \frac{ {{I}} }{ \frac{
+            {{h/10}} }{2} }= {{W = Math.round((I/h*2)*1000)/100}}см^3$$
+          </p>
+          <p>
+            Радіус інерції: $$i =\sqrt{\frac{ I }{ A } } = \sqrt{\frac{ {{I}} }{
+            {{A}} } }= {{A = Math.round((I/A)**0.5*100)/100}}см$$
+          </p>
+        </div>
       </div>
 
       <!-- <div class="before"></div> -->
     </div>
     <script>
-      const { createApp } = Vue;
-
-      createApp({
+      // const { createApp } = Vue;
+      const { createApp, ref, computed } = Vue;
+      const app = Vue.createApp({
         data() {
           return {
             section: "Труба прямокутна",
@@ -248,24 +337,19 @@
             b: 100,
             t: 3,
             s: 4,
+            rectangles: null,
           };
         },
         methods: {
           reRender() {
             if (window.MathJax) {
               console.log("rendering mathjax");
-              window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub], () =>
-                console.log("done")
-              );
+              this.$nextTick(() => {
+                window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub], () =>
+                  console.log("done")
+                );
+              });
             }
-          },
-        },
-        computed: {
-          h() {
-            console.log("data changed");
-            this.$nextTick().then(() => {
-              this.reRender();
-            });
           },
         },
         mounted() {
@@ -294,7 +378,10 @@
             });
           },
         },
-      }).mount("#app");
+      });
+      app.component("rectangle-form", RectangleForm);
+      app.component("section-formula", SectionFormula);
+      app.mount("#app");
     </script>
   </body>
 </html>

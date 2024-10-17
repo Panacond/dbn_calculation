@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Пластина на 2-м сторонам</title>
+    <!-- Подключаем MathJax для рендеринга формул -->
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [["$", "$"]], // Настройка для inline формул
+          displayMath: [["$$", "$$"]], // Настройка для дисплейных формул
+        },
+        startup: {
+          typeset: false, // Отключаем автоматический рендеринг при загрузке страницы
+        },
+      };
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+      async
+    ></script>
+    <!-- <script src="./mathjax.js"></script> -->
+    <!-- <script src="./tex-mml-chtml.js"></script> -->
+    <!-- Подключаем Vue.js -->
+    <script src="https://unpkg.com/vue@3"></script>
+    <!-- <script src="./vue.global.js"></script> -->
+    
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      .formula {
+        font-size: 1.5em;
+        margin-top: 20px;
+      }
+      input {
+        width: 2cm;
+      }
+
+      table {
+        border-collapse: collapse;
+        border: 2px solid rgb(140 140 140);
+        /* font-family: sans-serif; */
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+      }
+
+      caption {
+        padding: 15px;
+        font-weight: bold;
+        font-size: 1.5em;
+      }
+
+      th,
+      td {
+        border: 1px solid rgb(160 160 160);
+        padding: 8px 10px;
+      }
+
+      td {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>
+        Изгиб пластинки по цилиндрической поверхности со свободно опертыми
+        краями
+      </h1>
+      <p>Опирание по 2 сторонам</p>
+
+      <p class="form-group">
+        <label for="l">длина пластины a:</label>
+        <input type="number" v-model="l" id="l" min="0" step="1" /> мм
+      </p>
+      <p class="form-group">
+        <label for="h">толщина пластины h:</label>
+        <input type="number" v-model="h" id="h" min="1" step="1" /> мм
+      </p>
+      <p class="form-group">
+        <label for="q_r">расчетная нагрузка q<sub>r</sub> :</label>
+        <input type="number" v-model="q_r" id="q_r" min="1" step="1" />Па
+      </p>
+      <p class="form-group">
+        <label for="q_n">нормативная нагрузка нагрузка q<sub>n</sub></label>
+        <input type="number" v-model="q_n" id="q_n" min="1" step="1" />Па
+      </p>
+      <p class="form-group">
+        <label for="R">расчетное сопротивление изгибу R:</label>
+        <input type="number" v-model="R" id="R" min="1" step="1" /> МПа
+      </p>
+      <p class="form-group">
+        <label for="E">модуль упругости E:</label>
+        <input type="number" v-model="E" id="E" min="1" step="1" /> МПа
+      </p>
+      <p class="form-group">
+        <label for="mu">коэффициент Пуассона $\mu$:</label>
+        <input type="number" v-model="mu" id="mu" min="1" step="0.1" /> МПа
+      </p>
+      <p>Цилиндрическая жесткость:</p>
+      <p>
+        $$ D = \frac{ E \times h^3}{12 \times (1- \mu^2)} = \frac{ {{E}} \times
+        {{h}}^3}{12 \times (1- {{mu}}^2) \times 10^3} =
+        {{D=round(E*h**3/(12*(1-mu**2))/10**3)}} \text{ Н м }$$
+      </p>
+      <p>Прогиб от расчетных нагрузок:</p>
+      <p>
+        $$f_0 = \frac{5}{384} \frac{q_r \times l^4}{D} = \frac{5}{384} \frac{
+        {{q_r}} \times {{l}} ^4}{ {{D}} \times 10^9 } = {{f_0=f(q_r)}} \text{
+        мм}$$
+      </p>
+      <p>
+        $$ k = \frac{3 \times f_0^2}{h^2} = \frac{3 \times {{f_0}}^2}{ {{h}}^2}
+        = {{k=round(3*f_0**2/h**2)}} $$
+      </p>
+      <p>
+        $$k_1=\left( \frac{\sqrt{k(27 \times k - 32)}}{2 \times 3^\frac{3}{2}} +
+        \frac{k}{2} - \frac{8}{27} \right)^\frac{1}{3} = \left( \frac{\sqrt{
+        {{k}} (27 \times {{k}} - 32)}}{2 \times 3^\frac{3}{2}} + \frac{k}{2} -
+        \frac{8}{27} \right)^\frac{1}{3} = {{k_1}} $$
+      </p>
+      <p>
+        $$ a= k_1 + \frac{4}{9 \times k_1} - \frac{5}{3} = {{k_1}} + \frac{4}{9
+        \times {{k_1}} } - \frac{5}{3} = {{a=round(k_1+4/9/k_1-5/3)}} $$
+      </p>
+      <p>Наибольшие напряжения от изгиба:</p>
+      <p>
+        $$\sigma_1=\frac{a \times 3.14^2 \times D}{h \times l^2} = \frac{ {{a}}
+        \times 3.14^2 \times {{D}} }{ {{h}} \times {{l}}^2} =
+        {{sigma_1=round(a*3.14**2*D/h/l**2*10**3)}} \text{ МПа}$$
+      </p>
+      <p>наибольший изгибающий момент посредине полоски:</p>
+      <p>
+        $$M_{max}= \frac{q_r \times l^2}{8} = \frac{ {{q_r}} \times {{l}}^2}{8
+        \times 10^6} ={{M_max=round(q_r*l**2/8/10**6)}} \text{ Н}$$
+      </p>
+      <p>Соответствующие наибольшие напряжения изгиба будут:</p>
+      <p>
+        $$\sigma_2= \frac{6 \times M_{max}}{h^2} =\frac{6 \times {{M_max}} }{
+        {{h}}^2} = {{sigma_2 = round( 6*M_max/h**2)}} \text{ МПа}$$
+      </p>
+      <p>Полное наибольшее напряжение будет:</p>
+      <p>
+        $$ \sigma =\sigma_1 +\sigma_2 ={{sigma_1}} + {{sigma_2}}
+        ={{sigma=round(sigma_1+sigma_2 )}} \text{ МПа}$$
+      </p>
+      <p>Коэффициент использования по прочности:</p>
+      <p>
+        $$ k_r = \frac{\sigma}{R} = \frac{ {{sigma}} }{ {{R}} } =
+        {{round(sigma/R)}} $$
+      </p>
+
+      <p>Прогиб от нормативных нагрузок составит:</p>
+      <p>
+        $$f_n = \frac{5}{384} \frac{q_n \times l^4}{D} = \frac{5}{384} \frac{
+        {{q_n}} \times {{l}} ^4}{ {{D}} \times 10^9 } = {{f_n=f(q_n)}} \text{
+        мм}$$
+      </p>
+
+      <select v-model="type">
+        <option disabled value="">Виберіть тип</option>
+        <option>Зенитный фонарь в 1 нитку</option>
+        <option>Зенитный фонарь в составе стеклопакета</option>
+        <option>Вертикальный фасад</option>
+      </select>
+
+      <div v-if="type == 'Вертикальный фасад' || type == 'Зенитный фонарь в 1 нитку' ">
+        <p>Допустимый прогиб 1/100 пролета:</p>
+        <p>
+          $$f_d = \frac{l}{100}=\frac{ {{l}} }{100}={{f_d=round(l/100)}} \text{
+          мм}$$
+        </p>
+      </div>
+      <div v-else>
+        <p>Допустимый прогиб 1/200 пролета:</p>
+        <p>
+          $$f_d = \frac{l}{200}=\frac{ {{l}} }{200}={{f_d=round(l/200)}} \text{
+          мм}$$
+        </p>
+      </div>
+
+      <p>Коэффициент использования по прогибам:</p>
+      <p>
+        $$k_f = \frac{f}{f_d} = \frac{ {{f_n}} }{ {{f_d}} } = {{round(f_n/f_d)}} $$
+      </p>
+    </div>
+
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            l: 1000,
+            h: 4,
+            R: 15,
+            E: 70000,
+            mu: 0.3,
+            q_r: 310,
+            q_n: 220,
+            type: "Вертикальный фасад",
+          };
+        },
+        mounted() {
+          // Ждем пока MathJax загрузится
+          this.renderMath();
+        },
+        updated() {
+          // Перерендериваем формулы при обновлении данных
+          this.renderMath();
+        },
+        computed: {
+          k_1() {
+            return this.round(
+              ((this.k * (27 * this.k - 32)) ** 0.5 / (2 * 3 ** (3 / 2)) +
+                this.k / 2 -
+                8 / 27) **
+                (1 / 3)
+            );
+          },
+          R_p() {
+            return this.round(
+              (6 * this.beta1 * this.q_r * this.a ** 2) / this.h ** 2 / 10 ** 6
+            );
+          },
+        },
+
+        methods: {
+          round(a) {
+            return Math.round(a * 100) / 100;
+          },
+
+          f(q) {
+            return this.round(((5 / 384) * q * this.l ** 4) / this.D / 10 ** 9);
+          },
+
+          renderMath() {
+            MathJax.typesetPromise();
+          },
+        },
+      });
+
+      app.mount("#app");
+    </script>
+  </body>
+</html>

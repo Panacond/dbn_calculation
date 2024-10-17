@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Пластина по 4 сторонам</title>
+    <!-- Подключаем MathJax для рендеринга формул -->
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [["$", "$"]], // Настройка для inline формул
+          displayMath: [["$$", "$$"]], // Настройка для дисплейных формул
+        },
+        startup: {
+          typeset: false, // Отключаем автоматический рендеринг при загрузке страницы
+        },
+      };
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+      async
+    ></script>
+    <!-- <script src="./mathjax.js"></script> -->
+    <!-- <script src="./tex-mml-chtml.js"></script> -->
+    <!-- Подключаем Vue.js -->
+    <script src="https://unpkg.com/vue@3"></script>
+    <!-- <script src="./vue.global.js"></script> -->
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      .formula {
+        font-size: 1.5em;
+        margin-top: 20px;
+      }
+      input {
+        width: 2cm;
+      }
+
+      table {
+        border-collapse: collapse;
+        border: 2px solid rgb(140 140 140);
+        /* font-family: sans-serif; */
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+      }
+
+      caption {
+        padding: 15px;
+        font-weight: bold;
+        font-size: 1.5em;
+      }
+
+      th,
+      td {
+        border: 1px solid rgb(160 160 160);
+        padding: 8px 10px;
+      }
+
+      td {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>
+        Расчет равномерно нагруженной прямоугольной пластины со свободно
+        опертыми краями
+      </h1>
+      <p>Опирание по 4 сторонам</p>
+
+      <p class="form-group">
+        <label for="a">ширина пластины a:</label>
+        <input type="number" v-model="a" id="a" min="0" step="1" /> мм
+      </p>
+      <p class="form-group">
+        <label for="b">длина пластины b:</label>
+        <input type="number" v-model="b" id="b" min="0" step="1" /> мм
+      </p>
+      <p class="form-group">
+        <label for="h">толщина пластины h:</label>
+        <input type="number" v-model="h" id="h" min="1" step="1" /> мм
+      </p>
+      <p class="form-group">
+        <label for="q_r">расчетная нагрузка q<sub>r</sub> :</label>
+        <input type="number" v-model="q_r" id="q_r" min="1" step="1" />Па
+      </p>
+      <p class="form-group">
+        <label for="q_n">нормативная нагрузка нагрузка q<sub>n</sub></label>
+        <input type="number" v-model="q_n" id="q_n" min="1" step="1" />Па
+      </p>
+      <p class="form-group">
+        <label for="R">расчетное сопротивление изгибу R:</label>
+        <input type="number" v-model="R" id="R" min="1" step="1" /> МПа
+      </p>
+      <p class="form-group">
+        <label for="E">модуль упругости E:</label>
+        <input type="number" v-model="E" id="E" min="1" step="1" /> МПа
+      </p>
+      <p>отношение сторон:</p>
+      <p>$$ b/a = \frac{b}{a} = \frac{ {{b}} }{ {{a}} } = {{round(b/a)}}$$</p>
+
+      <div class="table">
+        <table>
+          <caption>
+            Коэффициенты для расчета равномерно нагруженных прямоугольных
+            пластинок со свободно опертыми краями
+          </caption>
+          <thead>
+            <tr class="row">
+              <th class="col">$ b/a$</th>
+              <th v-for="item in xValuesView">
+                {{ item }}
+              </th>
+            </tr>
+          </thead>
+          <tr class="row">
+            <th class="col">$ \alpha $</th>
+            <td v-for="item in aValues">
+              {{ item }}
+            </td>
+          </tr>
+          <tr class="row">
+            <th class="col">$ \beta_1 $</th>
+            <td v-for="item in b1Values">
+              {{ item }}
+            </td>
+          </tr>
+        </table>
+      </div>
+      <p>$\alpha={{alpha}}$; $\beta_1 ={{beta1}}$;</p>
+      <p>Напряжения в пластине составят:</p>
+      <p>$$ R_p= \frac{ 6 \times \beta_1 \times q_r \times a^2 }{ h^2 } = \frac{ 6 \times {{beta1}} \times {{q_r}} \times {{a}}^2 }{ {{h}}^2 } = {{R_p}} \text{ МПа} $$</p>
+      <p>Коэффициент использования по прочности:</p>
+      <p>$$ k_r = \frac{R_p}{R} = \frac{ {{R_p}} }{ {{R}} } = {{round(R_p/R)}} $$</p>
+      
+      <p>Прогиб от нормативных нагрузок составит:</p>
+      <p>$$ f= \alpha \frac{q_n \times a^4}{ E \times h^3} = {{alpha}} \times \frac{ {{q_n}} \times {{a}}^4}{ {{E}} \times {{h}}^3 \times 10^6} = {{f}} \text{ мм}  $$</p>
+      <p>Допустимый прогиб 1/100 меньшего пролета:</p>
+      <p>$$f_d = \frac{b}{1000}=\frac{ {{a}} }{100}={{f_d=round(a/100)}} \text{ мм}$$</p>
+      <p>Коэффициент использования по прогибам:</p>
+      <p>$$k_f = \frac{f}{f_d} = \frac{ {{f}} }{ {{f_d}} } = {{round(f/f_d)}}  $$</p>
+    </div>
+
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            a: 1000,
+            b: 1700,
+            h: 4,
+            R: 15,
+            E: 70000,
+            q_r: 310,
+            q_n: 220,
+            xValuesView: [
+              1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0, 3.0, 4.0,
+              5.0, "∞",
+            ],
+            xValues: [
+              1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0, 3.0, 4.0,
+              5.0, 5.1,
+            ],
+            aValues: [
+              0.0443, 0.053, 0.0616, 0.0697, 0.077, 0.0843, 0.0906, 0.0964,
+              0.1017, 0.1064, 0.1106, 0.1336, 0.14, 0.1416, 0.1422,
+            ],
+            b1Values: [
+              0.0479, 0.0553, 0.0626, 0.0693, 0.0753, 0.0812, 0.0862, 0.0908,
+              0.0948, 0.0985, 0.1017, 0.1189, 0.1235, 0.1246, 0.125,
+            ],
+          };
+        },
+        mounted() {
+          // Ждем пока MathJax загрузится
+          this.renderMath();
+        },
+        updated() {
+          // Перерендериваем формулы при обновлении данных
+          this.renderMath();
+        },
+        computed: {
+          R_p(){
+            return this.round( 6 * this.beta1 * this.q_r * this.a**2/this.h**2/10**6)
+          },
+          alpha() {
+            return Math.round( this.interpolate(
+              this.b / this.a,
+              this.xValues,
+              this.aValues
+            )*10**4)/10**4;
+          },
+          beta1() {
+            return Math.round( this.interpolate(
+              this.b / this.a,
+              this.xValues,
+              this.b1Values
+              )*10**4)/10**4;
+          },
+          f(){
+
+            return this.round(this.alpha * this.q_n * this.a**4/ this.E/ this.h**3/10**6)
+          }
+        },
+
+        methods: {
+          round(a) {
+            return Math.round(a * 100) / 100;
+          },
+
+          interpolate(x, xValues, yValues) {
+            if (xValues.length !== yValues.length) {
+              throw new Error("Списки x и y должны быть одинаковой длины.");
+            }
+
+            // Если x меньше минимального значения в xValues, вернуть первое значение yValues
+            if (x < xValues[0]) {
+              return yValues[0];
+            }
+
+            // Если x больше максимального значения в xValues, вернуть последнее значение yValues
+            if (x > xValues[xValues.length - 1]) {
+              return yValues[yValues.length - 1];
+            }
+
+            // Линейная интерполяция
+            for (let i = 1; i < xValues.length; i++) {
+              if (xValues[i - 1] <= x && x <= xValues[i]) {
+                const y =
+                  yValues[i - 1] +
+                  ((yValues[i] - yValues[i - 1]) * (x - xValues[i - 1])) /
+                    (xValues[i] - xValues[i - 1]);
+                return y;
+              }
+            }
+
+            throw new Error("Значение x не удалось интерполировать.");
+          },
+
+          renderMath() {
+            MathJax.typesetPromise();
+          },
+        },
+      });
+
+      app.mount("#app");
+    </script>
+  </body>
+</html>

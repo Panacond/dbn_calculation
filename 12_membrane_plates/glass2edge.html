@@ -19,10 +19,10 @@
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
       async
     ></script>
-    <script src="./mathjax.js"></script>
-    <script src="./tex-mml-chtml.js"></script>
+    <!-- <script src="./mathjax.js"></script> -->
+    <!-- <script src="./tex-mml-chtml.js"></script> -->
     <script src="https://unpkg.com/vue@3"></script>
-    <script src="./vue.global.js"></script>
+    <!-- <script src="./vue.global.js"></script> -->
 
     <link rel="stylesheet" href="./style.css" />
   </head>
@@ -36,7 +36,7 @@
         <p>Спирання по 2 сторони</p>
 
         <p class="form-group">
-          <label for="l">довжина пластини a:</label>
+          <label for="l">довжина пластини l:</label>
           <input type="number" v-model="l" id="l" min="0" step="1" /> мм
         </p>
         <p class="form-group">
@@ -127,6 +127,8 @@
           {{q_n}} \times {{l}} ^4}{ {{D}} \times 10^9 } = {{f_n=f(q_n)}} \text{
           мм}$$
         </p>
+        <p>Відносний прогин від нормативних навантажень складе:</p>
+        <p>$$\frac{a}{f_n}=\frac{1}{ \frac{l}{f_n} }=\frac{1}{ \frac{ {{l}} }{ {{f_n}} } }=\frac{1}{ {{round(l/f_n)}} }$$</p>
       </div>
     </div>
 

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <h4>Квадратна труба</h4>
+      <img src="./image/pipe.svg" alt="pipe" />
+      <span class="form-group">
+        <label for="b">b мм:</label>
+        <input type="number" v-model="geometry.b" id="b" min="0" step="1" />
+      </span>
+      <span class="form-group">
+        <label for="t"> t мм:</label>
+        <input type="number" v-model="geometry.t" id="t" min="0" step="1" />
+      </span>
+      <p>
+        Площа перерізу: A={{A}} см<sup>2</sup>; Момент інерції:
+        I={{I}}см<sup>4</sup>;
+      </p>
+      <p>Момент опору см<sup>3</sup>:</p>
+      <p>
+        $$W=\frac{I}{\frac{ b }{2}}=\frac{ {{I}} }{\frac{ {{geometry.b}} \times
+        0.1 }{2}} \times10 = {{W=round(I/geometry.b*2*10)}} \text{ см}^3$$
+      </p>
+      <p>Радіус інерції перерізу:</p>
+      <p>
+        $$i=\sqrt{ \frac{I}{A}} = \sqrt{ \frac{ {{I}} }{ {{A}} }} =
+        {{i=round((I/A)**0.5 )}} \text{ см}$$
+      </p>
+    </div>
+    <script>
+      //         A() {
+      //   return this.round(
+      //     (this.geometry.b * this.geometry.t * 4 -
+      //       this.geometry.t ** 2 * 6) /
+      //       10 ** 2
+      //   );
+      // },
+      // I() {
+      //   return this.round(
+      //     (this.geometry.b ** 4 / 12 -
+      //       (this.geometry.b - this.geometry.t * 2) ** 4 / 12 -
+      //       this.geometry.t ** 2 *
+      //         (this.geometry.b / 2 +
+      //           this.geometry.t * (7 - this.geometry.t)) **
+      //           2) /
+      //       10 ** 4
+      //   );
+      // },
+    </script>
+  </body>
+</html>

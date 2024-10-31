@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>steel_column</title>
+    <!-- Подключаем MathJax для рендеринга формул -->
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [["$", "$"]], // Настройка для inline формул
+          displayMath: [["$$", "$$"]], // Настройка для дисплейных формул
+        },
+        startup: {
+          typeset: false, // Отключаем автоматический рендеринг при загрузке страницы
+        },
+      };
+    </script> 
+    <script
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    async
+  ></script>
+    <!-- <script src="./mathjax.js"></script>
+    <script src="./tex-mml-chtml.js"></script> -->
+    <!-- Подключаем Vue.js -->
+    <script src="https://unpkg.com/vue@3"></script>
+    <!-- <script src="./vue.global.js"></script> -->
+    <script src="./DbnReliability.js"></script>
+    <script src="./DbnReliability2.js"></script>
+    <script src="./SectionPipe.js"></script>
+    <script src="./SectionRectangle.js"></script>
+    <script src="./SectionNumerical.js"></script>
+    <script src="./tableFive.js"></script>
+
+    <style>
+      #type {
+        /* color: brown; */
+        display: flex;
+        align-items: center;
+      }
+    </style>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="page">
+        <h1>Розрахунок металевої стійки</h1>
+
+        <h2>ДБН В.2.6-198:2014 Зі Зміною № 1 "Сталеві конструкції"</h2>
+        <h3>8.1 Розрахунок елементів суцільного перерізу</h3>
+
+        <dbn-reliability></dbn-reliability>
+      </div>
+      <div class="before"></div>
+      <div class="page">
+        <dbn-reliability2></dbn-reliability2>
+        <div class="form-group">
+          <label for="gamma_n"
+            >Коефіціент надійности за відповідальністю $\gamma_n$:</label
+          >
+          <input
+            type="number"
+            v-model="gamma_n"
+            id="gamma_n"
+            min="0"
+            step="0.1"
+          />
+        </div>
+      </div>
+      <div class="before"></div>
+      <div class="page">
+        <table-five></table-five>
+        <p class="form-group">
+          <label for="gamma_c">Коефіцієнт умов роботи $\gamma_c$:</label>
+          <input type="number" v-model="gamma_c" min="0" step="0.1" />
+        </p>
+      </div>
+      <div class="before"></div>
+      <div class="page">
+        <div>
+          <table>
+            <caption>
+              Таблиця 13.7 - Коеффіцієнти розрахункової довжини колон (стояків)
+            </caption>
+            <tbody>
+              <tr class="row">
+                <td class="col">
+                  Схема опорного закріплення колон (стояків) і вид навантаження
+                </td>
+                <td class="col"><img src="./image/1.svg" alt="1.0" /></td>
+                <td class="col"><img src="./image/07.svg" alt="0.7" /></td>
+                <td class="col"><img src="./image/05.svg" alt="0.5" /></td>
+                <td class="col"><img src="./image/2.svg" alt="0.5" /></td>
+                <td class="col"><img src="./image/10.svg" alt="0.5" /></td>
+                <td class="col"><img src="./image/20.svg" alt="0.5" /></td>
+                <td class="col"><img src="./image/0725.svg" alt="0.5" /></td>
+                <td class="col"><img src="./image/112.svg" alt="0.5" /></td>
+              </tr>
+              <tr class="row">
+                <td class="col">$\mu$</td>
+                <td class="col">1.0</td>
+                <td class="col">0.7</td>
+                <td class="col">0.5</td>
+                <td class="col">2.0</td>
+                <td class="col">1.0</td>
+                <td class="col">2.0</td>
+                <td class="col">0.725</td>
+                <td class="col">1.12</td>
+              </tr>
+            </tbody>
+          </table>
+          Виберіть коефіцієнт розрахунокової довжини
+          <select v-model="mu">
+            <option disabled value="">Виберіть</option>
+            <option>0.5</option>
+            <option>0.7</option>
+            <option>0.725</option>
+            <option>1</option>
+            <option>1.12</option>
+            <option>2.0</option>
+          </select>
+        </div>
+        <div>
+          <h3>Геометрические характеристики сечения</h3>
+          <div id="v-model-radiobutton">
+            <input type="radio" id="one" value="1" v-model="section" />
+            <label for="one">Квадратна труба</label>
+            <input type="radio" id="two" value="2" v-model="section" />
+            <label for="two">Цільний переріз</label>
+            <input type="radio" id="three" value="3" v-model="section" />
+            <label for="two">Задати чисельно</label>
+          </div>
+          <div v-if="section==1">
+            <section-pipe :geometry="geometry"></section-pipe>
+          </div>
+          <div v-else-if="section==2">
+            <section-rectangle :geometry="geometry"></section-rectangle>
+          </div>
+          <div v-else>
+            <section-numerical :geometry="geometry"></section-numerical>
+          </div>
+        </div>
+      </div>
+      <div class="before"></div>
+      <div class="page">
+        <div>
+          <h2>Вихідні данні</h2>
+          <p>
+            <span class="form-group">
+              <label for="l">Довжина елемента l м:</label>
+              <input type="number" v-model="l" min="0" step="0.1" />
+            </span>
+            <span class="form-group">
+              <label for="E"> Модуль пружності E (МПа):</label>
+              <input type="number" v-model="E" min="0" step="1" />
+            </span>
+          </p>
+          <p class="form-group">
+            <label for="E">Розрахунковий опір R<sub>y</sub> (МПа):</label>
+            <input type="number" v-model="R_y" min="0" step="1" />
+          </p>
+          <p class="form-group">
+            <label for="N">Навантаження на стійку N (Н):</label>
+            <input type="number" v-model="N" min="0" step="1" />
+            (10 000Н = 10 кН = 1000 кгс = 1 тс)
+          </p>
+          <p>
+            13.3.1 Розрахункова довжина $l_{ef}$ колонн (стояків) постійного по
+            довжині перерізу або окремх ділянок ступінчатіх колон слід визначати
+            за формулою (13.2): $l_{ef} = \mu \times l = {{mu}} \times {{l}} = {{l_ef}} $
+          </p>
+
+          <h4>13.4.1 Гнучкість елемента:</h4>
+          <p>
+            $$\lambda= \frac{l_{ef} }{i} = \frac{ {{l_ef}} }{ {{geometry.i}} }
+            \times100= {{lambda}}$$
+          </p>
+          <p>Умовна гучність:</p>
+          <p>
+            $$\overline{ \lambda } = \lambda \sqrt{ \frac{R_y}{E} } = {{lambda}}
+            \sqrt{ \frac{ {{R_y}} }{ {{E}} } } = {{lambda_}} $$
+          </p>
+          <div v-if="lambda_<0.4">
+            <p>
+              При значеннях $\overline{\lambda} < 0.4$ для всіх типів кривої
+              стійкості допускається прийнати $\varphi = {{varphi=1.0}}$
+            </p>
+          </div>
+          <div v-else>
+            <p>
+              8.1.3 Значення коєффіціента $\delta$ обчислювати за формулою (8.5):
+            </p>
+            <p>
+              $$\delta = 9.87(1-\alpha + \beta \times \overline{\lambda}) +
+              \overline{\lambda}^2 = 9.87(1- {{geometry.alpha}} +
+              {{geometry.beta}} \times {{lambda_}}) + {{lambda_}}^2 = {{delta}} $$
+            </p>
+            <p>
+              Значення коефіцієнтів $\varphi$, які обислені за формулою (8.4),
+              слід приймати не більше 7,6/$\overline{\lambda}^2$ для типу:
+            </p>
+            <ul>
+              <li v-if="this.geometry.beta == 0.06">
+                кривої стійкості а при $\overline{\lambda} = {{lambda_}}>3.8$
+                <div v-if="lambda_>3.8">
+                  $$\varphi = \frac{7.6}{ \overline{\lambda}^2 } = \frac{7.6}{
+                  {{lambda_}}^2 } ={{varphi = round(7.6/lambda_**2)}}$$
+                </div>
+                <div v-else>
+                  $$\varphi=\frac{0.5}{ \overline{\lambda}^2 } (\delta -
+                  \sqrt{\delta^2-39.48 \times \overline{\lambda}^2}) = \frac{0.5}{
+                  {{lambda_}}^2 } ( {{delta}} - \sqrt{ {{delta}}^2-39.48 \times
+                  {{lambda_}}^2}) = {{varphi = varphi_c}}$$
+                </div>
+              </li>
+              <li v-if="this.geometry.beta == 0.09">
+                кривої стійкості b при $\overline{\lambda} = {{lambda_}}>4.4$
+                <div v-if="lambda_>4.4">
+                  $$\varphi = \frac{7.6}{ \overline{\lambda}^2 } = \frac{7.6}{
+                  {{lambda_}}^2 } ={{varphi = round(7.6/lambda_**2)}}$$
+                </div>
+                <div v-else>
+                  $$\varphi=\frac{0.5}{ \overline{\lambda}^2 } (\delta -
+                  \sqrt{\delta^2-39.48 \times \overline{\lambda}^2}) = \frac{0.5}{
+                  {{lambda_}}^2 } ( {{delta}} - \sqrt{ {{delta}}^2-39.48 \times
+                  {{lambda_}}^2}) = {{varphi = varphi_c}}$$
+                </div>
+              </li>
+              <li v-if="this.geometry.beta == 0.14">
+                кривої стійкості c при $\overline{\lambda} = {{lambda_}}>5.8$
+  
+                <div v-if="lambda_>5.8">
+                  $$\varphi = \frac{7.6}{ \overline{\lambda}^2 } = \frac{7.6}{
+                  {{lambda_}}^2 } ={{varphi = round(7.6/lambda_**2)}}$$
+                </div>
+                <div v-else>
+                  $$\varphi=\frac{0.5}{ \overline{\lambda}^2 } (\delta -
+                  \sqrt{\delta^2-39.48 \times \overline{\lambda}^2}) = \frac{0.5}{
+                  {{lambda_}}^2 } ( {{delta}} - \sqrt{ {{delta}}^2-39.48 \times
+                  {{lambda_}}^2}) = {{varphi = varphi_c}}$$
+                </div>
+              </li>
+            </ul>
+          </div>
+  
+          <div>
+            <p>
+              8.1.1 Розрахунок на міцність зі сталі з характеристичним опором
+              $R_{yn}\leq 440$ Н/мм2 при центральному розтязі і стиску слід
+              виконувати за формулою (8.11)
+            </p>
+            <p>
+              $$\frac{N \times \gamma_n}{A_n \times R_y \times \gamma_c}= \frac{
+              {{N}} \times {{gamma_n}} }{ {{geometry.A}} \times {{R_y}} \times
+              {{gamma_c}} \times 100 } = {{k_1}} $$
+            </p>
+            <p>
+              8.1.3 Розрахнуок на стійкість елементів суцільного перерізу при
+              центральному стиску і при виконанні вимог 8.3.2 - 8.38 слід
+              виконувати за формулою:
+            </p>
+            <p>
+              $$\frac{N \times \gamma_n}{\varphi \times A \times R_y \times
+              \gamma_c}= \frac{ {{N}} \times {{gamma_n}} }{ {{varphi}} \times
+              {{geometry.A}} \times {{R_y}} \times {{gamma_c}} } = {{k_2}}$$
+            </p>
+          </div>
+          <div>
+            <table>
+              <caption>
+                Результати розрахунку
+              </caption>
+              <thead>
+                <tr class="row">
+                  <th class="col">Перевірка</th>
+                  <th class="col">Коефіцієнт використання</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="row">
+                  <td class="col" style="text-align: justify">
+                    1. Розрахунок на міцність п.8.1.1
+                  </td>
+                  <th class="col">{{k_1}}</th>
+                </tr>
+                <tr class="row">
+                  <td class="col" style="text-align: justify">
+                    2. Розрахнуок на стійкість п.8.1.3
+                  </td>
+                  <th class="col">{{k_2}}</th>
+                </tr>
+                <tr class="row">
+                  <td class="col" style="text-align: justify">
+                    3. Розрахнуок на гучність п.13.4.1
+                  </td>
+                  <th class="col">{{k_3=round(lambda/200)}}</th>
+                </tr>
+              </tbody>
+            </table>
+            <p v-if="k_3>1">
+              У разі перевищення значень гнучкості, слід додатково перевіряти
+              міцність і стійкість таких елементів на дію місцевих навантажень під
+              час транспотрування та монтажу
+            </p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            l: 3.5,
+            E: 206000,
+            R_y: 235,
+            N: 35000,
+            varphi:0,
+            geometry: {
+              b: 70,
+              t: 4,
+            },
+            gamma_n: 0.95,
+            gamma_c: 0.95,
+            mu: 1.0,
+            section: 1,
+          };
+        },
+        mounted() {
+          // Ждем пока MathJax загрузится
+          this.renderMath();
+        },
+        updated() {
+          // Перерендериваем формулы при обновлении данных
+          this.renderMath();
+        },
+        computed: {
+          k_1() {
+            return this.round(
+              (this.N * this.gamma_n) /
+                (this.gamma_c * this.R_y * this.geometry.A * 100)
+            );
+          },
+          k_2() {
+            return this.round(this.k_1 / this.varphi);
+          },
+          varphi_c() {
+            return this.round(
+              (0.5 / this.lambda_ ** 2) *
+                (this.delta -
+                  (this.delta ** 2 - 39.48 * this.lambda_ ** 2) ** 0.5)
+            );
+          },
+          l_ef() {
+            return this.round(this.mu * this.l);
+          },
+          lambda() {
+            return this.round((this.l_ef / this.geometry.i) * 100);
+          },
+          lambda_() {
+            return this.round(this.lambda * (this.R_y / this.E) ** 0.5);
+          },
+          delta() {
+            return this.round(
+              9.87 *
+                (1 - this.geometry.alpha + this.geometry.beta * this.lambda_) +
+                this.lambda_ ** 2
+            );
+          },
+        },
+        methods: {
+          round(a) {
+            return Math.round(a * 100) / 100;
+          },
+          renderMath() {
+            MathJax.typesetPromise();
+          },
+        },
+        components: {
+          DbnReliability,
+          DbnReliability2,
+          SectionPipe,
+          SectionRectangle,
+          SectionNumerical,
+          TableFive,
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>

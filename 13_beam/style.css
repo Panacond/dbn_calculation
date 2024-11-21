@@ -1,0 +1,89 @@
+body {
+  background-image: url(./A4.svg);
+  background-repeat: repeat-y;
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: 0.99em;
+}
+
+.page {
+  /* border-style: solid; */
+  /* border-color: red; */
+  /* border-width: 0.03cm; */
+  margin: 0px 0.5cm 2cm 1.8cm;
+  height: 990px;
+  width: 17.5cm;
+  padding: 0.5cm;
+}
+
+.before {
+  height: 8px;
+  border-style: solid;
+  border-color: white;
+  font-size: 10px;
+  content: " ";
+}
+
+h3{
+  text-align: center;
+}
+input{
+  width: 2cm;
+}
+.page {
+  margin: 0px 0.5cm 2cm 1.8cm;
+  height: 990px;
+  width: 17.5cm;
+  padding: 0.5cm;
+}
+
+.before {
+  height: 8px;
+  border-style: solid;
+  border-color: white;
+  font-size: 10px;
+  content: " ";
+}
+  .form-group {
+    margin-bottom: 15px;
+  }
+  label {
+    margin-right: 10px;
+  }
+
+  .formula {
+    font-size: 1.5em;
+    margin-top: 20px;
+  }
+  table {
+    border-collapse: collapse;
+    border: 2px solid rgb(140 140 140);
+    /* font-family: sans-serif; */
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    margin: 0%;
+    padding: 0px;
+  }
+
+  caption {
+    padding: 15px;
+    font-weight: bold;
+    font-size: 1.5em;
+  }
+
+  th,
+  td {
+    border: 1px solid rgb(160 160 160);
+    padding: 2px 2px;
+  }
+
+  td {
+    text-align: center;
+  }
+
+  tbody > tr:nth-of-type(even) {
+    background-color: rgb(237 238 242);
+  }
+
+  p{
+    margin: 3px;
+  }

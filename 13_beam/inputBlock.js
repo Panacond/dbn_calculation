@@ -16,7 +16,7 @@ const InputBlock = {
         <option value="uniform">Поступово розподілена</option>
       </select>
       <div>
-        <label>Величина (кН):</label>
+        <label>Величина (Н):</label>
         <input type="number" v-model="load.magnitude" />
         <label v-if="load.type === 'point'">Розташування (м):</label>
         <input

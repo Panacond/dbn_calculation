@@ -175,8 +175,8 @@
               // { type: "point", magnitude: 10, start: 5 },
               // { type: "point", magnitude: -5, start: 6 },
 
-              { type: "uniform", magnitude: 10, start: 3, end: 5 },
-              { type: "point", magnitude: 10, start: 3 },
+              { type: "uniform", magnitude: 1000, start: 3, end: 5 },
+              { type: "point", magnitude: 1000, start: 3 },
               // { type: "uniform", magnitude: 5, start: 3, end: 5 },
             ],
           };
@@ -451,7 +451,7 @@
               }
               epur.push({
                 x: this.coordinateM[c],
-                y: this.round((y / EI) * 10 ** 8),
+                y: this.round((y / EI) * 10 ** 5),
               });
             }
             epur.push({

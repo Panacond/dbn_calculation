@@ -72,7 +72,7 @@ const DbnReliability2 = {
     </tr>
 
     <tr class="row">
-      <th class="col" rowspan="3">СС3</th>
+      <th class="col" rowspan="3">СС1</th>
       <th class="col">А</th>
       <td class="col">1,000</td>
       <td class="col" rowspan="3">0,950</td>

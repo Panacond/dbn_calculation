@@ -2,20 +2,19 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="34.11047mm"
-   height="9.2032423mm"
-   viewBox="0 0 34.11047 9.2032423"
+   width="35.017609mm"
+   height="10.980992mm"
+   viewBox="0 0 35.017609 10.980992"
    version="1.1"
-   id="svg2330"
+   id="svg4620"
    inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
-   sodipodi:docname="beam_two.svg"
+   sodipodi:docname="console_beam_force.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
-     id="namedview2332"
+     id="namedview4622"
      pagecolor="#ffffff"
      bordercolor="#666666"
      borderopacity="1.0"
@@ -25,9 +24,9 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="1.7209638"
-     inkscape:cx="7.5539068"
-     inkscape:cy="49.100394"
+     inkscape:zoom="3.4419276"
+     inkscape:cx="137.27773"
+     inkscape:cy="44.597104"
      inkscape:window-width="1600"
      inkscape:window-height="838"
      inkscape:window-x="-8"
@@ -35,129 +34,45 @@
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
-     id="defs2327" />
+     id="defs4617" />
   <g
      inkscape:label="Слой 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-45.56263,-124.11288)">
+     transform="translate(-2.9289701,-134.09516)">
     <path
        style="fill:#000000;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 62.52917,124.1629 v 6.23747 l 0.35526,-2.83943 h -0.69184 l 0.33658,2.83943"
-       id="path1331-41-0-1"
+       d="m 34.483764,134.14518 v 6.23747 l 0.35526,-2.83943 h -0.69184 l 0.33658,2.83943"
+       id="use1601-8"
        sodipodi:nodetypes="ccccc" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
-       d="m 47.28237,130.40037 v -6.23747 l 30.78092,0.0136 v 6.20497"
-       id="path1559-5-3"
-       sodipodi:nodetypes="cccc" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#path1331-41-0-1"
-       id="use1570-2-6"
-       transform="translate(-2.44064)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#use1570-2-6"
-       id="use1572-0-6"
-       transform="translate(-2.44064)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#use1572-0-6"
-       id="use1574-7-9"
-       transform="translate(-2.44064)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#use1574-7-9"
-       id="use1576-0-1"
-       transform="translate(-2.44064)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#use1576-0-1"
-       id="use1587-3-5"
-       transform="translate(-2.44064)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#use1587-3-5"
-       id="use1589-2-3"
-       transform="translate(-2.84627)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#path1331-41-0-1"
-       id="use1591-6-4"
-       transform="translate(2.44064)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#use1591-6-4"
-       id="use1593-1-1"
-       transform="translate(2.44064)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#use1593-1-1"
-       id="use1595-8-2"
-       transform="translate(2.44064)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#use1595-8-2"
-       id="use1597-2-5"
-       transform="translate(2.44064)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#use1597-2-5"
-       id="use1599-9-9"
-       transform="translate(2.88086)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#use1599-9-9"
-       id="use1601-8-1"
-       transform="translate(2.88086)" />
-    <path
        style="font-variation-settings:normal;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000"
-       d="m 46.76885,130.40037 31.78974,-0.0192"
-       id="path417-0-1-6"
-       sodipodi:nodetypes="cc" />
+       d="m 4.11955,140.38265 h 30.4936"
+       id="path417-0-1" />
     <g
-       id="g1137-7"
-       transform="rotate(90,259.7259,170.9421)">
+       id="g1137"
+       transform="rotate(90,233.15334,154.881)">
       <path
          style="font-variation-settings:normal;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.196632;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000"
          d="m 216.29743,383.89915 h 5.80249"
-         id="path1056-2-9"
+         id="path1056-2"
          sodipodi:nodetypes="cc" />
       <path
          style="font-variation-settings:normal;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.196632;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000"
          d="m 217.21391,383.89915 -1.1367,1.1367"
-         id="path1058-7-5" />
+         id="path1058-7" />
       <path
          style="font-variation-settings:normal;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.196632;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000"
          d="m 218.5831,383.89915 -1.1367,1.1367"
-         id="path1060-3-5" />
+         id="path1060-3" />
       <path
          style="font-variation-settings:normal;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.196632;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000"
          d="m 219.95229,383.89915 -1.1367,1.1367"
-         id="path1062-9-8" />
+         id="path1062-9" />
       <path
          style="font-variation-settings:normal;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.196632;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000"
          d="m 221.32148,383.89915 -1.1367,1.1367"
-         id="path1064-8-0" />
+         id="path1064-8" />
     </g>
-    <use
-       x="0"
-       y="0"
-       xlink:href="#g1137-7"
-       id="use1509"
-       transform="rotate(180,62.617865,130.00445)" />
   </g>
 </svg>

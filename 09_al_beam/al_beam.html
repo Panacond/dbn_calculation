@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>металева балка</title>
+    <title>алюмінієва балка</title>
     <script>
       window.MathJax = {
         tex: {
@@ -21,24 +21,35 @@
     ></script>
     <script src="https://unpkg.com/vue@3"></script>
     <link rel="stylesheet" href="style.css" />
-    <script src="../09_al_beam/geometrySection.js"></script>
-    <script src="../09_al_beam/stressDeflection.js"></script>
-    <script src="./metalCheck.js"></script>
+    <script src="./geometrySection.js"></script>
+    <script src="./stressDeflection.js"></script>
+    <script src="./alCheck.js"></script>
   </head>
   <body>
     <div id="app">
       <div class="page">
         <div class="input">
-          <h2>Розрахунок металевої балки на міцніть та прогиб</h2>
+          <h2>Розрахунок алюмініевого профіля міцніть та прогиб</h2>
+          <p>
+            Марка алюмінію:
+            <select v-model="mark">
+              <option disabled value="">Виберіть марку</option>
+              <option>АД31Т5</option>
+              <option>АД31Т1</option>
+              <option>1915Т</option>
+              <option>АД31Т</option>
+              <option>6060T66</option></select
+            >{{R_ins}}
+          </p>
           <p>
             R=
             <input v-model="R" type="number" placeholder="R" size="5" />
-            (МПа) Розрахунковий опір
+            (МПа) Розрахунковий опір алюмінію
           </p>
           <p>
             E=
             <input v-model="elastic" type="number" placeholder="E" />
-            (МПа) Модуль пружності
+            (МПа) Модуль пружності алюмінію
           </p>
           <p>
             b=
@@ -79,23 +90,23 @@
           </p>
         </div>
         <geometry-section
-        @update:ipcalk="ipcalk = $event"
-        @update:wpcalk="W_p = $event"
+          @update:ipcalk="ipcalk = $event"
+          @update:wpcalk="W_p = $event"
         >
         </geometry-section>
       </div>
       <div class="page">
         <stress-deflection
-        :elastic="elastic"
-        :calculated="calculated"
-        :normative="normative"
-        :ipcalk="ipcalk"
-        @update:stress="stress = $event"
-        @update:deflection="deflection = $event"
-        @update:lenght="lenght = $event"
-        @update:types="types = $event"
+          :elastic="elastic"
+          :calculated="calculated"
+          :normative="normative"
+          :ipcalk="ipcalk"
+          @update:stress="stress = $event"
+          @update:deflection="deflection = $event"
+          @update:lenght="lenght = $event"
+          @update:types="types = $event"
         ></stress-deflection>
-        <metal-check
+        <!-- <metal-check
         :wpcalk="wpcalk"
         :ipcalk="ipcalk"
         :resistance="resistance"
@@ -103,42 +114,65 @@
         :lenght="lenght"
         :deflection="deflection"
         :types="types"
-        ></metal-check>
+        ></metal-check> -->
+        <al-check
+          :wpcalk="wpcalk"
+          :ipcalk="ipcalk"
+          :resistance="resistance"
+          :stress="stress"
+          :lenght="lenght"
+          :deflection="deflection"
+          :types="types"
+        ></al-check>
       </div>
     </div>
-    
+
     <script>
       const app = Vue.createApp({
         data() {
           return {
-            R: 235,
-            elastic: 206000,
+            mark: "1915Т",
+            R: 55,
+            elastic: 70000,
             q_r: 1767,
             q_n: 770,
             b: 1.33,
             b_s: 100,
-            ipcalk:166.71,
-            W_p:26.53,
+            ipcalk: 166.71,
+            W_p: 26.53,
             l: 2.3,
-            stress:1554.01,
-            deflection:1.09,
-            lenght:2.3,
-            types:1,
+            stress: 1554.01,
+            deflection: 1.09,
+            lenght: 2.3,
+            types: 1,
           };
         },
         computed: {
-          wpcalk(){
-            return this.W_p
+          R_ins() {
+            if (this.mark === "1915Т") {
+              this.R = 195;
+            } else if (this.mark === "АД31Т5") {
+              this.R = 100;
+            } else if (this.mark === "АД31Т1") {
+              this.R = 120;
+            } else if (this.mark === "6060T66") {
+              this.R = 195;
+            } else {
+              this.R = 55;
+            }
           },
-          resistance(){
-            return this.R
+          wpcalk() {
+            return this.W_p;
           },
-          calculated(){
-            return this.q_r *this.b
+          resistance() {
+            return this.R;
           },
-          normative(){
-            return this.q_n *this.b
-          }
+          calculated() {
+            return this.q_r * this.b;
+          },
+          normative() {
+            return this.q_n * this.b;
+          },
         },
         mounted() {
           this.renderMath();
@@ -154,9 +188,11 @@
             MathJax.typesetPromise();
           },
         },
-        components:{
-            GeometrySection, StressDeflection, MetalCheck,
-        }
+        components: {
+          GeometrySection,
+          StressDeflection,
+          AlCheck,
+        },
       });
 
       app.mount("#app");

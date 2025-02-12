@@ -50,7 +50,6 @@ const MetalCheck = {
     <h4>Згідно з ДСТУ Б В.1.2-3:2006 Прогини і переміщення</h4>
     <p>
       5 Вертикальні граничні прогини елементів конструкцій
-      <tr></tr>
       5.1 Вертикальні граничні прогини елементів конструкцій і
       навантаження, від яких слід визначати прогини, наведені в табл.
       1.<br />
@@ -111,16 +110,16 @@ const MetalCheck = {
       },
     max_f() {
       let k = this.typeS;
-      if (this.l * k <= 1) {
+      if (this.l_p * k <= 1) {
         return 120 * k;
-      } else if (this.l * k <= 3) {
-        return interpolate(this.l, 1, 3, 120, 150);
-      } else if (this.l * k <= 6) {
-        return interpolate(this.l, 3, 6, 150, 200);
-      } else if (this.l * k <= 12) {
-        return interpolate(this.l, 6, 12, 200, 250);
-      } else if (this.l * k <= 24) {
-        return interpolate(this.l, 12, 24, 250, 300);
+      } else if (this.l_p * k <= 3) {
+        return this.interpolate(this.l_p, 1, 3, 120, 150);
+      } else if (this.l_p * k <= 6) {
+        return this.interpolate(this.l_p, 3, 6, 150, 200);
+      } else if (this.l_p * k <= 12) {
+        return this.interpolate(this.l_p, 6, 12, 200, 250);
+      } else if (this.l_p * k <= 24) {
+        return this.interpolate(this.l_p, 12, 24, 250, 300);
       }
       return 300;
     },
@@ -135,6 +134,11 @@ const MetalCheck = {
   methods: {
     round(a) {
       return Math.round(a * 100) / 100;
+    },
+    interpolate(x, x1, x2, y1, y2) {
+      return (
+        Math.round((y1 + ((y2 - y1) / (x2 - x1)) * (x - x1)) * 100) / 100
+      )
     },
     renderMath() {
       MathJax.typesetPromise();

@@ -4,101 +4,38 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Вітрове навантаження</title>
-    <style>
-      body {
-        background-image: url(../A4.svg);
-        background-repeat: repeat-y;
-        font-family: "Times New Roman", Times, Georgia, serif;
-        font-size: 0.99em;
-      }
+    <link rel="stylesheet" href="./style.css" />
 
-      .page {
-        /* border-style: solid; */
-        /* border-color: red; */
-        /* border-width: 0.03cm; */
-        margin: 0px 0.5cm 2cm 1.8cm;
-        height: 990px;
-        width: 17.5cm;
-        padding: 0.5cm;
-      }
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [["$", "$"]], // Настройка для inline формул
+          displayMath: [["$$", "$$"]], // Настройка для дисплейных формул
+        },
+        startup: {
+          typeset: false, // Отключаем автоматический рендеринг при загрузке страницы
+        },
+      };
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+      async
+    ></script>
 
-      .before {
-        height: 8px;
-        border-style: solid;
-        border-color: white;
-        font-size: 10px;
-        content: " ";
-      }
+    <script src="https://unpkg.com/vue@3"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 
-      table {
-        border-collapse: collapse;
-        border: 2px solid rgb(140 140 140);
-        font-size: 0.8rem;
-        letter-spacing: 1px;
-      }
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
 
-      caption {
-        padding: 10px;
-        font-weight: bold;
-      }
-
-      th,
-      td {
-        border: 1px solid rgb(160 160 160);
-        padding: 8px 10px;
-      }
-
-      td {
-        text-align: center;
-      }
-
-      tbody > tr:nth-of-type(even) {
-        background-color: rgb(237 238 242);
-      }
-
-      thead {
-        background-color: rgb(228 240 245);
-      }
-
-      .help {
-        color: red;
-      }
-      .help:hover img {
-        display: inline;
-      }
-      .help img {
-        display: none;
-        z-index: 1;
-        position: absolute;
-      }
-    </style>
+    <script src="./chartData1.js"></script>
+    <script src="./chartData2.js"></script>
+    <script src="./chartData3.js"></script>
+    <script src="./chartComponent.js"></script>
   </head>
 
   <body>
-    <script src="./vue.global.js"></script>
-
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        extensions: ["tex2jax.js"],
-        jax: ["input/TeX", "output/HTML-CSS"],
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-          processEscapes: true
-        },
-        "HTML-CSS": { fonts: ["TeX"] }
-      });
-    </script>
-
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js"
-    ></script>
-
     <div id="app">
-      <div class="before"></div>
       <div class="page">
         <h2>Визначення вітрового навантаження</h2>
         <p>ДБН В.1.2-2:2006 навантаження і впливи</p>
@@ -119,7 +56,8 @@
         </p>
         <p>
           $\varphi=0.05$ ухил з підвітряного боку (ухил H/L з підвітряного боку)
-       $С_{rеl}={{C_rel=1}}$</p>
+          $С_{rеl}={{C_rel=1}}$
+        </p>
         <p>
           9.12 Коефіцієнт напрямку C<sub>dir</sub> враховує нерівномірність
           вітрового навантаження за напрямками вітру і, як правило, приймається
@@ -175,7 +113,6 @@
           60 м або 2 км – при більшій висоті.
         </p>
       </div>
-      <div class="before"></div>
       <div class="page">
         <p>
           Тип місцевості:
@@ -188,13 +125,12 @@
           </select>
           Період власних коливань:
           <select v-model="period_of_oscillation2">
-            <option disabled value="">Виберіть період </option>
+            <option disabled value="">Виберіть період</option>
             <option>більше 0,25с</option>
             <option>менше 0,25с</option>
           </select>
         </p>
-        <p>{{period_of_oscillation}}</p>
-        <p>$C_h={{c_h}}$ {{period_of_oscillation2}}  </p>
+        <p>$C_h={{c_h}}$ {{period_of_oscillation2}}</p>
         <p>
           9.16 При розрахунку кріплень елементів огороджень до несучих
           конструкцій у кутах споруди і по зовнішньому контуру покриття слід
@@ -234,37 +170,24 @@
         </p>
         <img src="./wind/sheme2.svg" width="550px" alt="рис 9.11" />
       </div>
-      <div class="before"></div>
       <div class="page">
-        <img src="./wind/9-5.svg" alt="Рисунок 9.5" />
-        <p>
-          Рисунок 9.5. Коефіцієнт C<sub>d</sub> для кам'яних будівель і будівель
-          із залізобетонним каркасом
-        </p>
-        <img src="./wind/9-6.svg" alt="Рисунок 9.6" />
-        <p>
-          Рисунок 9.6. Коефіцієнт C<sub>d</sub> для будівель із сталевим
-          каркасом
-        </p>
-        <img src="./wind/9-7.svg" alt="Рисунок 9.7" />
-        <p>
-          Рисунок 9.7. Коефіцієнт C<sub>d</sub> для будівель із сталебетонним
-          каркасом
-        </p>
+        <select-chart :width="width" :height="height" @update:cd="cd = $event">
+        </select-chart>
+        <p>{{newCd()}}</p>
         <p>
           Для основних типів будівель і споруд значення C<sub>d</sub>
           визначаються за графіками на рис. 9.5-9.10. Наведені на рисунках
           ширина і діаметр прийняті в перерізі, перпендикулярному до вітрового
           потоку.
         </p>
-      </div>
-      <div class="before"></div>
-      <div class="page">
         <p>
           C<sub>d</sub>=
           <input v-model="C_d" type="number" placeholder="C_d" />
           в залежності від висоти Z={{z}}м, та ширини B={{B}}м, споруди
         </p>
+      </div>
+      <div class="page">
+        
         <p>
           9.7 Коефіцієнт С визначається за формулою: $$C = C_{aer} \times C_h
           \times C_{alt} \times C_{rel} \times C_{dir} \times C_d $$ $$C =
@@ -381,312 +304,270 @@
           </tbody>
         </table>
         <p>10 Па = 1 $\frac{ кгс }{ м^2 }$</p>
-        <!-- <div v-if="k < 1">
-                <h3>Міцність перерізу достатня коэфіцієнт використання {{k}}</h3>
-            </div>
-            <div style="color: red;" v-else>
-                <h3>Необхідно збільшити кількість гвинтів</h3>
-            </div> -->
-
-        <!-- <div class="before"></div> -->
       </div>
-      <script>
-        const { createApp } = Vue;
 
-        createApp({
-          data() {
-            return {
-              z: 17.22,
-              place: 3,
-              B: 372,
-              C_h: 2.25,
-              C_d: 0.9,
-              W_0: 370,
-              activeColor: "black",
-              age: "житлові та громадські",
-              gamma_fm: 1.14,
-              period_of_oscillation2: "менше 0,25с",
-            };
-          },
-          methods: {
-            reRender() {
-              if (window.MathJax) {
-                console.log("rendering mathjax");
-                window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub], () =>
-                  console.log("done")
-                );
-              }
-            },
-          },
-          computed: {
-            mu() {
-              if (this.alpha < 25) {
-                return 1;
-              } else if (this.alpha > 60) {
-                return 0;
-              } else {
-                return Math.round(((60 - this.alpha) / 35) * 100) / 100;
-              }
-              return;
-            },
-            c_h() {
-              z = this.z;
-              p = this.place;
-              pi = this.period_of_oscillation2 === "менше 0,25с" ? 1:0;
-              if (pi == 0) {
-                if (p == 1) {
-                  if (z <= 5) {
-                    c = 1.4;
-                  } else if (z <= 10) {
-                    c = 1.8;
-                  } else if (z <= 20) {
-                    c = 1.95;
-                  } else if (z <= 40) {
-                    c = 2.25;
-                  } else if (z <= 60) {
-                    c = 2.45;
-                  } else if (z <= 80) {
-                    c = 2.65;
-                  } else if (z <= 100) {
-                    c = 2.7;
-                  } else if (z <= 150) {
-                    c = 2.95;
-                  } else {
-                    c = 3.1;
-                  }
-                } else if (p == 2) {
-                  if (z <= 5) {
-                    c = 1.2;
-                  } else if (z <= 10) {
-                    c = 1.5;
-                  } else if (z <= 20) {
-                    c = 1.85;
-                  } else if (z <= 40) {
-                    c = 2.2;
-                  } else if (z <= 60) {
-                    c = 2.45;
-                  } else if (z <= 80) {
-                    c = 2.6;
-                  } else if (z <= 100) {
-                    c = 2.7;
-                  } else if (z <= 150) {
-                    c = 3.0;
-                  } else {
-                    c = 3.15;
-                  }
-                } else if (p == 3) {
-                  if (z <= 5) {
-                    c = 0.9;
-                  } else if (z <= 10) {
-                    c = 1.2;
-                  } else if (z <= 20) {
-                    c = 1.55;
-                  } else if (z <= 40) {
-                    c = 2.0;
-                  } else if (z <= 60) {
-                    c = 2.25;
-                  } else if (z <= 80) {
-                    c = 2.45;
-                  } else if (z <= 100) {
-                    c = 2.6;
-                  } else if (z <= 150) {
-                    c = 2.9;
-                  } else {
-                    c = 3.3;
-                  }
-                } else {
-                  if (z <= 5) {
-                    c = 0.6;
-                  } else if (z <= 10) {
-                    c = 1.0;
-                  } else if (z <= 20) {
-                    c = 1.4;
-                  } else if (z <= 40) {
-                    c = 1.95;
-                  } else if (z <= 60) {
-                    c = 2.25;
-                  } else if (z <= 80) {
-                    c = 2.5;
-                  } else if (z <= 100) {
-                    c = 2.7;
-                  } else if (z <= 150) {
-                    c = 3.1;
-                  } else {
-                    c = 3.4;
-                  }
-                }
-              } else {
-                if (p == 1) {
-                  if (z <= 5) {
-                    c = 0.9;
-                  } else if (z <= 10) {
-                    c = 1.2;
-                  } else if (z <= 20) {
-                    c = 1.35;
-                  } else if (z <= 40) {
-                    c = 1.6;
-                  } else if (z <= 60) {
-                    c = 1.75;
-                  } else if (z <= 80) {
-                    c = 1.9;
-                  } else if (z <= 100) {
-                    c = 1.95;
-                  } else if (z <= 150) {
-                    c = 2.15;
-                  } else {
-                    c = 2.3;
-                  }
-                } else if (p == 2) {
-                  if (z <= 5) {
-                    c = 0.7;
-                  } else if (z <= 10) {
-                    c = 0.9;
-                  } else if (z <= 20) {
-                    c = 1.15;
-                  } else if (z <= 40) {
-                    c = 1.45;
-                  } else if (z <= 60) {
-                    c = 1.65;
-                  } else if (z <= 80) {
-                    c = 1.75;
-                  } else if (z <= 100) {
-                    c = 1.85;
-                  } else if (z <= 150) {
-                    c = 2.1;
-                  } else {
-                    c = 2.2;
-                  }
-                } else if (p == 3) {
-                  if (z <= 5) {
-                    c = 0.4;
-                  } else if (z <= 10) {
-                    c = 0.6;
-                  } else if (z <= 20) {
-                    c = 0.85;
-                  } else if (z <= 40) {
-                    c = 1.15;
-                  } else if (z <= 60) {
-                    c = 1.35;
-                  } else if (z <= 80) {
-                    c = 1.5;
-                  } else if (z <= 100) {
-                    c = 1.6;
-                  } else if (z <= 150) {
-                    c = 1.85;
-                  } else {
-                    c = 2.05;
-                  }
-                } else {
-                  if (z <= 5) {
-                    c = 0.2;
-                  } else if (z <= 10) {
-                    c = 0.4;
-                  } else if (z <= 20) {
-                    c = 0.65;
-                  } else if (z <= 40) {
-                    c = 1.0;
-                  } else if (z <= 60) {
-                    c = 1.1;
-                  } else if (z <= 80) {
-                    c = 1.2;
-                  } else if (z <= 100) {
-                    c = 1.25;
-                  } else if (z <= 150) {
-                    c = 1.35;
-                  } else {
-                    c = 1.45;
-                  }
-                }
-              }
-
-              return c;
-            },
-            year() {
-              if (this.age == "житлові та громадські") {
-                this.gamma_fm = 1.14;
-                return 100;
-              } else if (this.age == "виробничі та допоміжні") {
-                this.gamma_fm = 1.04;
-                return 60;
-              } else if (this.age == "складські") {
-                this.gamma_fm = 1.04;
-                return 60;
-              } else if (this.age == "сільськогосподарські") {
-                this.gamma_fm = 1.0;
-                return 50;
-              } else if (
-                this.age ==
-                "мобільні збірно-розбірні (у тому числі промислові, житлові та інші)"
-              ) {
-                this.gamma_fm = 0.83;
-                return 20;
-              } else {
-                this.gamma_fm = 0.76;
-                return 15;
-              }
-            },
-            redAlert() {
-              if (this.L < this.L_max) {
-                return "red";
-              } else {
-                return "black";
-              }
-            },
-          },
-          mounted() {
-            this.reRender();
-          },
-          watch: {
-            period_of_oscillation2: function () {
-              this.$nextTick().then(() => {
-                this.reRender();
-              });
-            },
-            place: function () {
-              console.log("data changed");
-              this.$nextTick().then(() => {
-                this.reRender();
-              });
-            },
-            z: function () {
-              console.log("data changed");
-              this.$nextTick().then(() => {
-                this.reRender();
-              });
-            },
-            B: function () {
-              console.log("data changed");
-              this.$nextTick().then(() => {
-                this.reRender();
-              });
-            },
-            C_h: function () {
-              console.log("data changed");
-              this.$nextTick().then(() => {
-                this.reRender();
-              });
-            },
-            C_d: function () {
-              console.log("data changed");
-              this.$nextTick().then(() => {
-                this.reRender();
-              });
-            },
-            W_0: function () {
-              console.log("data changed");
-              this.$nextTick().then(() => {
-                this.reRender();
-              });
-            },
-            gamma_fm: function () {
-              console.log("data changed");
-              this.$nextTick().then(() => {
-                this.reRender();
-              });
-            },
-          },
-        }).mount("#app");
-      </script>
     </div>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            z: 17.22,
+            place: 3,
+            B: 72,
+            C_h: 2.25,
+            C_d: 0.9,
+            cd:1,
+            W_0: 370,
+            activeColor: "black",
+            age: "житлові та громадські",
+            gamma_fm: 1.14,
+            period_of_oscillation2: "менше 0,25с",
+          };
+        },
+        methods: {
+          renderMath() {
+            MathJax.typesetPromise();
+          },
+          newCd(){
+            this.C_d = this.cd
+          }
+        },
+        computed: {
+          width(){
+            return this.z;
+          },
+          height(){
+            return this.B;
+          },
+          mu() {
+            if (this.alpha < 25) {
+              return 1;
+            } else if (this.alpha > 60) {
+              return 0;
+            } else {
+              return Math.round(((60 - this.alpha) / 35) * 100) / 100;
+            }
+            return;
+          },
+          c_h() {
+            z = this.z;
+            p = this.place;
+            pi = this.period_of_oscillation2 === "менше 0,25с" ? 1 : 0;
+            if (pi == 0) {
+              if (p == 1) {
+                if (z <= 5) {
+                  c = 1.4;
+                } else if (z <= 10) {
+                  c = 1.8;
+                } else if (z <= 20) {
+                  c = 1.95;
+                } else if (z <= 40) {
+                  c = 2.25;
+                } else if (z <= 60) {
+                  c = 2.45;
+                } else if (z <= 80) {
+                  c = 2.65;
+                } else if (z <= 100) {
+                  c = 2.7;
+                } else if (z <= 150) {
+                  c = 2.95;
+                } else {
+                  c = 3.1;
+                }
+              } 
+              else if (p == 2) {
+                if (z <= 5) {
+                  c = 1.2;
+                } else if (z <= 10) {
+                  c = 1.5;
+                } else if (z <= 20) {
+                  c = 1.85;
+                } else if (z <= 40) {
+                  c = 2.2;
+                } else if (z <= 60) {
+                  c = 2.45;
+                } else if (z <= 80) {
+                  c = 2.6;
+                } else if (z <= 100) {
+                  c = 2.7;
+                } else if (z <= 150) {
+                  c = 3.0;
+                } else {
+                  c = 3.15;
+                }
+              } 
+              else if (p == 3) {
+                if (z <= 5) {
+                  c = 0.9;
+                } else if (z <= 10) {
+                  c = 1.2;
+                } else if (z <= 20) {
+                  c = 1.55;
+                } else if (z <= 40) {
+                  c = 2.0;
+                } else if (z <= 60) {
+                  c = 2.25;
+                } else if (z <= 80) {
+                  c = 2.45;
+                } else if (z <= 100) {
+                  c = 2.6;
+                } else if (z <= 150) {
+                  c = 2.9;
+                } else {
+                  c = 3.3;
+                }
+              } 
+              else {
+                if (z <= 5) {
+                  c = 0.6;
+                } else if (z <= 10) {
+                  c = 1.0;
+                } else if (z <= 20) {
+                  c = 1.4;
+                } else if (z <= 40) {
+                  c = 1.95;
+                } else if (z <= 60) {
+                  c = 2.25;
+                } else if (z <= 80) {
+                  c = 2.5;
+                } else if (z <= 100) {
+                  c = 2.7;
+                } else if (z <= 150) {
+                  c = 3.1;
+                } else {
+                  c = 3.4;
+                }
+              }
+            } 
+            else {
+              if (p == 1) {
+                if (z <= 5) {
+                  c = 0.9;
+                } else if (z <= 10) {
+                  c = 1.2;
+                } else if (z <= 20) {
+                  c = 1.35;
+                } else if (z <= 40) {
+                  c = 1.6;
+                } else if (z <= 60) {
+                  c = 1.75;
+                } else if (z <= 80) {
+                  c = 1.9;
+                } else if (z <= 100) {
+                  c = 1.95;
+                } else if (z <= 150) {
+                  c = 2.15;
+                } else {
+                  c = 2.3;
+                }
+              } else if (p == 2) {
+                if (z <= 5) {
+                  c = 0.7;
+                } else if (z <= 10) {
+                  c = 0.9;
+                } else if (z <= 20) {
+                  c = 1.15;
+                } else if (z <= 40) {
+                  c = 1.45;
+                } else if (z <= 60) {
+                  c = 1.65;
+                } else if (z <= 80) {
+                  c = 1.75;
+                } else if (z <= 100) {
+                  c = 1.85;
+                } else if (z <= 150) {
+                  c = 2.1;
+                } else {
+                  c = 2.2;
+                }
+              } else if (p == 3) {
+                if (z <= 5) {
+                  c = 0.4;
+                } else if (z <= 10) {
+                  c = 0.6;
+                } else if (z <= 20) {
+                  c = 0.85;
+                } else if (z <= 40) {
+                  c = 1.15;
+                } else if (z <= 60) {
+                  c = 1.35;
+                } else if (z <= 80) {
+                  c = 1.5;
+                } else if (z <= 100) {
+                  c = 1.6;
+                } else if (z <= 150) {
+                  c = 1.85;
+                } else {
+                  c = 2.05;
+                }
+              } else {
+                if (z <= 5) {
+                  c = 0.2;
+                } else if (z <= 10) {
+                  c = 0.4;
+                } else if (z <= 20) {
+                  c = 0.65;
+                } else if (z <= 40) {
+                  c = 1.0;
+                } else if (z <= 60) {
+                  c = 1.1;
+                } else if (z <= 80) {
+                  c = 1.2;
+                } else if (z <= 100) {
+                  c = 1.25;
+                } else if (z <= 150) {
+                  c = 1.35;
+                } else {
+                  c = 1.45;
+                }
+              }
+            }
+
+            return c;
+          },
+          year() {
+            if (this.age == "житлові та громадські") {
+              this.gamma_fm = 1.14;
+              return 100;
+            } else if (this.age == "виробничі та допоміжні") {
+              this.gamma_fm = 1.04;
+              return 60;
+            } else if (this.age == "складські") {
+              this.gamma_fm = 1.04;
+              return 60;
+            } else if (this.age == "сільськогосподарські") {
+              this.gamma_fm = 1.0;
+              return 50;
+            } else if (
+              this.age ==
+              "мобільні збірно-розбірні (у тому числі промислові, житлові та інші)"
+            ) {
+              this.gamma_fm = 0.83;
+              return 20;
+            } else {
+              this.gamma_fm = 0.76;
+              return 15;
+            }
+          },
+          redAlert() {
+            if (this.L < this.L_max) {
+              return "red";
+            } else {
+              return "black";
+            }
+          },
+        },
+        mounted() {
+          this.renderMath();
+        },
+        updated() {
+          this.renderMath();
+        },
+      });
+    </script>
+    <script src="./selectChart.js"></script>
+    <script>
+      app.mount("#app");
+    </script>
   </body>
 </html>

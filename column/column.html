@@ -178,9 +178,9 @@
           <p>Умовна гучність:</p>
           <p>
             $$\overline{ \lambda } = \lambda \sqrt{ \frac{R_y}{E} } = {{lambda}}
-            \sqrt{ \frac{ {{R_y}} }{ {{E}} } } = {{lambda_}} $$
+            \sqrt{ \frac{ {{R_y}} }{ {{E}} } } = {{lambdaUndeground}} $$
           </p>
-          <div v-if="lambda_<0.4">
+          <div v-if="lambdaUndeground<0.4">
             <p>
               При значеннях $\overline{\lambda} < 0.4$ для всіх типів кривої
               стійкості допускається прийнати $\varphi = {{varphi=1.0}}$
@@ -193,7 +193,7 @@
             <p>
               $$\delta = 9.87(1-\alpha + \beta \times \overline{\lambda}) +
               \overline{\lambda}^2 = 9.87(1- {{geometry.alpha}} +
-              {{geometry.beta}} \times {{lambda_}}) + {{lambda_}}^2 = {{delta}} $$
+              {{geometry.beta}} \times {{lambdaUndeground}}) + {{lambdaUndeground}}^2 = {{delta}} $$
             </p>
             <p>
               Значення коефіцієнтів $\varphi$, які обислені за формулою (8.4),
@@ -201,43 +201,43 @@
             </p>
             <ul>
               <li v-if="this.geometry.beta == 0.06">
-                кривої стійкості а при $\overline{\lambda} = {{lambda_}}>3.8$
-                <div v-if="lambda_>3.8">
+                {{curve_a}}
+                <div v-if="lambdaUndeground>3.8">
                   $$\varphi = \frac{7.6}{ \overline{\lambda}^2 } = \frac{7.6}{
-                  {{lambda_}}^2 } ={{varphi = round(7.6/lambda_**2)}}$$
+                  {{lambdaUndeground}}^2 } ={{varphi = round(7.6/lambdaUndeground**2)}}$$
                 </div>
                 <div v-else>
                   $$\varphi=\frac{0.5}{ \overline{\lambda}^2 } (\delta -
                   \sqrt{\delta^2-39.48 \times \overline{\lambda}^2}) = \frac{0.5}{
-                  {{lambda_}}^2 } ( {{delta}} - \sqrt{ {{delta}}^2-39.48 \times
-                  {{lambda_}}^2}) = {{varphi = varphi_c}}$$
+                  {{lambdaUndeground}}^2 } ( {{delta}} - \sqrt{ {{delta}}^2-39.48 \times
+                  {{lambdaUndeground}}^2}) = {{varphi = varphi_c}}$$
                 </div>
               </li>
               <li v-if="this.geometry.beta == 0.09">
-                кривої стійкості b при $\overline{\lambda} = {{lambda_}}>4.4$
-                <div v-if="lambda_>4.4">
+                кривої стійкості b при $\overline{\lambda} = {{lambdaUndeground}}>4.4$
+                <div v-if="lambdaUndeground>4.4">
                   $$\varphi = \frac{7.6}{ \overline{\lambda}^2 } = \frac{7.6}{
-                  {{lambda_}}^2 } ={{varphi = round(7.6/lambda_**2)}}$$
+                  {{lambdaUndeground}}^2 } ={{varphi = round(7.6/lambdaUndeground**2)}}$$
                 </div>
                 <div v-else>
                   $$\varphi=\frac{0.5}{ \overline{\lambda}^2 } (\delta -
                   \sqrt{\delta^2-39.48 \times \overline{\lambda}^2}) = \frac{0.5}{
-                  {{lambda_}}^2 } ( {{delta}} - \sqrt{ {{delta}}^2-39.48 \times
-                  {{lambda_}}^2}) = {{varphi = varphi_c}}$$
+                  {{lambdaUndeground}}^2 } ( {{delta}} - \sqrt{ {{delta}}^2-39.48 \times
+                  {{lambdaUndeground}}^2}) = {{varphi = varphi_c}}$$
                 </div>
               </li>
               <li v-if="this.geometry.beta == 0.14">
-                кривої стійкості c при $\overline{\lambda} = {{lambda_}}>5.8$
+                кривої стійкості c при $\overline{\lambda} = {{lambdaUndeground}}>5.8$
   
-                <div v-if="lambda_>5.8">
+                <div v-if="lambdaUndeground>5.8">
                   $$\varphi = \frac{7.6}{ \overline{\lambda}^2 } = \frac{7.6}{
-                  {{lambda_}}^2 } ={{varphi = round(7.6/lambda_**2)}}$$
+                  {{lambdaUndeground}}^2 } ={{varphi = round(7.6/lambdaUndeground**2)}}$$
                 </div>
                 <div v-else>
                   $$\varphi=\frac{0.5}{ \overline{\lambda}^2 } (\delta -
                   \sqrt{\delta^2-39.48 \times \overline{\lambda}^2}) = \frac{0.5}{
-                  {{lambda_}}^2 } ( {{delta}} - \sqrt{ {{delta}}^2-39.48 \times
-                  {{lambda_}}^2}) = {{varphi = varphi_c}}$$
+                  {{lambdaUndeground}}^2 } ( {{delta}} - \sqrt{ {{delta}}^2-39.48 \times
+                  {{lambdaUndeground}}^2}) = {{varphi = varphi_c}}$$
                 </div>
               </li>
             </ul>
@@ -336,6 +336,9 @@
           this.renderMath();
         },
         computed: {
+          curve_a(){
+            return `кривої стійкості а при $\\overline{ \\lambda } = ${this.lambdaUndeground} > 3.8 $`
+          },
           k_1() {
             return this.round(
               (this.N * this.gamma_n) /
@@ -347,9 +350,9 @@
           },
           varphi_c() {
             return this.round(
-              (0.5 / this.lambda_ ** 2) *
+              (0.5 / this.lambdaUndeground ** 2) *
                 (this.delta -
-                  (this.delta ** 2 - 39.48 * this.lambda_ ** 2) ** 0.5)
+                  (this.delta ** 2 - 39.48 * this.lambdaUndeground ** 2) ** 0.5)
             );
           },
           l_ef() {
@@ -358,14 +361,14 @@
           lambda() {
             return this.round((this.l_ef / this.geometry.i) * 100);
           },
-          lambda_() {
-            return this.round(this.lambda * (this.R_y / this.E) ** 0.5);
+          lambdaUndeground() {
+            return this.round( Math.sqrt(this.lambda * (this.R_y / this.E)));
           },
           delta() {
             return this.round(
               9.87 *
-                (1 - this.geometry.alpha + this.geometry.beta * this.lambda_) +
-                this.lambda_ ** 2
+                (1 - this.geometry.alpha + this.geometry.beta * this.lambdaUndeground) +
+                this.lambdaUndeground ** 2
             );
           },
         },

@@ -66,5 +66,16 @@ const SectionRectangle = {
     round(a) {
       return Math.round(a * 100) / 100;
     },
+    renderMath() {
+      MathJax.typesetPromise();
+    },
+  },
+  mounted() {
+    // Ждем пока MathJax загрузится
+    this.renderMath();
+  },
+  updated() {
+    // Перерендериваем формулы при обновлении данных
+    this.renderMath();
   },
 };

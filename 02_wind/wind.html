@@ -171,9 +171,12 @@
         <img src="./wind/sheme2.svg" width="550px" alt="рис 9.11" />
       </div>
       <div class="page">
-        <select-chart :width="width" :height="height" @update:cd="cd = $event">
+        <select-chart
+          :width="width"
+          :height="height"
+          @update:cd="updateA"
+        >
         </select-chart>
-        <p>{{newCd()}}</p>
         <p>
           Для основних типів будівель і споруд значення C<sub>d</sub>
           визначаються за графіками на рис. 9.5-9.10. Наведені на рисунках
@@ -187,7 +190,6 @@
         </p>
       </div>
       <div class="page">
-        
         <p>
           9.7 Коефіцієнт С визначається за формулою: $$C = C_{aer} \times C_h
           \times C_{alt} \times C_{rel} \times C_{dir} \times C_d $$ $$C =
@@ -305,18 +307,17 @@
         </table>
         <p>10 Па = 1 $\frac{ кгс }{ м^2 }$</p>
       </div>
-
     </div>
     <script>
       const app = Vue.createApp({
         data() {
           return {
-            z: 17.22,
+            z: 72,
             place: 3,
-            B: 72,
+            B: 18,
             C_h: 2.25,
             C_d: 0.9,
-            cd:1,
+            cd: 1,
             W_0: 370,
             activeColor: "black",
             age: "житлові та громадські",
@@ -328,16 +329,21 @@
           renderMath() {
             MathJax.typesetPromise();
           },
-          newCd(){
-            this.C_d = this.cd
-          }
+          updateA(newA) {
+            this.cd = newA;
+          },
+        },
+        watch: {
+          cd(newA) {
+            this.C_d = newA;
+          },
         },
         computed: {
-          width(){
-            return this.z;
-          },
-          height(){
+          width() {
             return this.B;
+          },
+          height() {
+            return this.z;
           },
           mu() {
             if (this.alpha < 25) {
@@ -374,8 +380,7 @@
                 } else {
                   c = 3.1;
                 }
-              } 
-              else if (p == 2) {
+              } else if (p == 2) {
                 if (z <= 5) {
                   c = 1.2;
                 } else if (z <= 10) {
@@ -395,8 +400,7 @@
                 } else {
                   c = 3.15;
                 }
-              } 
-              else if (p == 3) {
+              } else if (p == 3) {
                 if (z <= 5) {
                   c = 0.9;
                 } else if (z <= 10) {
@@ -416,8 +420,7 @@
                 } else {
                   c = 3.3;
                 }
-              } 
-              else {
+              } else {
                 if (z <= 5) {
                   c = 0.6;
                 } else if (z <= 10) {
@@ -438,8 +441,7 @@
                   c = 3.4;
                 }
               }
-            } 
-            else {
+            } else {
               if (p == 1) {
                 if (z <= 5) {
                   c = 0.9;

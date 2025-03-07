@@ -37,12 +37,7 @@ const ChartComponent = {
     planeInter(p0, points) {
       if (points.length < 3) return null;
       const [p1, p2, p3] = points;
-      const A = (p2.y - p1.y) * (p3.z - p1.z) - (p3.y - p1.y) * (p2.z - p1.z);
-      const B = (p3.x - p1.x) * (p2.z - p1.z) - (p2.x - p1.x) * (p3.z - p1.z);
-      const C = (p2.x - p1.x) * (p3.y - p1.y) - (p3.x - p1.x) * (p2.y - p1.y);
-      let z = p1.z - (A * (p0.x - p1.x) + B * (p0.y - p1.y)) / C;
-      const minZ = Math.min(p1.z, p2.z, p3.z);
-      z = Math.round((z > minZ ? z : minZ) * 100) / 100;
+      z = Math.max(p1.z, p2.z, p3.z,)
       this.$emit("min-found", z);
       return z;
     },

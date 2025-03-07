@@ -171,11 +171,7 @@
         <img src="./wind/sheme2.svg" width="550px" alt="рис 9.11" />
       </div>
       <div class="page">
-        <select-chart
-          :width="width"
-          :height="height"
-          @update:cd="updateA"
-        >
+        <select-chart :width="width" :height="height" @update:cd="updateA">
         </select-chart>
         <p>
           Для основних типів будівель і споруд значення C<sub>d</sub>
@@ -188,8 +184,6 @@
           <input v-model="C_d" type="number" placeholder="C_d" />
           в залежності від висоти Z={{z}}м, та ширини B={{B}}м, споруди
         </p>
-      </div>
-      <div class="page">
         <p>
           9.7 Коефіцієнт С визначається за формулою: $$C = C_{aer} \times C_h
           \times C_{alt} \times C_{rel} \times C_{dir} \times C_d $$ $$C =
@@ -211,6 +205,8 @@
           <input v-model="W_0" type="number" placeholder="W_0" />
           Pa
         </p>
+      </div>
+      <div class="page">
         <p>
           9.14 Коефіцієнт надійності за граничним розрахунковим значенням
           вітрового навантаження визначається залежно від заданого середнього
@@ -261,14 +257,37 @@
           від частки часу $\eta$ , протягом якої можуть порушуватися умови
           другого граничного стану.
         </p>
+        <p>Таблиця 9.3</p>
+        <div class="table">
+          <table>
+            <thead>
+              <tr class="row">
+                <th class="col">$ \eta$</th>
+                <th v-for="item in xValues">{{ item }}</th>
+              </tr>
+            </thead>
+            <tr class="row">
+              <th class="col">$ \gamma_{fe} $</th>
+              <td v-for="item in aValues">{{ item }}</td>
+            </tr>
+          </table>
+        </div>
         <p>
           Значення $\eta$ приймається за нормами проектування конструкцій або
           встановлюється завданням на проектування залежно від їхнього
           призначення, відповідальності та наслідків виходу за граничний стан.
           Для об'єктів масового будівництва допускається приймати $\eta= 0,02$
-          $\gamma_{fe}={{gamma_fe=0.21}}$
+          $\gamma_{fe}=0.21$
         </p>
-
+        <p>
+          <span>
+            $\eta$=
+          <input v-model="eta" type="number" placeholder="eta" />
+          </span>
+          <span>
+            $\gamma_{fe}={{gamma_fe}}$
+          </span>
+        </p>
         <p>
           9.5 Експлуатаційне розрахункове значення вітрового навантаження
           визначається за формулою: $$ W_e = \gamma_{fe} \times W_0 \times C =
@@ -294,7 +313,7 @@
           </thead>
           <tbody>
             <tr>
-              <th scope="row">Експлуатаційне, Па</th>
+              <th scope="row">Експлуатаційне розрахункове значення, Па</th>
               <td>{{W_e}}</td>
               <td>{{Math.round(W_e/0.8*(-2)*100)/100}}</td>
             </tr>
@@ -323,6 +342,16 @@
             age: "житлові та громадські",
             gamma_fm: 1.14,
             period_of_oscillation2: "менше 0,25с",
+            xValuesView: [
+              0.002, 0.005, 
+            ],
+            xValues: [
+            0.002, 0.005, 0.01, 0.02, 0.03, 0.04, 0.05, 0.1
+            ],
+            aValues: [
+              0.42, 0.33, 0.27, 0.21, 0.18, 0.16, 0.14, 0.09
+            ],
+            eta:0.02,
           };
         },
         methods: {
@@ -332,6 +361,38 @@
           updateA(newA) {
             this.cd = newA;
           },
+          round(a) {
+            return Math.round(a * 100) / 100;
+          },
+
+          interpolate(x, xValues, yValues) {
+            if (xValues.length !== yValues.length) {
+              throw new Error("Списки x и y должны быть одинаковой длины.");
+            }
+
+            // Если x меньше минимального значения в xValues, вернуть первое значение yValues
+            if (x < xValues[0]) {
+              return yValues[0];
+            }
+
+            // Если x больше максимального значения в xValues, вернуть последнее значение yValues
+            if (x > xValues[xValues.length - 1]) {
+              return yValues[yValues.length - 1];
+            }
+
+            // Линейная интерполяция
+            for (let i = 1; i < xValues.length; i++) {
+              if (xValues[i - 1] <= x && x <= xValues[i]) {
+                const y =
+                  yValues[i - 1] +
+                  ((yValues[i] - yValues[i - 1]) * (x - xValues[i - 1])) /
+                    (xValues[i] - xValues[i - 1]);
+                return y;
+              }
+            }
+
+            throw new Error("Значение x не удалось интерполировать.");
+          },
         },
         watch: {
           cd(newA) {
@@ -339,6 +400,13 @@
           },
         },
         computed: {
+          gamma_fe(){
+            return this.round(
+              this.interpolate(this.eta, this.xValues, this.aValues)
+            )
+
+          },
+
           width() {
             return this.B;
           },

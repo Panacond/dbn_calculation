@@ -201,7 +201,7 @@
             </p>
             <ul>
               <li v-if="this.geometry.beta == 0.06">
-                {{curve_a}}
+                <span>{{curve_a}}</span>
                 <div v-if="lambdaUndeground>3.8">
                   $$\varphi = \frac{7.6}{ \overline{\lambda}^2 } = \frac{7.6}{
                   {{lambdaUndeground}}^2 } ={{varphi = round(7.6/lambdaUndeground**2)}}$$

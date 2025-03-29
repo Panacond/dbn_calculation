@@ -47,6 +47,8 @@
           м, висота споруди B=
           <input v-model="B" type="number" placeholder="B" />
           м, ширина чи диаметр
+          <input v-model="B2" type="number" placeholder="B2" />
+          м, довжина
         </p>
         <p>
           9.11 Коефіцієнт рельєфу С<sub>rеl</sub> враховує мікрорельєф
@@ -162,17 +164,48 @@
           тиску на споруду.
         </p>
         <p>
-          9.16 При расчете креплений элементов ограждения к несущим конструкциям
-          в углах здания и по внешнему контуру покрытия следует учитывать
-          местное отрицательное давление ветра с аэродинамическим коэффициентом
-          С<sub>аеr</sub> = –2, распределенное вдоль поверхностей на ширине 1,5
-          м (рис. 9.11).
+          9.16 При розрахунку кріплень елементів огороджень до несучих
+          конструкцій у кутах споруди і по зовнішньому контуру покриття слід
+          враховувати місцевий від'ємний тиск вітру з аеродинамічним
+          коефіцієнтом С<sub>аеr</sub> = –2, розподілений вздовж поверхонь на
+          ширині е/10.( е – найменший серед габаритних розмірів споруди) У кутах
+          покрівлі, що сполучаються зкутами споруди (зони А на (рисунку 9.11),
+          слід приймати С<sub>аеr</sub> = –3,5.
         </p>
-        <img src="./wind/sheme2.svg" width="550px" alt="рис 9.11" />
+        <img src="./wind/sheme3.svg" width="550px" alt="рис 9.11" />
       </div>
       <div class="page">
-        <select-chart :width="width" :height="height" @update:cd="updateA">
-        </select-chart>
+        <div v-if="period_of_oscillation2=='менше 0,25с'">
+          <table>
+            <thead>
+              <!-- Первая строка заголовка -->
+              <tr>
+                <th rowspan="2">{{ head91[0] }}</th>
+                <th colspan="4">C<sub>h</sub> для типу місцевості</th>
+              </tr>
+              <!-- Вторая строка заголовка -->
+              <tr>
+                <th v-for="(col, index) in head91.slice(1)" :key="index">
+                  {{ col }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(row, rowIndex) in transposedData" :key="rowIndex">
+                <td v-for="(value, colIndex) in row" :key="colIndex">
+                  {{ value }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p>C<sub>h</sub> = {{c_h}}</p>
+          <p>C<sub>d</sub> = {{C_d}}</p>
+        </div>
+        <div v-else>
+          <select-chart :width="width" :height="height" @update:cd="updateA">
+          </select-chart>
+        </div>
+
         <p>
           Для основних типів будівель і споруд значення C<sub>d</sub>
           визначаються за графіками на рис. 9.5-9.10. Наведені на рисунках
@@ -282,11 +315,9 @@
         <p>
           <span>
             $\eta$=
-          <input v-model="eta" type="number" placeholder="eta" />
+            <input v-model="eta" type="number" placeholder="eta" />
           </span>
-          <span>
-            $\gamma_{fe}={{gamma_fe}}$
-          </span>
+          <span> $\gamma_{fe}={{gamma_fe}}$ </span>
         </p>
         <p>
           9.5 Експлуатаційне розрахункове значення вітрового навантаження
@@ -309,6 +340,7 @@
               <th scope="col">Вид вітрового навантаження</th>
               <th scope="col">С<sub>аlt</sub>=0.8</th>
               <th scope="col">С<sub>аlt</sub>=-2</th>
+              <th scope="col">С<sub>аlt</sub>=-3.5 </br> e={{e_10()}}м</th>
             </tr>
           </thead>
           <tbody>
@@ -316,11 +348,13 @@
               <th scope="row">Експлуатаційне розрахункове значення, Па</th>
               <td>{{W_e}}</td>
               <td>{{Math.round(W_e/0.8*(-2)*100)/100}}</td>
+              <td>{{Math.round(W_e/0.8*(-3.5)*100)/100}}</td>
             </tr>
             <tr>
               <th scope="row">Граничне розрахункове значення, Па</th>
               <td>{{W_m}}</td>
               <td>{{Math.round(W_m/0.8*(-2)*100)/100}}</td>
+              <td>{{Math.round(W_m/0.8*(-3.5)*100)/100}}</td>
             </tr>
           </tbody>
         </table>
@@ -334,27 +368,33 @@
             z: 72,
             place: 3,
             B: 18,
+            B2: 15,
             C_h: 2.25,
-            C_d: 0.9,
-            cd: 1,
+            // C_d: 1,
+            cd: 0.9,
             W_0: 370,
             activeColor: "black",
             age: "житлові та громадські",
             gamma_fm: 1.14,
             period_of_oscillation2: "менше 0,25с",
-            xValuesView: [
-              0.002, 0.005, 
+            xValuesView: [0.002, 0.005],
+            xValues: [0.002, 0.005, 0.01, 0.02, 0.03, 0.04, 0.05, 0.1],
+            aValues: [0.42, 0.33, 0.27, 0.21, 0.18, 0.16, 0.14, 0.09],
+            eta: 0.02,
+            head91: ["Z, (м)", "I", "II", "III", "IV"], // Заголовки
+            table91: [
+              [5, 10, 20, 40, 60, 80, 100, 150, 200],
+              [0.9, 1.2, 1.35, 1.6, 1.75, 1.9, 1.95, 2.15, 2.3],
+              [0.7, 0.9, 1.15, 1.45, 1.65, 1.75, 1.85, 2.1, 2.2],
+              [0.4, 0.6, 0.85, 1.15, 1.35, 1.5, 1.6, 1.85, 2.05],
+              [0.2, 0.4, 0.65, 1.0, 1.1, 1.2, 1.25, 1.35, 1.45],
             ],
-            xValues: [
-            0.002, 0.005, 0.01, 0.02, 0.03, 0.04, 0.05, 0.1
-            ],
-            aValues: [
-              0.42, 0.33, 0.27, 0.21, 0.18, 0.16, 0.14, 0.09
-            ],
-            eta:0.02,
           };
         },
         methods: {
+          e_10(){
+            return this.round(Math.min(this.z, this.B, this.B2)/10)
+          },
           renderMath() {
             MathJax.typesetPromise();
           },
@@ -400,11 +440,23 @@
           },
         },
         computed: {
-          gamma_fe(){
+          C_d() {
+            if (this.period_of_oscillation2 == "менше 0,25с") {
+              return 1;
+            }
+            return this.cd;
+          },
+          gamma_fe() {
             return this.round(
               this.interpolate(this.eta, this.xValues, this.aValues)
-            )
+            );
+          },
 
+          transposedData() {
+            // Транспонирование (переворачиваем столбцы в строки)
+            return this.table91[0].map((_, colIndex) =>
+              this.table91.map((row) => row[colIndex])
+            );
           },
 
           width() {

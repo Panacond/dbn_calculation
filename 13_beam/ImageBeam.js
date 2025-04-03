@@ -89,7 +89,7 @@ const ImageBeam = {
         font-size="12px"
         text-anchor="middle"
       >
-        {{item.p}}кН
+        {{item.p}}Н
       </text>
       <path
         d="M 20 30 L 20 73.63"
@@ -156,7 +156,7 @@ const ImageBeam = {
           font-size="12px"
           text-anchor="middle"
         >
-          {{item.p}}кН/м
+          {{item.p}}Н/м
         </text>
         <use
           x="0"

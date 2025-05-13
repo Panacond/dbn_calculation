@@ -25,7 +25,7 @@ const StressDeflection = {
     <p>Максимальний момент в перерізі буде:</p>
     <p>
         $$M= \\frac{q \\times l^2}{8} =\\frac{ {{q}} \\times {{l}}^2}{8} = {{M=
-        Math.round( (q*l**2/8)*100)/100}} Н/м$$
+        Math.round( (q*l**2/8)*100)/100}} Н × м$$
     </p>
     <p>Максимальній прогин:</p>
     <p>
@@ -44,7 +44,7 @@ const StressDeflection = {
     <p>Максимальний момент в перерізі буде:</p>
     <p>
         $$M= \\frac{q \\times l^2}{12} =\\frac{ {{q}} \\times {{l}}^2}{12} = {{M
-        = Math.round( (q*l**2/12)*100)/100}} Н/м$$
+        = Math.round( (q*l**2/12)*100)/100}} Н × м$$
     </p>
     <p>Максимальній прогин:</p>
     <p>
@@ -63,7 +63,7 @@ const StressDeflection = {
     <p>Максимальний момент в перерізі буде:</p>
     <p>
         $$M= \\frac{q \\times l^2}{8} =\\frac{ {{q}} \\times {{l}}^2}{8} = {{M =
-        Math.round( (q*l**2/8)*100)/100}} Н/м$$
+        Math.round( (q*l**2/8)*100)/100}} Н × м$$
     </p>
     <p>Максимальній прогин:</p>
     <p>
@@ -87,7 +87,7 @@ const StressDeflection = {
     <p>Максимальний момент в перерізі буде:</p>
     <p>
         $$M= q \\times b_f \\times l = {{q}}\\times {{b_f}} \\times {{l}} = {{M =
-        Math.round( (q*b_f*l)*100)/100}} Н/м$$
+        Math.round( (q*b_f*l)*100)/100}} Н × м$$
     </p>
     <p>Максимальній прогин:</p>
     <p>
@@ -116,7 +116,7 @@ const StressDeflection = {
     <p>Максимальний момент в перерізі буде:</p>
     <p>
         $$M= q \\times b_f \\times a = {{q}}\\times {{b_f}} \\times {{a}} = {{M =
-        Math.round( (q*b_f*a)*100)/100}} Н/м$$
+        Math.round( (q*b_f*a)*100)/100}} Н × м$$
     </p>
     <p>Максимальній прогин:</p>
     <p>
@@ -133,7 +133,7 @@ const StressDeflection = {
     <p>Максимальний момент в перерізі буде:</p>
     <p>
         $$M= \\frac{q \\times l^2}{2} =\\frac{ {{q}} \\times {{l}}^2}{2} = {{M =
-        Math.round( (q*l**2/2)*100)/100}} Н/м$$
+        Math.round( (q*l**2/2)*100)/100}} Н × м$$
     </p>
     <p>Максимальній прогин:</p>
     <p>

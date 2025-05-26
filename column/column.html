@@ -171,6 +171,8 @@
           </p>
 
           <h4>13.4.1 Гнучкість елемента:</h4>
+          <p>13.4.1 Рекомендується щоб гнучкість елемента $\lambda = l_{ef} / i$ не перевищувала значення $\lambda_u =
+            200$ для стиснутих елементів і $\lambda_u = 400$ для розтягнутих елементів.</p>
           <p>
             $$\lambda= \frac{l_{ef} }{i} = \frac{ {{l_ef}} }{ {{geometry.i}} }
             \times100= {{lambda}}$$
@@ -362,7 +364,7 @@
             return this.round((this.l_ef / this.geometry.i) * 100);
           },
           lambdaUndeground() {
-            return this.round( Math.sqrt(this.lambda * (this.R_y / this.E)));
+            return this.round( this.lambda * Math.sqrt( (this.R_y / this.E)));
           },
           delta() {
             return this.round(
